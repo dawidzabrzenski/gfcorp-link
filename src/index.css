@@ -1,0 +1,9 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer components {
+  .header-btn {
+    @apply text-maincolor cursor-pointer rounded-lg p-1.5 transition-all duration-200 hover:bg-stone-200;
+  }
+}
