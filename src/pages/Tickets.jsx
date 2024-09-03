@@ -1,7 +1,11 @@
 import TicketsList from "../ui/TicketsList";
 
 function Tickets() {
-  return <TicketsList />;
+  return (
+    <>
+      <TicketsList />
+    </>
+  );
 }
 
 export default Tickets;

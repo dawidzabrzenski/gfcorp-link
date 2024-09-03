@@ -3,6 +3,7 @@ import {
   HiOutlineTicket,
   HiOutlineChatBubbleLeftRight,
   HiOutlineCog8Tooth,
+  HiOutlineUserGroup,
 } from "react-icons/hi2";
 import NavItem from "./NavItem";
 
@@ -26,6 +27,12 @@ function MainNav() {
           <NavItem to={"/chat"}>
             <HiOutlineChatBubbleLeftRight size={28} />
             <span>Chat</span>
+          </NavItem>
+        </li>
+        <li>
+          <NavItem to={"/users"}>
+            <HiOutlineUserGroup size={28} />
+            <span>Users</span>
           </NavItem>
         </li>
         <li>
