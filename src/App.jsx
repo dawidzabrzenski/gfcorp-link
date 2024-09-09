@@ -3,6 +3,7 @@ import Dashboard from "./pages/Dashboard";
 import AppLayout from "./ui/AppLayout";
 import Tickets from "./pages/Tickets";
 import Chat from "./pages/Chat";
+import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 
 function App() {
@@ -14,6 +15,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />}></Route>
           <Route path="tickets" element={<Tickets />}></Route>
           <Route path="chat" element={<Chat />}></Route>
+          <Route path="users" element={<Users />}></Route>
           <Route path="settings" element={<Settings />}></Route>
         </Route>
       </Routes>
