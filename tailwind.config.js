@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+// eslint-disable-next-line
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
@@ -14,7 +15,17 @@ export default {
         maincolor: "#3818D9",
       },
       boxShadow: {
-        "right-light": "4px 0 8px rgba(0, 0, 0, 0.03)", // Niestandardowy cień padający tylko z prawej strony
+        "right-light": "4px 0 8px rgba(0, 0, 0, 0.03)",
+      },
+      animation: {
+        backSectionHeaderButton: "backSectionHeaderButton 0.4s ease-in-out",
+      },
+      keyframes: {
+        backSectionHeaderButton: {
+          "0%": { transform: "translateX(-3.5rem)" }, // -translate-x-12
+          "50%": { transform: "translateX(-4rem)" },
+          "100%": { transform: "translateX(-3.5rem)" },
+        },
       },
     },
   },
