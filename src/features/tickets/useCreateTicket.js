@@ -1,4 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
+import toast from "react-hot-toast";
+
 import { createTicket as createTicketApi } from "../../services/apiTickets";
 
 export function useCreateTicket() {
@@ -8,8 +10,8 @@ export function useCreateTicket() {
     isPending: isCreating,
   } = useMutation({
     mutationFn: createTicketApi,
-    onSuccess: () => console.log("Success"),
-    onError: () => console.log("Error"),
+    onSuccess: () => toast.success("Ticket successfully created"),
+    onError: () => toast.error("There was an error creating the ticket"),
   });
 
   return { createTicket, error, isCreating };

@@ -13,6 +13,7 @@ export default {
       },
       colors: {
         maincolor: "#3818D9",
+        maincolordarker: "#2c13ad",
       },
       boxShadow: {
         "right-light": "4px 0 8px rgba(0, 0, 0, 0.03)",

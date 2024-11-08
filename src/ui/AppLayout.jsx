@@ -4,10 +4,10 @@ import Sidebar from "./Sidebar";
 
 function AppLayout() {
   return (
-    <div className="grid h-screen grid-cols-[22rem_1fr] grid-rows-[auto_1fr]">
+    <div className="grid h-screen grid-cols-[22rem_1fr] grid-rows-[auto_1fr] overflow-hidden">
       <Header />
       <Sidebar />
-      <main>
+      <main className="overflow-y-scroll">
         <Outlet />
       </main>
     </div>

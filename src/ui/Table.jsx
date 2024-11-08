@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import TableRow from "./TableRow";
 import StatusButton from "./StatusButton";
 
@@ -23,8 +24,6 @@ function Header({ children }) {
 }
 
 function Body({ data, render }) {
-  console.log(data);
-
   return <div className="flex flex-col gap-2">{data.map(render)}</div>;
 }
 
@@ -32,11 +31,13 @@ function Row({ tickets }) {
   const { id, type, date, status, summary, reporter, asignee } = tickets;
 
   const { columns } = useContext(TableContext);
+  const navigate = useNavigate();
 
   return (
     <div
       className="grid cursor-pointer rounded-md bg-stone-100 py-2 transition-colors duration-300 hover:bg-stone-200"
       style={{ gridTemplateColumns: columns }}
+      onClick={() => navigate(`/tickets/${id}`)}
     >
       <TableRow type="bold">{id}</TableRow>
       <TableRow>{date.split("T")[0]}</TableRow>

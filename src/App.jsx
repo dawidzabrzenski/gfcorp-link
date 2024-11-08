@@ -9,6 +9,8 @@ import Chat from "./pages/Chat";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 import TicketAddForm from "./features/tickets/TicketAddForm";
+import TicketDetail from "./features/tickets/TicketDetail";
+import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -30,12 +32,33 @@ function App() {
             <Route path="dashboard" element={<Dashboard />}></Route>
             <Route path="tickets" element={<Tickets />}></Route>
             <Route path="tickets/add" element={<TicketAddForm />}></Route>
+            <Route path="tickets/:id" element={<TicketDetail />} />
             <Route path="chat" element={<Chat />}></Route>
             <Route path="users" element={<Users />}></Route>
             <Route path="settings" element={<Settings />}></Route>
           </Route>
         </Routes>
       </BrowserRouter>
+      <Toaster
+        position="top-center"
+        gutter={12}
+        containerStyle={{ margin: "16px" }}
+        toastOptions={{
+          success: {
+            duration: 3000,
+          },
+          error: {
+            duration: 5000,
+          },
+          style: {
+            fontSize: "16px",
+            maxWidth: "500px",
+            padding: "16px 24px",
+            backgroundColor: "#fafaf9",
+            color: "#374151",
+          },
+        }}
+      />
     </QueryClientProvider>
   );
 }

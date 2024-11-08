@@ -1,9 +1,21 @@
 import supabase from "./supabase";
 
+export async function getTicket(id) {
+  let { data: ticket, error } = await supabase
+    .from("tickets")
+    .select("*")
+    .eq("id", id);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Ticket could not be loaded");
+  }
+
+  return ticket;
+}
+
 export async function getTickets() {
   const { data, error } = await supabase.from("tickets").select("*");
-
-  console.log(data);
 
   if (error) {
     console.error(error);

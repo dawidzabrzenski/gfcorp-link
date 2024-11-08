@@ -1,6 +1,6 @@
 function SectionHeader({ title, children, backIcon }) {
   return (
-    <div className="flex items-center justify-between px-14 py-4">
+    <div className="bg-color- sticky top-0 flex items-center justify-between bg-white px-14 py-4">
       <span className="text-4xl font-medium">{title}</span>
       {children}
     </div>

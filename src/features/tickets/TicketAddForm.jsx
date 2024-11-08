@@ -17,6 +17,7 @@ function TicketAddForm() {
       ...data,
       status: "not-assigned",
     });
+    reset();
   };
 
   const categories = ["MES", "MS365", "React", "Software"];
@@ -42,6 +43,7 @@ function TicketAddForm() {
           <input
             type="text"
             id="summary"
+            disabled={isCreating}
             className="w-3/4 rounded-md border px-2 py-3"
             {...register("summary", {
               required: "This field is required",
@@ -52,13 +54,16 @@ function TicketAddForm() {
           <FormLabel htmlFor="type">Type</FormLabel>
           <select
             id="type"
+            disabled={isCreating}
             className="w-3/4 rounded-md border px-2 py-3"
             {...register("type", {
               required: "This field is required",
             })}
           >
-            {categories.map((type) => (
-              <option value={type}>{type}</option>
+            {categories.map((type, index) => (
+              <option key={index} value={type}>
+                {type}
+              </option>
             ))}
           </select>
         </FormRow>
@@ -68,14 +73,20 @@ function TicketAddForm() {
             Description
           </label>
           <textarea
-            className="h-[15rem] w-full resize-none p-2"
+            className="h-[15rem] w-full resize-none rounded-md border px-2 py-3"
             id="description"
+            disabled={isCreating}
             {...register("description", { required: "This field is required" })}
           />
         </div>
 
         <div className="flex justify-end">
-          <Button>Submit</Button>
+          <button
+            disabled={isCreating}
+            className="rounded-md bg-maincolor px-6 py-2 text-stone-50"
+          >
+            Submit
+          </button>
         </div>
       </form>
     </div>
