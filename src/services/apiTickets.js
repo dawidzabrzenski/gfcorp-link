@@ -12,3 +12,16 @@ export async function getTickets() {
 
   return data;
 }
+
+export async function createTicket(newTicket) {
+  const { data, error } = await supabase
+    .from("tickets")
+    .insert([{ ...newTicket }]);
+
+  if (error) {
+    console.error(error);
+    throw new Error("Ticket could not be created");
+  }
+
+  return data;
+}

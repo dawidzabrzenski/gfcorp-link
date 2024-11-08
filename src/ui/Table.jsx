@@ -35,7 +35,7 @@ function Row({ tickets }) {
 
   return (
     <div
-      className="grid rounded-md bg-stone-100 py-2"
+      className="grid cursor-pointer rounded-md bg-stone-100 py-2 transition-colors duration-300 hover:bg-stone-200"
       style={{ gridTemplateColumns: columns }}
     >
       <TableRow type="bold">{id}</TableRow>
