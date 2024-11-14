@@ -1,16 +1,19 @@
 import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+import { Toaster } from "react-hot-toast";
 
 import Dashboard from "./pages/Dashboard";
-import AppLayout from "./ui/AppLayout";
+import Login from "./pages/Login";
 import Tickets from "./pages/Tickets";
 import Chat from "./pages/Chat";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
+
+import AppLayout from "./ui/AppLayout";
+
 import TicketAddForm from "./features/tickets/TicketAddForm";
 import TicketDetailPage from "./features/tickets/TicketDetailPage";
-import { Toaster } from "react-hot-toast";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -37,6 +40,8 @@ function App() {
             <Route path="users" element={<Users />}></Route>
             <Route path="settings" element={<Settings />}></Route>
           </Route>
+
+          <Route path="login" element={<Login />} />
         </Routes>
       </BrowserRouter>
       <Toaster

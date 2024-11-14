@@ -43,6 +43,7 @@ function TicketAddForm() {
           <input
             type="text"
             id="summary"
+            required
             disabled={isCreating}
             className="w-3/4 rounded-md border px-2 py-3"
             {...register("summary", {
@@ -54,6 +55,7 @@ function TicketAddForm() {
           <FormLabel htmlFor="type">Type</FormLabel>
           <select
             id="type"
+            required
             disabled={isCreating}
             className="w-3/4 rounded-md border px-2 py-3"
             {...register("type", {
@@ -75,6 +77,7 @@ function TicketAddForm() {
           <textarea
             className="h-[15rem] w-full resize-none rounded-md border px-2 py-3"
             id="description"
+            required
             disabled={isCreating}
             {...register("description", { required: "This field is required" })}
           />
