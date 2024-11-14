@@ -4,7 +4,6 @@ import SectionHeader from "../../ui/SectionHeader";
 import { useNavigate } from "react-router-dom";
 import FormLabel from "../../ui/FormLabel";
 import FormRow from "../../ui/FormRow";
-import Button from "../../ui/Button";
 import { useCreateTicket } from "./useCreateTicket";
 
 function TicketAddForm() {
@@ -18,6 +17,7 @@ function TicketAddForm() {
       status: "not-assigned",
     });
     reset();
+    navigate("/tickets");
   };
 
   const categories = ["MES", "MS365", "React", "Software"];

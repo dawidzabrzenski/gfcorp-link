@@ -12,11 +12,12 @@ export default {
         height: { screen: "100dvh" },
       },
       colors: {
-        maincolor: "#3818D9",
+        maincolor: "#2818D9",
         maincolordarker: "#2c13ad",
       },
       boxShadow: {
         "right-light": "4px 0 8px rgba(0, 0, 0, 0.03)",
+        "focus-shadow": "0 0 0 2px #2d13ad47",
       },
       animation: {
         backSectionHeaderButton: "backSectionHeaderButton 0.4s ease-in-out",

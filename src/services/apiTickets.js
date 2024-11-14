@@ -1,10 +1,11 @@
 import supabase from "./supabase";
 
 export async function getTicket(id) {
-  let { data: ticket, error } = await supabase
+  const { data: ticket, error } = await supabase
     .from("tickets")
     .select("*")
-    .eq("id", id);
+    .eq("id", id)
+    .single();
 
   if (error) {
     console.error(error);

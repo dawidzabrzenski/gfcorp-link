@@ -10,7 +10,7 @@ export function useTicket() {
     data: ticket,
     error,
   } = useQuery({
-    queryKey: ["ticket"],
+    queryKey: ["ticket", id],
     queryFn: () => getTicket(id),
     retry: false,
   });

@@ -51,8 +51,8 @@ function Row({ tickets }) {
         {reporter}
       </TableRow>
       <TableRow>
-        <div className="h-6 w-6 rounded-full bg-blue-400"></div>
-        {asignee}
+        {asignee && <div className="h-6 w-6 rounded-full bg-blue-400"></div>}
+        {asignee || <p className="text-gray-600">Nobody is assigned yet</p>}
       </TableRow>
     </div>
   );
