@@ -6,11 +6,10 @@ import { useForm } from "react-hook-form";
 import FormRow from "../../ui/FormRow";
 
 function SignupForm() {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const { login, isPending } = useLogin();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
   const { register, formState, getValues, reset } = useForm();
+  const { errors } = formState;
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -36,8 +35,6 @@ function SignupForm() {
           id="email"
           autoComplete="username"
           placeholder="Enter your name"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           disabled={isPending}
         />
         <input
@@ -46,12 +43,10 @@ function SignupForm() {
           id="email"
           autoComplete="username"
           placeholder="Enter your surname"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
           disabled={isPending}
         />
       </FormRow>
-      <FormRow label="Email address">
+      <FormRow label="Email address" error={errors?.email?.message}>
         <input
           className="w-full rounded-md border px-4 py-4 text-gray-700 transition duration-300 ease-in-out placeholder:font-light placeholder:text-gray-400 focus:border-transparent focus:shadow-lg focus:outline-maincolorlighter"
           type="email"
@@ -78,8 +73,6 @@ function SignupForm() {
           id="password"
           autoComplete="current-password"
           placeholder="············"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
         />
         <div
           className="absolute inset-y-0 right-3 flex cursor-pointer items-center"
@@ -91,6 +84,20 @@ function SignupForm() {
             <IoMdEyeOff size={18} className="text-gray-400" />
           )}
         </div>
+      </FormRow>
+      <FormRow label="Repeat password" error={errors?.passwordConfirm?.message}>
+        <input
+          className="w-full rounded-md border px-4 py-4 text-gray-700 transition duration-300 ease-in-out placeholder:font-light placeholder:text-gray-400 focus:border-transparent focus:shadow-lg focus:outline-maincolorlighter"
+          type="password"
+          id="passwordConfirm"
+          placeholder="············"
+          disabled={isPending}
+          {...register("passwordConfirm", {
+            required: "This field is required",
+            validate: (value) =>
+              value === getValues().password || "Passwords need to match",
+          })}
+        />
       </FormRow>
       <div className="flex gap-2">
         <input type="checkbox" className="w-8" />
