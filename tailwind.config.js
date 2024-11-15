@@ -12,6 +12,7 @@ export default {
         height: { screen: "100dvh" },
       },
       colors: {
+        bgcolor: "#f3f4f6",
         maincolor: "#2563eb",
         maincolordarker: "#2159d3",
         maincolorlighter: "#3a72ed",

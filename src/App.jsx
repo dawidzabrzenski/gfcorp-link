@@ -9,6 +9,7 @@ import Tickets from "./pages/Tickets";
 import Chat from "./pages/Chat";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
+import Signup from "./pages/Signup";
 
 import AppLayout from "./ui/AppLayout";
 import ProtectedRoute from "./ui/ProtectedRoute";
@@ -49,6 +50,7 @@ function App() {
           </Route>
 
           <Route path="login" element={<Login />} />
+          <Route path="signup" element={<Signup />} />
         </Routes>
       </BrowserRouter>
       <Toaster

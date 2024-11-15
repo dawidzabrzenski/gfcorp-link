@@ -27,7 +27,7 @@ function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
-      <FormRow label="Email address" orientation="vertical">
+      <FormRow label="Email address">
         <input
           className="focus:outline-maincolorlighter w-full rounded-md border px-4 py-4 text-gray-700 transition duration-300 ease-in-out placeholder:font-light placeholder:text-gray-400 focus:border-transparent focus:shadow-lg"
           type="email"

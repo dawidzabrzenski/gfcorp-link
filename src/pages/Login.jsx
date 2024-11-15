@@ -1,8 +1,11 @@
+import { useNavigate } from "react-router-dom";
 import LoginForm from "../features/authentication/LoginForm";
 import LoginBackground from "../ui/LoginBackground";
 import Logo from "../ui/Logo";
 
 function Login() {
+  const navigate = useNavigate();
+
   return (
     <div className="flex">
       <div className="h-screen w-[70vw] bg-gray-100">
@@ -23,7 +26,10 @@ function Login() {
         </div>
         <p className="w-full text-center text-sm text-gray-400">
           New on our platform?{" "}
-          <span className="hover:text-maincolorlightest cursor-pointer text-maincolor transition-all duration-300 hover:underline">
+          <span
+            className="cursor-pointer text-maincolor transition-all duration-300 hover:text-maincolorlightest hover:underline"
+            onClick={() => navigate("/signup")}
+          >
             Create an account
           </span>
         </p>
