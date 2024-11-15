@@ -3,7 +3,6 @@ import FormRow from "../../ui/FormRow";
 import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 
 import { useLogin } from "./useLogin";
-// import SpinnerMini from "../../ui/SpinnerMini";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
@@ -13,8 +12,6 @@ function LoginForm() {
 
   function handleSubmit(e) {
     e.preventDefault();
-
-    console.log(email, password);
 
     if (!email || !password) return;
     login(
