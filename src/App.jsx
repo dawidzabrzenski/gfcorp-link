@@ -11,6 +11,7 @@ import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 
 import AppLayout from "./ui/AppLayout";
+import ProtectedRoute from "./ui/ProtectedRoute";
 
 import TicketAddForm from "./features/tickets/TicketAddForm";
 import TicketDetailPage from "./features/tickets/TicketDetailPage";
@@ -30,7 +31,13 @@ function App() {
 
       <BrowserRouter>
         <Routes>
-          <Route element={<AppLayout />}>
+          <Route
+            element={
+              <ProtectedRoute>
+                <AppLayout />
+              </ProtectedRoute>
+            }
+          >
             <Route index element={<Navigate replace to="dashboard" />}></Route>
             <Route path="dashboard" element={<Dashboard />}></Route>
             <Route path="tickets" element={<Tickets />}></Route>

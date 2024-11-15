@@ -12,8 +12,10 @@ export default {
         height: { screen: "100dvh" },
       },
       colors: {
-        maincolor: "#2818D9",
-        maincolordarker: "#2c13ad",
+        maincolor: "#2563eb",
+        maincolordarker: "#2159d3",
+        maincolorlighter: "#3a72ed",
+        maincolorlightest: "#6691f1",
       },
       boxShadow: {
         "right-light": "4px 0 8px rgba(0, 0, 0, 0.03)",

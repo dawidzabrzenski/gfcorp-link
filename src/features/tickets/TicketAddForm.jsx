@@ -39,7 +39,7 @@ function TicketAddForm() {
         className="flex flex-col gap-4 rounded-md bg-slate-50 px-12 py-4"
       >
         <FormRow>
-          <FormLabel htmlFor="summary">Subject</FormLabel>
+          <label htmlFor="summary">Subject</label>
           <input
             type="text"
             id="summary"
@@ -52,7 +52,7 @@ function TicketAddForm() {
           />
         </FormRow>
         <FormRow>
-          <FormLabel htmlFor="type">Type</FormLabel>
+          <label htmlFor="type">Type</label>
           <select
             id="type"
             required
@@ -70,18 +70,18 @@ function TicketAddForm() {
           </select>
         </FormRow>
 
-        <div className="flex items-center gap-12">
-          <label htmlFor="type" className="w-1/3 font-medium">
+        <FormRow>
+          <label htmlFor="type" className="font-medium">
             Description
           </label>
           <textarea
-            className="h-[15rem] w-full resize-none rounded-md border px-2 py-3"
+            className="h-[15rem] w-3/4 rounded-md border px-2 py-3"
             id="description"
             required
             disabled={isCreating}
             {...register("description", { required: "This field is required" })}
           />
-        </div>
+        </FormRow>
 
         <div className="flex justify-end">
           <button
