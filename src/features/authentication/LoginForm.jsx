@@ -2,12 +2,9 @@ import { useState } from "react";
 import FormRow from "../../ui/FormRow";
 import { IoMdEyeOff, IoMdEye } from "react-icons/io";
 
-import { useLogin } from "./useLogin";
-
-function LoginForm() {
+function LoginForm({ login, isPending }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, isPending } = useLogin();
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 
   function handleSubmit(e) {
@@ -29,7 +26,7 @@ function LoginForm() {
     <form onSubmit={handleSubmit} className="flex flex-col gap-4">
       <FormRow label="Email address">
         <input
-          className="focus:outline-maincolorlighter w-full rounded-md border px-4 py-4 text-gray-700 transition duration-300 ease-in-out placeholder:font-light placeholder:text-gray-400 focus:border-transparent focus:shadow-lg"
+          className="w-full rounded-md border px-4 py-4 text-gray-700 transition duration-300 ease-in-out placeholder:font-light placeholder:text-gray-400 focus:border-transparent focus:shadow-lg focus:outline-maincolorlighter"
           type="email"
           id="email"
           autoComplete="username"
@@ -42,7 +39,7 @@ function LoginForm() {
       <FormRow className="relative w-full">
         <input
           type={isPasswordVisible ? "text" : "password"}
-          className="focus:outline-maincolorlighter w-full rounded-md border px-4 py-4 text-gray-700 transition duration-300 ease-in-out placeholder:font-light placeholder:text-gray-400 focus:border-transparent focus:shadow-lg"
+          className="w-full rounded-md border px-4 py-4 text-gray-700 transition duration-300 ease-in-out placeholder:font-light placeholder:text-gray-400 focus:border-transparent focus:shadow-lg focus:outline-maincolorlighter"
           id="password"
           autoComplete="current-password"
           placeholder="Password"
@@ -60,10 +57,10 @@ function LoginForm() {
           )}
         </div>
       </FormRow>
-      <p className="hover:text-maincolorlightest ml-auto cursor-pointer text-sm text-maincolor underline-offset-2 transition-colors duration-300 hover:underline">
+      <p className="ml-auto cursor-pointer text-sm text-maincolor underline-offset-2 transition-colors duration-300 hover:text-maincolorlightest hover:underline">
         Forgot Password?
       </p>
-      <button className="bg-maincolorlighter box-sh mb-2 mt-4 w-full rounded-lg py-3 text-slate-50 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-maincolordarker">
+      <button className="box-sh mb-2 mt-4 w-full rounded-lg bg-maincolorlighter py-3 text-slate-50 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-maincolordarker">
         SIGN IN
       </button>
     </form>
