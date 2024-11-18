@@ -17,7 +17,7 @@ function ProtectedRoute({ children }) {
 
   if (isPending)
     return (
-      <div className="flex w-screen items-center justify-center">
+      <div className="flex h-screen w-screen items-center justify-center">
         <Spinner />
       </div>
     );

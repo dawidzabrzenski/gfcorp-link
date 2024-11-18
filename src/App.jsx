@@ -12,6 +12,7 @@ import Settings from "./pages/Settings";
 import Signup from "./pages/Signup";
 import ForgotPassword from "./pages/ForgotPassword";
 import ResetPassword from "./pages/ResetPassword";
+import UserSettings from "./pages/UserSettings";
 
 import AppLayout from "./ui/AppLayout";
 import ProtectedRoute from "./ui/ProtectedRoute";
@@ -48,6 +49,7 @@ function App() {
             <Route path="tickets/add" element={<TicketAddForm />}></Route>
             <Route path="tickets/:id" element={<TicketDetailPage />} />
             <Route path="chat" element={<Chat />}></Route>
+            <Route path="user-settings" element={<UserSettings />}></Route>
             <Route path="users" element={<Users />}></Route>
             <Route path="settings" element={<Settings />}></Route>
           </Route>

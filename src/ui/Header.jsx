@@ -6,15 +6,19 @@ import {
 } from "react-icons/hi2";
 import Skeleton, { SkeletonTheme } from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useNavigate } from "react-router-dom";
 
 import { useLogout } from "../features/authentication/useLogout";
+// import { useUserDetail } from "../features/authentication/useUserDetail";
 import { useUser } from "../features/authentication/useUser";
 
 function Header() {
   const { logout, isPending } = useLogout();
   const { user, isPending: isPendingUser } = useUser();
 
-  const { name, surname } = user.user_metadata;
+  const navigate = useNavigate();
+
+  const { name, surname, user_role: userRole } = user;
 
   if (isPendingUser)
     return (
@@ -46,12 +50,21 @@ function Header() {
           ) : (
             <>
               {name} {surname}
+              {userRole === "admin" && (
+                <span className="mx-2 rounded-full bg-red-500 px-2 py-1 text-xs uppercase text-white">
+                  {userRole}
+                </span>
+              )}
             </>
           )}
         </span>
       </div>
       <div className="flex items-center gap-2">
-        <HiOutlineUserCircle size={36} className="header-btn" />
+        <HiOutlineUserCircle
+          size={36}
+          className="header-btn"
+          onClick={() => navigate("user-settings")}
+        />
         <HiOutlineMoon size={36} className="header-btn" />
         <HiOutlineArrowRightStartOnRectangle
           onClick={() => logout()}
