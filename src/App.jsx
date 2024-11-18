@@ -10,9 +10,12 @@ import Chat from "./pages/Chat";
 import Users from "./pages/Users";
 import Settings from "./pages/Settings";
 import Signup from "./pages/Signup";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
 
 import AppLayout from "./ui/AppLayout";
 import ProtectedRoute from "./ui/ProtectedRoute";
+import AuthRoute from "./ui/AuthRoute";
 
 import TicketAddForm from "./features/tickets/TicketAddForm";
 import TicketDetailPage from "./features/tickets/TicketDetailPage";
@@ -49,8 +52,39 @@ function App() {
             <Route path="settings" element={<Settings />}></Route>
           </Route>
 
-          <Route path="login" element={<Login />} />
-          <Route path="signup" element={<Signup />} />
+          <Route
+            path="reset-pass"
+            element={
+              <ProtectedRoute>
+                <ResetPassword />
+              </ProtectedRoute>
+            }
+          />
+
+          <Route
+            path="login"
+            element={
+              <AuthRoute>
+                <Login />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="signup"
+            element={
+              <AuthRoute>
+                <Signup />
+              </AuthRoute>
+            }
+          />
+          <Route
+            path="forgot-pass"
+            element={
+              <AuthRoute>
+                <ForgotPassword />
+              </AuthRoute>
+            }
+          />
         </Routes>
       </BrowserRouter>
       <Toaster
