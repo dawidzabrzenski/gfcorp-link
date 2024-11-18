@@ -29,31 +29,27 @@ export async function updateUserRecovery({ email, password }) {
 //   return data?.user;
 // }
 
-export async function getCurrentUser({ detail }) {
+export async function getCurrentUser() {
   const { data: session } = await supabase.auth.getSession();
   if (!session) return null;
 
   const { data, error } = await supabase.auth.getUser();
   if (error) throw new Error(error.message);
 
-  if (!detail) {
-    return data?.user;
-  } else {
-    const { data: userDetail, error: errorDetail } = await supabase
-      .from("users")
-      .select("*")
-      .eq("id", data.user.id)
-      .single();
+  const { data: userDetail, error: errorDetail } = await supabase
+    .from("users")
+    .select("*")
+    .eq("id", data.user.id)
+    .single();
 
-    if (errorDetail) throw new Error(errorDetail.message);
+  if (errorDetail) throw new Error(errorDetail.message);
 
-    const userWithDetails = {
-      ...data.user,
-      ...userDetail,
-    };
+  const userWithDetails = {
+    ...data.user,
+    ...userDetail,
+  };
 
-    return userWithDetails;
-  }
+  return userWithDetails;
 }
 
 // export async function getUserDetail() {
