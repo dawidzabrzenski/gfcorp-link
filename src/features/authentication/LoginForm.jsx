@@ -1,11 +1,14 @@
 import { useState } from "react";
 import FormRow from "../../ui/FormRow";
 import { IoMdEyeOff, IoMdEye } from "react-icons/io";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm({ login, isPending }) {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isPasswordVisible, setIsPasswordVisible] = useState(false);
+
+  const navigate = useNavigate();
 
   function handleSubmit(e) {
     e.preventDefault();
@@ -57,7 +60,10 @@ function LoginForm({ login, isPending }) {
           )}
         </div>
       </FormRow>
-      <p className="ml-auto cursor-pointer text-sm text-maincolor underline-offset-2 transition-colors duration-300 hover:text-maincolorlightest hover:underline">
+      <p
+        className="ml-auto cursor-pointer text-sm text-maincolor underline-offset-2 transition-colors duration-300 hover:text-maincolorlightest hover:underline"
+        onClick={() => navigate("/forgot-pass")}
+      >
         Forgot Password?
       </p>
       <button className="box-sh mb-2 mt-4 w-full rounded-lg bg-maincolorlighter py-3 text-slate-50 shadow-md transition-all duration-300 hover:-translate-y-0.5 hover:bg-maincolordarker">
