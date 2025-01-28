@@ -37,7 +37,7 @@ function Login() {
             </label>
           </div>
 
-          <button className="bg-dark-main hover:bg-dark-mainhover outline-blue w-full rounded-lg py-3 font-medium transition-all duration-300">
+          <button className="bg-dark-main hover:bg-dark-mainhover outline-blue text-dark-darkbg w-full rounded-lg py-3 font-medium transition-all duration-300">
             Zaloguj
           </button>
         </form>

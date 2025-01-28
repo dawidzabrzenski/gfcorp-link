@@ -21,9 +21,10 @@ export default {
         mainbg: "#f3f4f6",
 
         dark: {
-          mainbg: "#04101c",
+          mainbg: "#0c1017",
           darkbg: "#05070a",
           main: "#f3f4f6",
+          notactive: "#8f9195",
           mainhover: "#c2c9d6",
           sec: "#82a0b8",
           focus: "hsla(210, 98%, 42%, 0.5)",
@@ -31,6 +32,9 @@ export default {
           placeholder: "#3c455a",
           mainborder: "#212732",
           mainborderhover: "#566481",
+          menuactive: "#1d2430",
+          menuhover: "#141a23",
+          menuactivehover: "#2a3140",
         },
 
         mainfont: "#7f8d8e",
