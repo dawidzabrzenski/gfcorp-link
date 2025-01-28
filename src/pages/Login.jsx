@@ -16,7 +16,7 @@ function Login() {
               type="email"
               id="email"
               placeholder="twójmail@gfcorp.pl"
-              className="bg-dark-darkbg border-dark-mainborder hover:border-dark-mainborderhover placeholder:text-dark-placeholder focus:outline-solid focus:outline-dark-focus focus:border-dark-focusbord rounded-lg border px-3 py-2 outline-none outline-4 outline-offset-0 transition-all duration-300 focus:outline"
+              className="bg-dark-darkbg border-dark-mainborder hover:border-dark-mainborderhover placeholder:text-dark-placeholder outline-blue rounded-lg border px-3 py-2 transition-all duration-300"
             />
           </FormRow>
           <FormRow>
@@ -26,18 +26,18 @@ function Login() {
               id="password"
               autocomplete="new-password"
               placeholder="••••••"
-              className="bg-dark-darkbg border-dark-mainborder hover:border-dark-mainborderhover placeholder:text-dark-placeholder focus:outline-solid focus:outline-dark-focus focus:border-dark-focusbord rounded-lg border px-3 py-2 outline-none outline-4 outline-offset-0 transition-all duration-300 focus:outline"
+              className="bg-dark-darkbg border-dark-mainborder hover:border-dark-mainborderhover placeholder:text-dark-placeholder outline-blue rounded-lg border px-3 py-2 transition-all duration-300"
             />
           </FormRow>
 
           <div class="flex items-center gap-3">
-            <input id="remember-me" type="checkbox" value="" class="" />
+            <input id="remember-me" type="checkbox" value="" />
             <label for="remember-me" className="text-dark-main">
               Zapamiętaj mnie
             </label>
           </div>
 
-          <button className="bg-dark-main hover:bg-dark-mainhover w-full rounded-lg py-3 font-medium transition-all duration-300">
+          <button className="bg-dark-main hover:bg-dark-mainhover outline-blue w-full rounded-lg py-3 font-medium transition-all duration-300">
             Zaloguj
           </button>
         </form>

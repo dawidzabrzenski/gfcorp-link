@@ -23,6 +23,16 @@ input:-webkit-autofill:active {
   font-family: "Inter", sans-serif !important;
 }
 
+.outline-blue {
+  @apply focus:outline-dark-focus focus:border-dark-focusbord outline-none outline-4 outline-offset-2 focus:outline;
+}
+
 input[type="checkbox"] {
-  @apply bg-dark-darkbg border-dark-mainborder hover:border-dark-focusbord h-5 w-5 appearance-none rounded border-2 transition-all duration-300 checked:border-blue-500 checked:bg-blue-500 hover:cursor-pointer focus:outline-none focus:ring-2 focus:ring-blue-200;
+  @apply bg-dark-darkbg border-dark-mainborder hover:border-dark-focusbord checked:border-dark-focusbord checked:bg-dark-focusbord outline-blue h-5 w-5 appearance-none rounded border-2 transition-all duration-300 hover:cursor-pointer;
+}
+
+input[type="checkbox"]:checked {
+  background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="white"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/></svg>');
+  background-repeat: no-repeat;
+  background-position: center;
 }
