@@ -4,6 +4,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 
 import AppLayout from "./ui/AppLayout";
+import Clients from "./pages/Clients";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
           <Route index element={<Navigate replace to="dashboard" />}></Route>
           <Route path="dashboard" element={<Dashboard />}></Route>
           <Route path="erp" element={<Login />}></Route>
+          <Route path="clients" element={<Clients />}></Route>
         </Route>
 
         <Route path="login" element={<Login />} />

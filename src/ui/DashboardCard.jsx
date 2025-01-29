@@ -9,7 +9,7 @@ import { Gauge, gaugeClasses } from "@mui/x-charts/Gauge";
 
 function DashboardCard({ name, children }) {
   return (
-    <div className="border-dark-mainborder flex w-fit items-center gap-8 rounded-xl border px-4 py-6">
+    <div className="flex w-fit items-center gap-8 rounded-xl border border-dark-mainborder px-4 py-6">
       {/* <Calendar sx={{ fontSize: "6rem", color: "#3c455a" }} /> */}
       <Gauge
         width={100}
@@ -26,7 +26,7 @@ function DashboardCard({ name, children }) {
         })}
       />
       <p className="text-4xl font-semibold">
-        Do końca zmiany <span className="font-light">(8h)</span>
+        Statystyka 1 <span className="font-light"></span>
       </p>
     </div>
   );

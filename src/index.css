@@ -4,7 +4,7 @@
 
 @layer components {
   .header-btn {
-    @apply cursor-pointer rounded-lg p-1.5 text-maincolor transition-all duration-200 hover:bg-stone-200;
+    @apply text-maincolor cursor-pointer rounded-lg p-1.5 transition-all duration-200 hover:bg-stone-200;
   }
 }
 
@@ -24,11 +24,15 @@ input:-webkit-autofill:active {
 }
 
 .outline-blue {
-  @apply focus:outline-dark-focus focus:border-dark-focusbord outline-none outline-4 outline-offset-2 focus:outline;
+  @apply outline-none outline-4 outline-offset-2 focus:border-dark-focusbord focus:outline focus:outline-dark-focus;
+}
+
+.menu-el {
+  @apply mx-4 flex items-center gap-2 rounded-lg px-4 py-2 transition-all duration-300 hover:bg-dark-menuhover [&.active]:bg-dark-menuactive [&.active]:text-dark-main [&.active]:hover:bg-dark-menuactivehover;
 }
 
 input[type="checkbox"] {
-  @apply bg-dark-darkbg border-dark-mainborder hover:border-dark-focusbord checked:border-dark-focusbord checked:bg-dark-focusbord outline-blue h-5 w-5 appearance-none rounded border-2 transition-all duration-300 hover:cursor-pointer;
+  @apply outline-blue h-5 w-5 appearance-none rounded border-2 border-dark-mainborder bg-dark-darkbg transition-all duration-300 checked:border-dark-focusbord checked:bg-dark-focusbord hover:cursor-pointer hover:border-dark-focusbord;
 }
 
 input[type="checkbox"]:checked {

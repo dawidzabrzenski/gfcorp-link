@@ -22,6 +22,7 @@ export default {
 
         dark: {
           mainbg: "#0c1017",
+          lightbg: "#151c28",
           darkbg: "#05070a",
           main: "#f3f4f6",
           notactive: "#8f9195",

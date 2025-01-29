@@ -1,11 +1,14 @@
 import React, { useState } from "react";
 import FormRow from "../ui/FormRow";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
+  const navigate = useNavigate();
+
   return (
-    <div className="bg-gradient-dark bg-dark-mainbg flex min-h-screen items-center justify-center">
-      <div className="bg-dark-mainbg text-dark-text border-dark-mainborder w-full max-w-md rounded-lg border p-8 shadow-xl">
-        <h2 className="text-dark-main mb-6 text-4xl font-semibold">
+    <div className="flex min-h-screen items-center justify-center bg-dark-mainbg bg-gradient-dark">
+      <div className="text-dark-text w-full max-w-md rounded-lg border border-dark-mainborder bg-dark-mainbg p-8 shadow-xl">
+        <h2 className="mb-6 text-4xl font-semibold text-dark-main">
           Zaloguj się
         </h2>
 
@@ -16,7 +19,7 @@ function Login() {
               type="email"
               id="email"
               placeholder="twójmail@gfcorp.pl"
-              className="bg-dark-darkbg border-dark-mainborder hover:border-dark-mainborderhover placeholder:text-dark-placeholder outline-blue rounded-lg border px-3 py-2 transition-all duration-300"
+              className="outline-blue rounded-lg border border-dark-mainborder bg-dark-darkbg px-3 py-2 transition-all duration-300 placeholder:text-dark-placeholder hover:border-dark-mainborderhover"
             />
           </FormRow>
           <FormRow>
@@ -26,7 +29,7 @@ function Login() {
               id="password"
               autocomplete="new-password"
               placeholder="••••••"
-              className="bg-dark-darkbg border-dark-mainborder hover:border-dark-mainborderhover placeholder:text-dark-placeholder outline-blue rounded-lg border px-3 py-2 transition-all duration-300"
+              className="outline-blue rounded-lg border border-dark-mainborder bg-dark-darkbg px-3 py-2 transition-all duration-300 placeholder:text-dark-placeholder hover:border-dark-mainborderhover"
             />
           </FormRow>
 
@@ -37,7 +40,10 @@ function Login() {
             </label>
           </div>
 
-          <button className="bg-dark-main hover:bg-dark-mainhover outline-blue text-dark-darkbg w-full rounded-lg py-3 font-medium transition-all duration-300">
+          <button
+            onClick={() => navigate("/dashboard")}
+            className="outline-blue w-full rounded-lg bg-dark-main py-3 font-medium text-dark-darkbg transition-all duration-300 hover:bg-dark-mainhover"
+          >
             Zaloguj
           </button>
         </form>
