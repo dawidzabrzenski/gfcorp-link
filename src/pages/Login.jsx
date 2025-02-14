@@ -1,9 +1,13 @@
-import FormRow from "../ui/FormRow";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useLogin } from "../features/authentication/useLogin";
 
-import axios from "axios";
+import FormRow from "../ui/FormRow";
 
 function Login() {
+  // const [error, setError] = useState(""); // stan do przechowywania błędu
+  const { login, error } = useLogin();
+
   const {
     register,
     handleSubmit,
@@ -13,33 +17,22 @@ function Login() {
   function onSubmit(data) {
     const { email, password } = data;
 
-    async function loginApi(email, password) {
-      try {
-        const res = await axios.post("http://localhost:5000/api/login", {
-          email,
-          password,
-        });
-
-        console.log(res.data);
-        console.log(res.data.message);
-        console.log(res.data.token);
-
-        if (res.data.token) {
-          localStorage.setItem("token", res.data.token);
-        }
-      } catch (error) {
-        console.error(error.response?.data.message);
-      }
-    }
-    loginApi(email, password);
+    login({ email, password });
   }
-
   return (
     <div className="flex min-h-screen items-center justify-center bg-dark-mainbg bg-gradient-dark">
       <div className="text-dark-text w-full max-w-md rounded-lg border border-dark-mainborder bg-dark-mainbg p-8 shadow-xl">
-        <h2 className="mb-6 text-4xl font-semibold text-dark-main">
+        <h2
+          className={`${error ? "mb-0" : "mb-6"} text-4xl font-semibold text-dark-main`}
+        >
           Zaloguj się
         </h2>
+
+        {error && (
+          <div className="my-3 rounded-lg border border-red-700 bg-red-300 p-2 text-red-700">
+            {error}
+          </div>
+        )}
 
         <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
           <FormRow>
