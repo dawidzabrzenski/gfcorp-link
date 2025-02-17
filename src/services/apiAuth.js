@@ -33,6 +33,7 @@ export async function getAuthStatus() {
       "Auth error:",
       error?.response?.data?.message || error.message,
     );
+    localStorage.removeItem("token");
     return false;
   }
 }

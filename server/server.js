@@ -157,7 +157,7 @@ app.post("/api/login", async (req, res) => {
 
   // tworzy token JWT o ważnosci 1h
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
+    expiresIn: "5s",
   });
 
   return res.json({
