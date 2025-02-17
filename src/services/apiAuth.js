@@ -1,4 +1,5 @@
 import axios from "axios";
+import toast from "react-hot-toast";
 
 export async function login(email, password) {
   try {
@@ -34,6 +35,7 @@ export async function getAuthStatus() {
       error?.response?.data?.message || error.message,
     );
     localStorage.removeItem("token");
+    toast.error("Sesja wygasła");
     return false;
   }
 }

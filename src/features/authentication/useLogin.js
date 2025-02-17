@@ -19,9 +19,6 @@ export function useLogin() {
       refetch();
       navigate("/dashboard", { replace: true });
     },
-    onError: (err) => {
-      const errorMessage = err.message || "Wystąpił nieoczekiwany błąd";
-    },
   });
 
   const error = queryError ? queryError.message : null;
