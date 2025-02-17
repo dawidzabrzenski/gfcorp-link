@@ -15,3 +15,24 @@ export async function login(email, password) {
     throw new Error(error.response.data.message);
   }
 }
+
+export async function authStatus() {
+  const token = localStorage.getItem("token");
+
+  if (!token) return false;
+
+  try {
+    const res = await axios.get("http://localhost:5000/api/protected", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+
+    return true;
+  } catch (error) {
+    localStorage.removeItem("token");
+    console.error(
+      "Auth error:",
+      error?.response?.data?.message || error.message,
+    );
+    return false;
+  }
+}
