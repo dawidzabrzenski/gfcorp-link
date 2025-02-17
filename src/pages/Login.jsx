@@ -4,9 +4,19 @@ import { useNavigate } from "react-router-dom";
 
 import FormRow from "../ui/FormRow";
 import LoadingScreen from "../ui/LoadingScreen";
+import { useEffect } from "react";
+import { useAuth } from "../features/authentication/useAuth";
 
 function Login() {
   const { login, error, isPending } = useLogin();
+  const { isAuthenticated } = useAuth();
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [isAuthenticated, navigate]);
 
   const {
     register,

@@ -1,24 +1,28 @@
-import { useNavigate, Outlet, useLocation } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "./useAuth";
 
 function ProtectedRoute({ children }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const { isAuthenticated, isPending, refetch } = useAuth();
 
-  useEffect(
-    function () {
-      refetch();
-      if (!isAuthenticated && !isPending) {
-        navigate("/login");
-      }
-    },
-    [isAuthenticated, isPending, navigate, refetch],
-  );
+  useEffect(() => {
+    refetch(); // Pobierz status autoryzacji na początku
 
-  if (isPending) return <p>Loading</p>;
+    if (isAuthenticated && location.pathname === "/login") {
+      console.log("test");
+      navigate("/dashboard", { replace: true });
+    }
 
-  if (isAuthenticated) return children;
+    if (!isAuthenticated && !isPending) {
+      navigate("/login", { replace: true });
+    }
+  }, [isAuthenticated, isPending, navigate, refetch, location.pathname]);
+
+  if (isPending) return <p>Loading...</p>;
+
+  return isAuthenticated ? children : null;
 }
 
 export default ProtectedRoute;
