@@ -40,6 +40,8 @@ const GroupSchema = new mongoose.Schema({
 
 const UserSchema = new mongoose.Schema({
   email: { type: String, required: true, unique: true },
+  firstName: { type: String, required: true },
+  lastName: { type: String, required: true },
   password: { type: String, required: true },
   group: { type: mongoose.Schema.Types.ObjectId, ref: "Group" },
 });
@@ -102,7 +104,7 @@ const addSampleData = async () => {
   }
 };
 
-async function addUser(email, password, groupId) {
+async function addUser(email, firstName, lastName, password, groupId) {
   try {
     const group = await Group.findById(groupId);
     if (!group) {
@@ -115,6 +117,8 @@ async function addUser(email, password, groupId) {
 
     const user = new User({
       email,
+      firstName,
+      lastName,
       password: hashedPassword,
       group: groupId,
     });
@@ -127,7 +131,13 @@ async function addUser(email, password, groupId) {
   }
 }
 
-// addUser("newuser@example.com", "newpassword", "67af0ad6e1a078b86d2df366");
+// addUser(
+//   "test@gfcorp.pl",
+//   "Dawid",
+//   "Zabrzeński",
+//   "test123",
+//   "67af0ad6e1a078b86d2df366",
+// );
 
 // dodawanie usera
 // addSampleData().catch((err) => console.log(err));
@@ -150,7 +160,11 @@ app.post("/api/login", async (req, res) => {
     expiresIn: "1h",
   });
 
-  return res.json({ message: "Logged successfully", token });
+  return res.json({
+    message: "Logged successfully",
+    token,
+    user: { email: email, firstName: user.firstName, lastName: user.lastName },
+  });
 });
 
 // endpoint do sprawdzenia wygenerowanego tokenu
