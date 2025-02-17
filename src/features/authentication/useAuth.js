@@ -1,23 +1,11 @@
-// useAuth.js
 import { useQuery } from "@tanstack/react-query";
+import { getAuthStatus } from "../../services/apiAuth";
 
 export function useAuth() {
-  const {
-    data: isAuthenticated,
-    isPending,
-    isError,
-  } = useQuery(
-    ["authStatus"],
-    () => {
-      const token = localStorage.getItem("token");
-      if (!token) return false;
+  const { data, isPending, error, refetch } = useQuery({
+    queryKey: ["auth"],
+    queryFn: getAuthStatus,
+  });
 
-      return true;
-    },
-    {
-      initialData: false,
-    },
-  );
-
-  return { isAuthenticated, isPending, isError };
+  return { isAuthenticated: data, isPending, error, refetch };
 }

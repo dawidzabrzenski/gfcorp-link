@@ -4,11 +4,9 @@ import { useNavigate } from "react-router-dom";
 
 import FormRow from "../ui/FormRow";
 import LoadingScreen from "../ui/LoadingScreen";
-import { getUser } from "../services/apiAuth";
 
 function Login() {
   const { login, error, isPending } = useLogin();
-  const navigate = useNavigate();
 
   const {
     register,
@@ -16,15 +14,10 @@ function Login() {
     formState: { errors },
   } = useForm();
 
-  function onSubmit(data) {
+  async function onSubmit(data) {
     const { email, password } = data;
 
-    // login({ email, password });
-
-    const token =
-      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY3YjMxMGE3OTFjNjNhNjdkMWYxMDM1YSIsImlhdCI6MTczOTc5MTQ2MSwiZXhwIjoxNzM5Nzk1MDYxfQ.3Ujkw8nEOsgyA4LT0gN9YHCnembgPoBxz5zkSsP9FXo";
-
-    getUser(token);
+    await login({ email, password });
   }
   return (
     <>

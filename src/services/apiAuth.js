@@ -16,7 +16,7 @@ export async function login(email, password) {
   }
 }
 
-export async function authStatus() {
+export async function getAuthStatus() {
   const token = localStorage.getItem("token");
 
   if (!token) return false;
@@ -26,9 +26,9 @@ export async function authStatus() {
       headers: { Authorization: `Bearer ${token}` },
     });
 
+    console.log("Authenticated token");
     return true;
   } catch (error) {
-    localStorage.removeItem("token");
     console.error(
       "Auth error:",
       error?.response?.data?.message || error.message,
@@ -45,8 +45,9 @@ export async function getUser(token) {
       },
     });
 
+    console.log(res.data);
     const { user } = res.data;
-    return user;
+    return res.data;
   } catch (error) {
     console.error("Error fetching user data", error);
   }

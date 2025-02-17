@@ -1,27 +1,24 @@
 import { useNavigate, Outlet, useLocation } from "react-router-dom";
-import { useAuth } from "./useAuth"; // Importujemy nasz hook
 import { useEffect } from "react";
+import { useAuth } from "./useAuth";
 
-function ProtectedRoute() {
+function ProtectedRoute({ children }) {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { isAuthenticated, isLoading, isError } = useAuth();
+  const { isAuthenticated, isPending, refetch } = useAuth();
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/login");
-    }
+  useEffect(
+    function () {
+      refetch();
+      if (!isAuthenticated && !isPending) {
+        navigate("/login");
+      }
+    },
+    [isAuthenticated, isPending, navigate, refetch],
+  );
 
-    if (isAuthenticated && location.pathname === "/login") {
-      navigate("/dashboard");
-    }
-  }, [isAuthenticated, isError, navigate, location.pathname]);
+  if (isPending) return <p>Loading</p>;
 
-  if (isLoading) {
-    return <div>Loading...</div>;
-  }
-
-  return <Outlet />;
+  if (isAuthenticated) return children;
 }
 
 export default ProtectedRoute;
