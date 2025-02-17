@@ -36,3 +36,18 @@ export async function authStatus() {
     return false;
   }
 }
+
+export async function getUser(token) {
+  try {
+    const res = await axios.get("http://localhost:5000/api/user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    const { user } = res.data;
+    return user;
+  } catch (error) {
+    console.error("Error fetching user data", error);
+  }
+}
