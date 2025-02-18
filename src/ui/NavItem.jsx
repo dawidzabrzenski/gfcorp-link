@@ -21,9 +21,9 @@ function NavItem({ to, children, submenu }) {
         </div>
 
         <div
-          className={`bg-dark-lightbg flex flex-col gap-2 overflow-hidden rounded-lg pl-6 transition-all duration-300 ${
+          className={`flex flex-col gap-2 overflow-hidden rounded-lg bg-dark-lightbg pl-6 transition-all duration-300 ease-in-out ${
             submenuExpanded
-              ? "mt-2 max-h-[500px] py-2 opacity-100"
+              ? "my-2 max-h-[500px] py-2 opacity-100"
               : "max-h-0 opacity-0"
           }`}
         >

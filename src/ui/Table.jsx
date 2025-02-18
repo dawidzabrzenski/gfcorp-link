@@ -7,9 +7,18 @@ import {
   getFilteredRowModel,
   flexRender,
 } from "@tanstack/react-table";
+import {
+  DeleteRounded as TrashBin,
+  CreateRounded as Edit,
+} from "@mui/icons-material";
 
 export default function Table({ usersData }) {
   const data = usersData;
+
+  const handleEdit = (user) => {
+    console.log("Edytowanie użytkownika:", user);
+    // Tutaj można dodać logikę nawigacji lub otwierania modala z edycją.
+  };
 
   const columns = [
     {
@@ -27,6 +36,27 @@ export default function Table({ usersData }) {
     {
       accessorKey: "group",
       header: "Grupa ",
+    },
+    {
+      header: "",
+      id: "actions",
+      enableSorting: false,
+      cell: ({ row }) => (
+        <div className="flex justify-center gap-2">
+          <button
+            onClick={() => handleEdit(row.original)}
+            className="bg-dark-lighterbg rounded px-2 py-1 text-white transition-all"
+          >
+            <TrashBin fontSize="very-small" />
+          </button>
+          <button
+            onClick={() => handleEdit(row.original)}
+            className="bg-dark-lighterbg rounded px-2 py-1 text-white transition-all"
+          >
+            <Edit fontSize="very-small" />
+          </button>
+        </div>
+      ),
     },
   ];
 
@@ -51,7 +81,7 @@ export default function Table({ usersData }) {
         placeholder="Wyszukaj"
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
-        className="mb-2 rounded border border-dark-mainborder bg-dark-mainbg p-2"
+        className="mb-2 cursor-pointer rounded border border-dark-mainborder bg-dark-mainbg p-2 transition-all duration-300 hover:border-dark-mainborderhover focus:outline-none"
       />
       <table className="w-full border-collapse">
         <thead>
@@ -60,14 +90,15 @@ export default function Table({ usersData }) {
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="cursor-pointer border border-dark-mainborder bg-dark-mainbg p-2 font-bold"
+                  className="cursor-pointer border border-dark-mainborder bg-dark-mainbg p-2 font-bold transition-all duration-200 hover:bg-dark-lightbg"
                   onClick={header.column.getToggleSortingHandler()}
                 >
                   {flexRender(
                     header.column.columnDef.header,
                     header.getContext(),
                   )}
-                  {header.column.getIsSorted() === "asc" ? " ↑" : " ↓"}
+                  {header.column.getCanSort() &&
+                    (header.column.getIsSorted() === "asc" ? " ↑" : " ↓")}{" "}
                 </th>
               ))}
             </tr>
@@ -77,7 +108,10 @@ export default function Table({ usersData }) {
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="border border-dark-mainborder p-2">
+                <td
+                  key={cell.id}
+                  className="border border-dark-mainborder p-2 transition-all duration-200 hover:bg-dark-lightbg"
+                >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
@@ -89,7 +123,7 @@ export default function Table({ usersData }) {
         <button
           onClick={() => table.previousPage()}
           disabled={!table.getCanPreviousPage()}
-          className="border p-1"
+          className="cursor-pointer rounded-lg border border-dark-mainborder px-4 py-1 transition-all duration-300 hover:border-dark-mainborderhover"
         >
           ←
         </button>
@@ -99,7 +133,7 @@ export default function Table({ usersData }) {
         <button
           onClick={() => table.nextPage()}
           disabled={!table.getCanNextPage()}
-          className="border p-1"
+          className="cursor-pointer rounded-lg border border-dark-mainborder px-4 py-1 transition-all duration-300 hover:border-dark-mainborderhover"
         >
           →
         </button>

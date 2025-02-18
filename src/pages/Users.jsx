@@ -1,6 +1,5 @@
 import Table from "../ui/Table";
 
-import { getUsers } from "../services/apiUser";
 import { useUsers } from "../features/authentication/useUsers";
 
 function Users() {

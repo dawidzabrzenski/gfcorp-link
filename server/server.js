@@ -132,9 +132,9 @@ async function addUser(email, firstName, lastName, password, groupId) {
 }
 
 // addUser(
-//   "marek.orlowski@gfcorp.pl",
-//   "Marek",
-//   "Orłowski",
+//   "jakub.rzadkowski@gfcorp.pl",
+//   "Jakub",
+//   "Rzadkowski",
 //   "gfcorp123",
 //   "67af0ad6e1a078b86d2df366",
 // );
@@ -218,6 +218,7 @@ app.get("/api/users", async (req, res) => {
 
     res.json(
       users.map((user) => ({
+        id: user._id,
         firstName: user.firstName,
         lastName: user.lastName,
         email: user.email,

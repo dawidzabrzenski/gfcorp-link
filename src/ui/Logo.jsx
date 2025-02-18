@@ -1,6 +1,10 @@
+import GFLogo from "../assets/gflogo.webp";
+
 function Logo() {
   return (
-    <h1 className="w-full border-b-[1px] border-dark-mainborder py-4 text-center text-5xl font-extrabold text-dark-focus"></h1>
+    <h1 className="flex w-full justify-center border-b-[1px] border-dark-mainborder py-4">
+      <img className="w-[50%]" src={GFLogo} />
+    </h1>
   );
 }
 
