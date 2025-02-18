@@ -132,6 +132,14 @@ async function addUser(email, firstName, lastName, password, groupId) {
 }
 
 // addUser(
+//   "testowy.user@gfcorp.pl",
+//   "Testowy",
+//   "User",
+//   "test",
+//   "67af0ad6e1a078b86d2df366",
+// );
+
+// addUser(
 //   "jakub.rzadkowski@gfcorp.pl",
 //   "Jakub",
 //   "Rzadkowski",
@@ -203,6 +211,28 @@ app.get("/api/user", async (req, res) => {
       lastName: user.lastName,
       email: user.email,
     });
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid or expired token" });
+  }
+});
+
+app.delete("/api/user/:id", async (req, res) => {
+  const token = req.headers.authorization?.split(" ")[1];
+
+  if (!token) {
+    return res.status(401).json({ message: "Authorization token is required" });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const user = await User.findById(decoded.id);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
+    await User.findByIdAndDelete(req.params.id);
+    res.json({ message: "User deleted successfully" });
   } catch (err) {
     return res.status(401).json({ message: "Invalid or expired token" });
   }

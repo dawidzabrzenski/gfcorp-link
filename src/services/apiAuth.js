@@ -35,7 +35,7 @@ export async function getAuthStatus() {
       error?.response?.data?.message || error.message,
     );
     localStorage.removeItem("token");
-    toast.error("Sesja wygasła");
+    toast.error("Sesja wygasła. Zaloguj się ponownie");
     return false;
   }
 }
