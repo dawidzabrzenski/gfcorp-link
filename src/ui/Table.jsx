@@ -8,29 +8,28 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 
-const data = [
-  { id: 1, name: "Jan", age: 25 },
-  { id: 2, name: "Anna", age: 30 },
-  { id: 3, name: "Piotr", age: 28 },
-  { id: 4, name: "Kasia", age: 35 },
-];
+export default function Table({ usersData }) {
+  const data = usersData;
 
-const columns = [
-  {
-    accessorKey: "id",
-    header: "ID",
-  },
-  {
-    accessorKey: "name",
-    header: "Imię",
-  },
-  {
-    accessorKey: "age",
-    header: "Wiek",
-  },
-];
+  const columns = [
+    {
+      accessorKey: "email",
+      header: "E-mail",
+    },
+    {
+      accessorKey: "firstName",
+      header: "Imię",
+    },
+    {
+      accessorKey: "lastName",
+      header: "Nazwisko",
+    },
+    {
+      accessorKey: "group",
+      header: "Grupa ",
+    },
+  ];
 
-export default function Table() {
   const [filter, setFilter] = useState("");
   const table = useReactTable({
     data,
@@ -52,7 +51,7 @@ export default function Table() {
         placeholder="Wyszukaj"
         value={filter}
         onChange={(e) => setFilter(e.target.value)}
-        className="mb-2 mr-auto rounded border p-2"
+        className="mb-2 rounded border border-dark-mainborder bg-dark-mainbg p-2"
       />
       <table className="w-full border-collapse">
         <thead>
@@ -61,7 +60,7 @@ export default function Table() {
               {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="cursor-pointer border p-2"
+                  className="cursor-pointer border border-dark-mainborder bg-dark-mainbg p-2 font-bold"
                   onClick={header.column.getToggleSortingHandler()}
                 >
                   {flexRender(
@@ -78,7 +77,7 @@ export default function Table() {
           {table.getRowModel().rows.map((row) => (
             <tr key={row.id}>
               {row.getVisibleCells().map((cell) => (
-                <td key={cell.id} className="border p-2">
+                <td key={cell.id} className="border border-dark-mainborder p-2">
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}

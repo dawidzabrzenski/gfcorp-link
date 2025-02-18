@@ -1,6 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "./useAuth";
+import FullscreenLoading from "../../ui/FullscreenLoading";
 
 function ProtectedRoute({ children }) {
   const navigate = useNavigate();
@@ -11,7 +12,6 @@ function ProtectedRoute({ children }) {
     refetch(); // Pobierz status autoryzacji na początku
 
     if (isAuthenticated && location.pathname === "/login") {
-      console.log("test");
       navigate("/dashboard", { replace: true });
     }
 
@@ -20,7 +20,7 @@ function ProtectedRoute({ children }) {
     }
   }, [isAuthenticated, isPending, navigate, refetch, location.pathname]);
 
-  if (isPending) return <p>Loading...</p>;
+  if (isPending) return <FullscreenLoading />;
 
   return isAuthenticated ? children : null;
 }

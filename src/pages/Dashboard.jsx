@@ -1,12 +1,26 @@
 import { useSelector } from "react-redux";
 import DashboardCard from "../ui/DashboardCard";
+import useUser from "../features/authentication/useUser";
+import Skeleton from "react-loading-skeleton";
 
 function Dashboard() {
+  const { userData, isPending } = useUser();
+
   return (
     <div className="flex flex-col gap-6">
       <h2 className="text-mainfont">Dashboard</h2>
       <h1 className="text-4xl font-semibold tracking-tight">
-        Witaj <span className="text-dark-focusbord">Dawid Zabrzeński</span> 👋
+        Witaj
+        {isPending ? (
+          <span className="mx-4 inline-block">
+            <Skeleton count={1} width={250} height={25} />
+          </span>
+        ) : (
+          <span className="text-dark-focusbord">
+            {" " + userData.firstName + " " + userData.lastName + " "}
+          </span>
+        )}
+        👋
       </h1>
       <div>
         <DashboardCard />

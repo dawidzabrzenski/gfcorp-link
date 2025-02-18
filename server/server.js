@@ -132,10 +132,10 @@ async function addUser(email, firstName, lastName, password, groupId) {
 }
 
 // addUser(
-//   "test@gfcorp.pl",
-//   "Dawid",
-//   "Zabrzeński",
-//   "test123",
+//   "marek.orlowski@gfcorp.pl",
+//   "Marek",
+//   "Orłowski",
+//   "gfcorp123",
 //   "67af0ad6e1a078b86d2df366",
 // );
 
@@ -157,7 +157,7 @@ app.post("/api/login", async (req, res) => {
 
   // tworzy token JWT o ważnosci 1h
   const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: "5s",
+    expiresIn: "1h",
   });
 
   return res.json({
@@ -205,6 +205,30 @@ app.get("/api/user", async (req, res) => {
     });
   } catch (err) {
     return res.status(401).json({ message: "Invalid or expired token" });
+  }
+});
+
+app.get("/api/users", async (req, res) => {
+  try {
+    const users = await User.find().populate("group", "name");
+
+    if (!users.length) {
+      return res.status(404).json({ message: "No users found" });
+    }
+
+    res.json(
+      users.map((user) => ({
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+        group: user.group ? user.group.name : null,
+      })),
+    );
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ message: "Something went wrong while querying users" });
   }
 });
 

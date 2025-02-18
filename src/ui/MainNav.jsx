@@ -4,6 +4,7 @@ import {
   SettingsRounded as Settings,
   ReceiptRounded as Receipt,
   AccountBoxRounded as Client,
+  PeopleAltRounded as Users,
 } from "@mui/icons-material";
 import NavItem from "./NavItem";
 import comarchLogo from "../assets/comarchlogo.webp";
@@ -42,9 +43,9 @@ function MainNav() {
           </NavItem>
         </li>
         <li>
-          <NavItem to={"/work-track"}>
-            <Settings fontSize="small" />
-            <p>Ustawienia</p>
+          <NavItem to={"/users"}>
+            <Users fontSize="small" />
+            <p>Użytkownicy</p>
           </NavItem>
         </li>
       </ul>

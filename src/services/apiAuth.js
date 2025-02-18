@@ -40,18 +40,11 @@ export async function getAuthStatus() {
   }
 }
 
-export async function getUser(token) {
+export async function logout() {
   try {
-    const res = await axios.get("http://localhost:5000/api/user", {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
-
-    console.log(res.data);
-    const { user } = res.data;
-    return res.data;
+    await localStorage.removeItem("token");
+    toast.success("Wylogowywanie Cię");
   } catch (error) {
-    console.error("Error fetching user data", error);
+    console.error("Error logging out", error);
   }
 }
