@@ -48,7 +48,7 @@ export async function getAuthStatus() {
 export async function logout() {
   try {
     await localStorage.removeItem("token");
-    toast.success("Wylogowywanie Cię");
+    toast.success("Wylogowano Cię");
   } catch (error) {
     console.error("Error logging out", error);
   }

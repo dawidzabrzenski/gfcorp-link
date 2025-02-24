@@ -6,6 +6,7 @@ import FormRow from "../ui/FormRow";
 import LoadingScreen from "../ui/LoadingScreen";
 import { useEffect } from "react";
 import { useAuth } from "../features/authentication/useAuth";
+import Button from "../ui/Button";
 
 function Login() {
   const { login, error, isPending } = useLogin();
@@ -98,13 +99,9 @@ function Login() {
               </label>
             </div>
 
-            <button
-              type="submit"
-              disabled={isPending}
-              className="outline-blue w-full rounded-lg bg-dark-main py-3 font-medium text-dark-darkbg transition-all duration-300 hover:bg-dark-mainhover"
-            >
+            <Button type="submit" disabled={isPending}>
               Zaloguj
-            </button>
+            </Button>
           </form>
         </div>
       </div>
