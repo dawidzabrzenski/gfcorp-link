@@ -57,6 +57,36 @@ const Group = mongoose.model("Group", GroupSchema);
 const User = mongoose.model("User", UserSchema);
 const Log = mongoose.model("Log", LogSchema);
 
+// middleware do weryfikacji tokenu JWT
+const authMiddleware = (req, res, next) => {
+  const token = req.headers.authorization?.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ message: "Authorization token is required" });
+  }
+  try {
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = decoded;
+    next();
+  } catch (err) {
+    return res.status(401).json({ message: "Invalid or expired token" });
+  }
+};
+
+app.get("/api/permissions", authMiddleware, async (req, res) => {
+  try {
+    const groupId = req.user.role;
+    const group = await Group.findById(groupId).populate("permissions");
+    if (!group) {
+      return res.status(404).json({ message: "Group not found" });
+    }
+    const permissions = group.permissions.map((perm) => perm.name);
+    res.json({ permissions });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
 // funkcja do dodawania danych do bazy
 const addSampleData = async () => {
   try {
@@ -132,11 +162,11 @@ async function addUser(email, firstName, lastName, password, groupId) {
 }
 
 // addUser(
-//   "testowy.user@gfcorp.pl",
+//   "test@gfcorp.pl",
 //   "Testowy",
 //   "User",
-//   "test",
-//   "67af0ad6e1a078b86d2df366",
+//   "test123",
+//   "67bc2e85846aed71848dda51",
 // );
 
 // addUser(
@@ -144,7 +174,7 @@ async function addUser(email, firstName, lastName, password, groupId) {
 //   "Jakub",
 //   "Rzadkowski",
 //   "gfcorp123",
-//   "67af0ad6e1a078b86d2df366",
+//   "67bc2e85846aed71848dda51",
 // );
 
 // dodawanie usera
@@ -153,25 +183,24 @@ async function addUser(email, firstName, lastName, password, groupId) {
 // endpoint do logowania
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email }).populate("group");
+    if (!user || !(await bcrypt.compare(password, user.password))) {
+      return res.status(401).json({ message: "Nieprawidłowe dane logowania" });
+    }
 
-  // szuka usera
-  const user = await User.findOne({ email });
-  if (!user)
-    return res.status(404).json({ message: "Podany użytkownik nie istnieje." });
+    console.log(user._id);
 
-  // używa funkcji kryptującej/dekryptującej do porównania haseł
-  const isMatch = await bcrypt.compare(password, user.password);
-  if (!isMatch) return res.status(400).json({ message: "Nieprawidłowe hasło" });
-
-  // tworzy token JWT o ważnosci 1h
-  const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
-    expiresIn: "1h",
-  });
-
-  return res.json({
-    message: "Logged successfully",
-    token,
-  });
+    const token = jwt.sign(
+      { id: user._id, role: user.group._id },
+      process.env.JWT_SECRET,
+      { expiresIn: "1h" },
+    );
+    res.json({ token });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
 });
 
 // endpoint do sprawdzenia wygenerowanego tokenu

@@ -1,3 +1,6 @@
+// src/components/MainNav.jsx
+import { useQuery } from "@tanstack/react-query";
+import { getPermissions } from "../services/apiPermissions";
 import {
   HomeRounded as Home,
   CalendarMonthRounded as Calendar,
@@ -7,7 +10,10 @@ import {
   PeopleAltRounded as Users,
 } from "@mui/icons-material";
 import NavItem from "./NavItem";
+import Spinner from "./Spinner";
 import comarchLogo from "../assets/comarchlogo.webp";
+
+const token = localStorage.getItem("token");
 
 const comarchSubmenu = [
   { name: "Klienci", link: "/clients", icon: <Client fontSize="small" /> },
@@ -15,6 +21,28 @@ const comarchSubmenu = [
 ];
 
 function MainNav() {
+  const {
+    data: permissions,
+    isLoading,
+    error,
+  } = useQuery({
+    queryKey: ["permissions"],
+    queryFn: () => getPermissions(token),
+    enabled: !!token,
+  });
+
+  if (isLoading) {
+    return (
+      <div className="flex h-full items-center justify-center">
+        <Spinner />
+      </div>
+    );
+  }
+
+  if (error) {
+    return <div>Błąd pobierania uprawnień: {error.message}</div>;
+  }
+
   return (
     <nav className="h-full">
       <ul className="flex flex-col justify-center gap-1 text-sm font-semibold text-dark-notactive">
@@ -42,12 +70,14 @@ function MainNav() {
             <p>Comarch XL ERP</p>
           </NavItem>
         </li>
-        <li>
-          <NavItem to={"/users"}>
-            <Users fontSize="small" />
-            <p>Użytkownicy</p>
-          </NavItem>
-        </li>
+        {permissions?.includes("users") && (
+          <li>
+            <NavItem to={"/users"}>
+              <Users fontSize="small" />
+              <p>Użytkownicy</p>
+            </NavItem>
+          </li>
+        )}
       </ul>
     </nav>
   );

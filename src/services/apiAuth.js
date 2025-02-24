@@ -1,12 +1,18 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
+// Uzyskanie wartości zmiennej środowiskowej
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function login(email, password) {
   try {
-    const res = await axios.post("http://localhost:5000/api/login", {
+    console.log(API_URL);
+
+    const res = await axios.post(`${API_URL}/api/login`, {
       email,
       password,
     });
+
     if (res.data.token) {
       await localStorage.setItem("token", res.data.token);
     }
@@ -23,11 +29,10 @@ export async function getAuthStatus() {
   if (!token) return false;
 
   try {
-    const res = await axios.get("http://localhost:5000/api/protected", {
+    const res = await axios.get(`${API_URL}/api/protected`, {
       headers: { Authorization: `Bearer ${token}` },
     });
 
-    console.log("Authenticated token");
     return true;
   } catch (error) {
     console.error(
