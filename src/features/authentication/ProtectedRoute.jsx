@@ -4,12 +4,14 @@ import { useAuth } from "./useAuth";
 import FullscreenLoading from "../../ui/FullscreenLoading";
 import { getPermissions } from "../../services/apiPermissions";
 import { useQuery } from "@tanstack/react-query";
+import toast from "react-hot-toast";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
   const navigate = useNavigate();
   const location = useLocation();
   const { isAuthenticated, isPending, refetch } = useAuth();
+  const excludedPaths = ["/dashboard", "/login", "/", "/no-access"];
 
   const {
     data: permissions,
@@ -32,8 +34,11 @@ function ProtectedRoute({ children }) {
       navigate("/login", { replace: true });
     }
 
-    if (!permissions?.includes(location.pathname.slice(1)))
-      navigate("/no-access", { replace: true });
+    if (
+      !permissions?.includes(location.pathname.slice(1)) &&
+      !excludedPaths.includes(location.pathname)
+    )
+      navigate("/dashboard", { replace: true });
   }, [
     isAuthenticated,
     isPending,
@@ -41,6 +46,7 @@ function ProtectedRoute({ children }) {
     refetch,
     location.pathname,
     permissions,
+    excludedPaths,
   ]);
 
   if (isPending) return <FullscreenLoading />;

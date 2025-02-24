@@ -170,9 +170,9 @@ async function addUser(email, firstName, lastName, password, groupId) {
 // );
 
 // addUser(
-//   "jakub.rzadkowski@gfcorp.pl",
-//   "Jakub",
-//   "Rzadkowski",
+//   "marek.orlowski@gfcorp.pl",
+//   "Marek",
+//   "Orlowski",
 //   "gfcorp123",
 //   "67bc2e85846aed71848dda51",
 // );
