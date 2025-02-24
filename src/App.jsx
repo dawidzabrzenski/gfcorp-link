@@ -42,7 +42,7 @@ function App() {
             >
               <Route index element={<Navigate replace to="dashboard" />} />
               <Route path="dashboard" element={<Dashboard />} />
-              <Route path="clients" element={<Clients />} />
+              <Route path="erp/clients" element={<Clients />} />
               <Route path="users" element={<Users />} />
               {/* <Route path="no-access" element={<NoAccess />} /> */}
             </Route>

@@ -16,8 +16,18 @@ import comarchLogo from "../assets/comarchlogo.webp";
 const token = localStorage.getItem("token");
 
 const comarchSubmenu = [
-  { name: "Klienci", link: "/clients", icon: <Client fontSize="small" /> },
-  { name: "Faktury", link: "/invoice", icon: <Receipt fontSize="small" /> },
+  {
+    name: "Klienci",
+    link: "/erp/clients",
+    icon: <Client fontSize="small" />,
+    requiredPermission: "erp/clients",
+  },
+  {
+    name: "Faktury",
+    link: "/invoice",
+    icon: <Receipt fontSize="small" />,
+    requiredPermission: "invoices",
+  },
 ];
 
 function MainNav() {
@@ -30,6 +40,12 @@ function MainNav() {
     queryFn: () => getPermissions(token),
     enabled: !!token,
   });
+
+  const filteredComarchSubmenu = comarchSubmenu.filter(
+    (item) =>
+      !item.requiredPermission ||
+      permissions?.includes(item.requiredPermission),
+  );
 
   if (isLoading) {
     return (
@@ -58,18 +74,20 @@ function MainNav() {
             <p>Czas pracy</p>
           </NavItem>
         </li>
-        <li className="flex flex-col">
-          <NavItem submenu={comarchSubmenu}>
-            <div className="flex h-[20px] w-[20px] items-center justify-center">
-              <img
-                src={comarchLogo}
-                className="h-[14px] w-[16px]"
-                alt="Comarch XL Logo"
-              />
-            </div>
-            <p>Comarch XL ERP</p>
-          </NavItem>
-        </li>
+        {filteredComarchSubmenu.length > 0 && (
+          <li className="flex flex-col">
+            <NavItem submenu={filteredComarchSubmenu}>
+              <div className="flex h-[20px] w-[20px] items-center justify-center">
+                <img
+                  src={comarchLogo}
+                  className="h-[14px] w-[16px]"
+                  alt="Comarch XL Logo"
+                />
+              </div>
+              <p>Comarch XL ERP</p>
+            </NavItem>
+          </li>
+        )}
         {permissions?.includes("users") && (
           <li>
             <NavItem to={"/users"}>
