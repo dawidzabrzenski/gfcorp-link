@@ -16,7 +16,7 @@ function Dashboard() {
             <Skeleton count={1} width={250} height={25} />
           </span>
         ) : (
-          <span className="text-dark-focusbord">
+          <span className="text-secfont">
             {" " + userData.firstName + " " + userData.lastName + " "}
           </span>
         )}

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useState, useCallback } from "react";
 import {
   useReactTable,
   getCoreRowModel,
@@ -13,52 +13,42 @@ import {
 } from "@mui/icons-material";
 
 export default function Table({ usersData }) {
-  const data = usersData;
+  const data = useMemo(() => usersData, [usersData]);
 
-  const handleEdit = (user) => {
+  const handleEdit = useCallback((user) => {
     console.log("Edytowanie użytkownika:", user);
-    // Tutaj można dodać logikę nawigacji lub otwierania modala z edycją.
-  };
+  }, []);
 
-  const columns = [
-    {
-      accessorKey: "email",
-      header: "E-mail",
-    },
-    {
-      accessorKey: "firstName",
-      header: "Imię",
-    },
-    {
-      accessorKey: "lastName",
-      header: "Nazwisko",
-    },
-    {
-      accessorKey: "group",
-      header: "Grupa ",
-    },
-    {
-      header: "",
-      id: "actions",
-      enableSorting: false,
-      cell: ({ row }) => (
-        <div className="flex justify-center gap-2">
-          <button
-            onClick={() => handleEdit(row.original)}
-            className="bg-dark-lighterbg rounded px-2 py-1 text-white transition-all"
-          >
-            <TrashBin fontSize="very-small" />
-          </button>
-          <button
-            onClick={() => handleEdit(row.original)}
-            className="bg-dark-lighterbg rounded px-2 py-1 text-white transition-all"
-          >
-            <Edit fontSize="very-small" />
-          </button>
-        </div>
-      ),
-    },
-  ];
+  const columns = useMemo(
+    () => [
+      { accessorKey: "email", header: "E-mail" },
+      { accessorKey: "firstName", header: "Imię" },
+      { accessorKey: "lastName", header: "Nazwisko" },
+      { accessorKey: "group", header: "Grupa" },
+      {
+        header: "",
+        id: "actions",
+        enableSorting: false,
+        cell: ({ row }) => (
+          <div className="flex justify-center gap-2">
+            <button
+              onClick={() => handleEdit(row.original)}
+              className="rounded bg-dark-lighterbg px-2 py-1 text-white transition-all"
+            >
+              <TrashBin fontSize="very-small" />
+            </button>
+            <button
+              onClick={() => handleEdit(row.original)}
+              className="rounded bg-dark-lighterbg px-2 py-1 text-white transition-all"
+            >
+              <Edit fontSize="very-small" />
+            </button>
+          </div>
+        ),
+      },
+    ],
+    [handleEdit],
+  );
 
   const [filter, setFilter] = useState("");
   const table = useReactTable({

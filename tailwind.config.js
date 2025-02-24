@@ -40,6 +40,7 @@ export default {
         },
 
         mainfont: "#7f8d8e",
+        secfont: "#59a3fa",
       },
     },
   },

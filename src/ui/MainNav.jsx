@@ -24,9 +24,9 @@ const comarchSubmenu = [
   },
   {
     name: "Faktury",
-    link: "/invoice",
+    link: "/erp/invoices",
     icon: <Receipt fontSize="small" />,
-    requiredPermission: "invoices",
+    requiredPermission: "erp/invoices",
   },
 ];
 
