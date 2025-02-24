@@ -9,6 +9,7 @@ import Clients from "./pages/Clients";
 import Users from "./pages/Users";
 import AppLayout from "./ui/AppLayout";
 import ProtectedRoute from "./features/authentication/ProtectedRoute";
+import NoAccess from "./pages/NoAccess";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -41,6 +42,7 @@ function App() {
               <Route path="dashboard" element={<Dashboard />} />
               <Route path="clients" element={<Clients />} />
               <Route path="users" element={<Users />} />
+              <Route path="no-access" element={<NoAccess />} />
             </Route>
 
             <Route path="login" element={<Login />} />

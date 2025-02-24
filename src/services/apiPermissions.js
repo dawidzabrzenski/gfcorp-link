@@ -9,7 +9,5 @@ export const getPermissions = async (token) => {
     },
   });
 
-  console.log(response.data.permissions);
-
   return response.data.permissions;
 };
