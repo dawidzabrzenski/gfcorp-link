@@ -28,7 +28,7 @@ function NavItem({ to, children, submenu }) {
           }`}
         >
           {submenu.map((el, index) => (
-            <NavItem key={index} to={el.link}>
+            <NavItem key={index} to={el.path}>
               {el?.icon}
               {el?.name}
             </NavItem>
