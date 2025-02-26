@@ -7,50 +7,15 @@ import {
   getFilteredRowModel,
   flexRender,
 } from "@tanstack/react-table";
-import {
-  DeleteRounded as TrashBin,
-  CreateRounded as Edit,
-} from "@mui/icons-material";
+import TablePaginationButton from "./TablePaginationButton";
 
-export default function Table({ usersData }) {
-  const data = useMemo(() => usersData, [usersData]);
-
-  const handleEdit = useCallback((user) => {
-    console.log("Edytowanie użytkownika:", user);
-  }, []);
-
-  const columns = useMemo(
-    () => [
-      { accessorKey: "email", header: "E-mail" },
-      { accessorKey: "firstName", header: "Imię" },
-      { accessorKey: "lastName", header: "Nazwisko" },
-      { accessorKey: "group", header: "Grupa" },
-      {
-        header: "",
-        id: "actions",
-        enableSorting: false,
-        cell: ({ row }) => (
-          <div className="flex justify-center gap-2">
-            <button
-              onClick={() => handleEdit(row.original)}
-              className="rounded bg-dark-lighterbg px-2 py-1 text-white transition-all"
-            >
-              <TrashBin fontSize="very-small" />
-            </button>
-            <button
-              onClick={() => handleEdit(row.original)}
-              className="rounded bg-dark-lighterbg px-2 py-1 text-white transition-all"
-            >
-              <Edit fontSize="very-small" />
-            </button>
-          </div>
-        ),
-      },
-    ],
-    [handleEdit],
-  );
-
+export default function Table({ data, columnsSchema }) {
   const [filter, setFilter] = useState("");
+
+  // const data = useMemo(() => usersData, [usersData]);
+
+  const columns = useMemo(() => columnsSchema, []);
+
   const table = useReactTable({
     data,
     columns,
@@ -110,23 +75,22 @@ export default function Table({ usersData }) {
         </tbody>
       </table>
       <div className="mt-2">
-        <button
-          onClick={() => table.previousPage()}
-          disabled={!table.getCanPreviousPage()}
-          className="cursor-pointer rounded-lg border border-dark-mainborder px-4 py-1 transition-all duration-300 hover:border-dark-mainborderhover"
+        <TablePaginationButton
+          handleClick={() => table.previousPage()}
+          handleDisabled={!table.getCanPreviousPage()}
         >
           ←
-        </button>
+        </TablePaginationButton>
         <span className="px-2">
           Strona {table.getState().pagination.pageIndex + 1}
         </span>
-        <button
-          onClick={() => table.nextPage()}
-          disabled={!table.getCanNextPage()}
-          className="cursor-pointer rounded-lg border border-dark-mainborder px-4 py-1 transition-all duration-300 hover:border-dark-mainborderhover"
+
+        <TablePaginationButton
+          handleClick={() => table.nextPage()}
+          handleDisabled={!table.getCanNextPage()}
         >
           →
-        </button>
+        </TablePaginationButton>
       </div>
     </div>
   );
