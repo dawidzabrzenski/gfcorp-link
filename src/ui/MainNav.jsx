@@ -1,6 +1,5 @@
 // src/components/MainNav.jsx
-import { useQuery } from "@tanstack/react-query";
-import { getPermissions } from "../services/apiPermissions";
+
 import {
   HomeRounded as Home,
   CalendarMonthRounded as Calendar,
@@ -12,6 +11,7 @@ import {
 import NavItem from "./NavItem";
 import Spinner from "./Loaders/Spinner";
 import comarchLogo from "../assets/comarchlogo.webp";
+import { usePermissions } from "../features/permissions/usePermissions";
 
 const token = localStorage.getItem("token");
 
@@ -31,15 +31,8 @@ const comarchSubmenu = [
 ];
 
 function MainNav() {
-  const {
-    data: permissions,
-    isLoading,
-    error,
-  } = useQuery({
-    queryKey: ["permissions"],
-    queryFn: () => getPermissions(token),
-    enabled: !!token,
-  });
+  const { permissions, pendingPermissions, errorPermissions } =
+    usePermissions();
 
   const filteredComarchSubmenu = comarchSubmenu.filter(
     (item) =>
@@ -47,7 +40,7 @@ function MainNav() {
       permissions?.includes(item.requiredPermission),
   );
 
-  if (isLoading) {
+  if (pendingPermissions) {
     return (
       <div className="flex h-full items-center justify-center">
         <Spinner />
@@ -55,8 +48,8 @@ function MainNav() {
     );
   }
 
-  if (error) {
-    return <div>Błąd pobierania uprawnień: {error.message}</div>;
+  if (errorPermissions) {
+    return <div>Błąd pobierania uprawnień: {errorPermissions.message}</div>;
   }
 
   return (
