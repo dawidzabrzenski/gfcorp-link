@@ -1,7 +1,7 @@
 import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "./useAuth";
-import FullscreenLoading from "../../ui/FullscreenLoading";
+import FullscreenLoading from "../../ui/Loaders/FullscreenLoading";
 import { getPermissions } from "../../services/apiPermissions";
 import { useQuery } from "@tanstack/react-query";
 import toast from "react-hot-toast";

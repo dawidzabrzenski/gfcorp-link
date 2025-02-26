@@ -10,7 +10,7 @@ import {
   PeopleAltRounded as Users,
 } from "@mui/icons-material";
 import NavItem from "./NavItem";
-import Spinner from "./Spinner";
+import Spinner from "./Loaders/Spinner";
 import comarchLogo from "../assets/comarchlogo.webp";
 
 const token = localStorage.getItem("token");

@@ -6,7 +6,7 @@ import { SkeletonTheme } from "react-loading-skeleton";
 
 import AppLayout from "./ui/AppLayout";
 import ProtectedRoute from "./features/authentication/ProtectedRoute";
-import FullscreenLoading from "./ui/FullscreenLoading";
+import FullscreenLoading from "./ui/Loaders/FullscreenLoading";
 
 const Login = lazy(() => import("./pages/Login"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
