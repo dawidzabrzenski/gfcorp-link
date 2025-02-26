@@ -1,4 +1,4 @@
-import Loader from "./Loaders/Spinner";
+import Loader from "./Spinner";
 
 function LoadingScreen() {
   return (

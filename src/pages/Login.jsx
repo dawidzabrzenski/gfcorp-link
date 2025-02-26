@@ -2,11 +2,12 @@ import { useForm } from "react-hook-form";
 import { useLogin } from "../features/authentication/useLogin";
 import { useNavigate } from "react-router-dom";
 
-import FormRow from "../ui/FormRow";
-import LoadingScreen from "../ui/LoadingScreen";
 import { useEffect } from "react";
 import { useAuth } from "../features/authentication/useAuth";
+
 import Button from "../ui/Button";
+import FormRow from "../ui/FormRow";
+import LoadingScreen from "../ui/Loaders/LoadingScreen";
 
 function Login() {
   const { login, error, isPending } = useLogin();
@@ -37,7 +38,9 @@ function Login() {
       <div className="flex min-h-screen items-center justify-center bg-dark-mainbg bg-gradient-dark">
         <div className="text-dark-text w-full max-w-md rounded-lg border border-dark-mainborder bg-dark-mainbg p-8 shadow-xl">
           <h2
-            className={`${error ? "mb-0" : "mb-6"} text-4xl font-semibold text-dark-main`}
+            className={`${
+              error ? "mb-0" : "mb-6"
+            } text-4xl font-semibold text-dark-main`}
           >
             Zaloguj się
           </h2>
@@ -58,7 +61,9 @@ function Login() {
                 type="email"
                 id="email"
                 placeholder="twójmail@gfcorp.pl"
-                className={`outline-blue relative rounded-lg border ${errors.email ? "border-red-800" : "border-dark-mainborder"} bg-dark-darkbg px-3 py-2 transition-all duration-300 placeholder:text-dark-placeholder hover:border-dark-mainborderhover`}
+                className={`outline-blue relative rounded-lg border ${
+                  errors.email ? "border-red-800" : "border-dark-mainborder"
+                } bg-dark-darkbg px-3 py-2 transition-all duration-300 placeholder:text-dark-placeholder hover:border-dark-mainborderhover`}
                 {...register("email", {
                   required: "Email jest wymagany",
                 })}
@@ -76,7 +81,9 @@ function Login() {
                 id="password"
                 autoComplete="new-password"
                 placeholder="••••••"
-                className={`outline-blue rounded-lg border ${errors.password ? "border-red-800" : "border-dark-mainborder"} bg-dark-darkbg px-3 py-2 transition-all duration-300 placeholder:text-dark-placeholder hover:border-dark-mainborderhover`}
+                className={`outline-blue rounded-lg border ${
+                  errors.password ? "border-red-800" : "border-dark-mainborder"
+                } bg-dark-darkbg px-3 py-2 transition-all duration-300 placeholder:text-dark-placeholder hover:border-dark-mainborderhover`}
                 {...register("password", {
                   required: "Hasło jest wymagane",
                   minLength: {
