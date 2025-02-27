@@ -1,7 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
 
-// Uzyskanie wartości zmiennej środowiskowej
 const API_URL = import.meta.env.VITE_API_URL;
 
 export async function login(email, password) {

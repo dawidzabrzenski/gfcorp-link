@@ -5,6 +5,7 @@ import {
   ReceiptRounded as Receipt,
   AccountBoxRounded as Client,
   PeopleAltRounded as Users,
+  CategoryRounded as Products,
 } from "@mui/icons-material";
 import NavItem from "./NavItem";
 import Spinner from "./Loaders/Spinner";
@@ -27,6 +28,12 @@ function MainNav() {
       path: "/erp/invoices",
       icon: <Receipt fontSize="small" />,
       requiredPermission: "erp/invoices",
+    },
+    {
+      name: "Produkty",
+      path: "/erp/products",
+      icon: <Products fontSize="small" />,
+      requiredPermission: "erp/products",
     },
   ];
 

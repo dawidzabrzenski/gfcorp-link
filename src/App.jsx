@@ -14,6 +14,7 @@ const Clients = lazy(() => import("./pages/Clients"));
 const Users = lazy(() => import("./pages/Users"));
 const NoAccess = lazy(() => import("./pages/NoAccess"));
 const NotFound = lazy(() => import("./pages/NotFound"));
+const Products = lazy(() => import("./pages/Products"));
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -48,6 +49,7 @@ function App() {
                 <Route index element={<Navigate replace to="dashboard" />} />
                 <Route path="dashboard" element={<Dashboard />} />
                 <Route path="erp/clients" element={<Clients />} />
+                <Route path="erp/products" element={<Products />} />
                 <Route path="users" element={<Users />} />
               </Route>
               <Route path="login" element={<Login />} />
