@@ -28,7 +28,7 @@ export default function Table({ data, columnsSchema, noWrap }) {
     },
     initialState: {
       pagination: {
-        pageSize: 25,
+        pageSize: 100,
       },
     },
     onGlobalFilterChange: setFilter,
@@ -36,14 +36,13 @@ export default function Table({ data, columnsSchema, noWrap }) {
 
   return (
     <div>
-      <div>
-        <p>Wyszukiwarka</p>
+      <div className="flex flex-col gap-4">
         <input
           type="text"
           placeholder="Wyszukaj"
           value={filter}
           onChange={(e) => setFilter(e.target.value)}
-          className="mb-2 cursor-pointer rounded border border-dark-mainborder bg-dark-mainbg p-2 transition-all duration-300 hover:border-dark-mainborderhover focus:outline-none"
+          className="mb-2 w-fit cursor-pointer rounded border border-dark-mainborder bg-dark-mainbg p-2 transition-all duration-300 hover:border-dark-mainborderhover focus:outline-none"
         />
       </div>
       <div>
