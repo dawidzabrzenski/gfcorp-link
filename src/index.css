@@ -41,6 +41,24 @@ input[type="checkbox"]:checked {
   background-position: center;
 }
 
+::-webkit-scrollbar {
+  width: 10px;
+  height: 14px;
+}
+
+::-webkit-scrollbar-track {
+  background: #ffffff00;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #212732;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #1a212c;
+}
+
 .loader {
   height: 30px;
   aspect-ratio: 2.5;
