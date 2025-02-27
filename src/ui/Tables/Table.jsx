@@ -9,7 +9,7 @@ import {
 } from "@tanstack/react-table";
 import TablePaginationButton from "./TablePaginationButton";
 
-export default function Table({ data, columnsSchema }) {
+export default function Table({ data, columnsSchema, noWrap }) {
   const [filter, setFilter] = useState("");
 
   // const data = useMemo(() => usersData, [usersData]);
@@ -26,27 +26,35 @@ export default function Table({ data, columnsSchema }) {
     state: {
       globalFilter: filter,
     },
+    initialState: {
+      pagination: {
+        pageSize: 25,
+      },
+    },
     onGlobalFilterChange: setFilter,
   });
 
   return (
     <div>
-      <input
-        type="text"
-        placeholder="Wyszukaj"
-        value={filter}
-        onChange={(e) => setFilter(e.target.value)}
-        className="mb-2 cursor-pointer rounded border border-dark-mainborder bg-dark-mainbg p-2 transition-all duration-300 hover:border-dark-mainborderhover focus:outline-none"
-      />
-      <div className="overflow-x-scroll">
-        <table className="w-full border-collapse">
+      <div>
+        <p>Wyszukiwarka</p>
+        <input
+          type="text"
+          placeholder="Wyszukaj"
+          value={filter}
+          onChange={(e) => setFilter(e.target.value)}
+          className="mb-2 cursor-pointer rounded border border-dark-mainborder bg-dark-mainbg p-2 transition-all duration-300 hover:border-dark-mainborderhover focus:outline-none"
+        />
+      </div>
+      <div>
+        <table className="border-collapse">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>
                 {headerGroup.headers.map((header) => (
                   <th
                     key={header.id}
-                    className="cursor-pointer border border-dark-mainborder bg-dark-mainbg p-2 font-bold transition-all duration-200 hover:bg-dark-lightbg"
+                    className={`${noWrap ? "whitespace-nowrap" : ""} cursor-pointer border border-dark-mainborder bg-dark-mainbg p-2 font-bold transition-all duration-200 hover:bg-dark-lightbg`}
                     onClick={header.column.getToggleSortingHandler()}
                   >
                     {flexRender(
@@ -68,9 +76,13 @@ export default function Table({ data, columnsSchema }) {
                 {row.getVisibleCells().map((cell) => (
                   <td
                     key={cell.id}
-                    className="border border-dark-mainborder p-2 transition-all duration-200 hover:bg-dark-lightbg"
+                    className={`${noWrap ? "whitespace-nowrap" : ""} border border-dark-mainborder p-2 transition-all duration-200 hover:bg-dark-lightbg`}
                   >
-                    {flexRender(cell.column.columnDef.cell, cell.getContext())}
+                    {!cell.getValue() ? (
+                      <p className="text-dark-notactive">brak</p>
+                    ) : (
+                      flexRender(cell.column.columnDef.cell, cell.getContext())
+                    )}
                   </td>
                 ))}
               </tr>

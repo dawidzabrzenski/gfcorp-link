@@ -9,7 +9,7 @@ function AppLayout() {
     <div className="grid h-screen grid-cols-[20rem_1fr] overflow-hidden bg-dark-darkbg text-dark-main">
       <Sidebar />
       <main
-        className={`min-h-full ${location.pathname === "/no-access" ? "bg-gradient-dark" : ""} px-12 py-12`}
+        className={`min-h-full overflow-auto ${location.pathname === "/no-access" ? "bg-gradient-dark" : ""} px-12 py-12`}
       >
         <Outlet />
       </main>
