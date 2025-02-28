@@ -1,19 +1,19 @@
 import { useQuery } from "@tanstack/react-query";
+import { useMemo } from "react";
 import {
   getProducts,
   getProductsPrices,
   getProductsQuantities,
 } from "../../services/apiProducts";
-import { useMemo } from "react";
 
-export function useProductsData() {
+export function useProductsData(page = 1) {
   const {
     data: productsData,
     error: productsError,
     isPending: productsLoading,
   } = useQuery({
-    queryKey: ["productsData"],
-    queryFn: getProducts,
+    queryKey: ["productsData", page],
+    queryFn: () => getProducts(page),
   });
 
   const productIds = useMemo(() => {
@@ -43,26 +43,29 @@ export function useProductsData() {
   });
 
   const combinedData = useMemo(() => {
-    if (!productsData || !pricesData || !quantitiesData) return null;
+    if (!productsData) return [];
     return productsData.map((product) => ({
       ...product,
-      price: pricesData[product.twr_GIDNumer] || "N/A",
-      quantity: quantitiesData[product.twr_GIDNumer] || {
-        twr_IloscSell: 0,
-        twr_IloscMag: 0,
-        twr_IloscRez: 0,
-      },
+      price: pricesData ? pricesData[product.twr_GIDNumer] || "N/A" : "loading",
+      quantity: quantitiesData
+        ? quantitiesData[product.twr_GIDNumer] || {
+            twr_IloscSell: 0,
+            twr_IloscMag: 0,
+            twr_IloscRez: 0,
+          }
+        : {
+            twr_IloscSell: "loading",
+            twr_IloscMag: "loading",
+            twr_IloscRez: "loading",
+          },
     }));
   }, [productsData, pricesData, quantitiesData]);
 
-  console.log("Products:", productsData);
-  console.log("Prices:", pricesData);
-  console.log("Quantities:", quantitiesData);
-  console.log("Combined:", combinedData);
-
   return {
     productsData: combinedData,
-    isLoading: productsLoading || pricesLoading || quantitiesLoading,
+    isLoading: productsLoading,
+    pricesLoading,
+    quantitiesLoading,
     error: productsError || pricesError || quantitiesError,
   };
 }

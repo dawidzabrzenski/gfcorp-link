@@ -2,35 +2,29 @@ import React, { useMemo, useState } from "react";
 import {
   useReactTable,
   getCoreRowModel,
-  getPaginationRowModel,
   getSortedRowModel,
   getFilteredRowModel,
   flexRender,
 } from "@tanstack/react-table";
+import Skeleton from "react-loading-skeleton";
+
 import TablePaginationButton from "./TablePaginationButton";
 
-export default function Table({ data, columnsSchema, noWrap }) {
+export default function Table({ data, columnsSchema, noWrap, page, setPage }) {
   const [filter, setFilter] = useState("");
 
-  // const data = useMemo(() => usersData, [usersData]);
-
-  const columns = useMemo(() => columnsSchema, []);
+  const columns = useMemo(() => columnsSchema, [columnsSchema]);
 
   const table = useReactTable({
     data,
     columns,
     getCoreRowModel: getCoreRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       globalFilter: filter,
     },
-    initialState: {
-      pagination: {
-        pageSize: 100,
-      },
-    },
+    manualPagination: true,
     onGlobalFilterChange: setFilter,
   });
 
@@ -79,9 +73,11 @@ export default function Table({ data, columnsSchema, noWrap }) {
                       key={cell.id}
                       className={`${noWrap ? "whitespace-nowrap" : ""} border border-dark-mainborder p-2 transition-all duration-200 hover:bg-dark-lightbg`}
                     >
-                      {cellValue === null ||
-                      cellValue === undefined ||
-                      cellValue === "" ? (
+                      {cellValue === "loading" ? (
+                        <Skeleton count={1} width="80%" height={17} />
+                      ) : cellValue === null ||
+                        cellValue === undefined ||
+                        cellValue === "" ? (
                         <p className="text-dark-notactive">brak</p>
                       ) : (
                         flexRender(
@@ -99,18 +95,15 @@ export default function Table({ data, columnsSchema, noWrap }) {
       </div>
       <div className="mt-2">
         <TablePaginationButton
-          handleClick={() => table.previousPage()}
-          handleDisabled={!table.getCanPreviousPage()}
+          handleClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+          handleDisabled={page === 1}
         >
           ←
         </TablePaginationButton>
-        <span className="px-2">
-          Strona {table.getState().pagination.pageIndex + 1}
-        </span>
-
+        <span className="px-2">Strona {page}</span>
         <TablePaginationButton
-          handleClick={() => table.nextPage()}
-          handleDisabled={!table.getCanNextPage()}
+          handleClick={() => setPage((prev) => prev + 1)}
+          handleDisabled={data.length < 50}
         >
           →
         </TablePaginationButton>

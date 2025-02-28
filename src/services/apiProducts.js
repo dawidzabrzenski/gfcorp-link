@@ -4,10 +4,10 @@ import { calculateNetPrice } from "../utils/helpers";
 const ERP_API_TOKEN = import.meta.env.VITE_ERP_API_TOKEN;
 const ERP_API_URL = import.meta.env.VITE_ERP_API_URL;
 
-export async function getProducts() {
+export async function getProducts(page = 1) {
   try {
     const res = await axios.get(
-      `http://${ERP_API_URL}/Product/GetAll?page=740&limit=50`,
+      `http://${ERP_API_URL}/Product/GetAll?page=${page}&limit=50&typy=1`,
       {
         headers: {
           Authorization: `Bearer ${ERP_API_TOKEN}`,

@@ -1,8 +1,11 @@
+import { useState } from "react";
 import { useProductsData } from "../../features/products/useProductsData";
 import Table from "./Table";
+import Spinner from "../Loaders/Spinner";
 
 function ProductsTable() {
-  const { productsData } = useProductsData();
+  const [page, setPage] = useState(1);
+  const { productsData, isLoading } = useProductsData(page);
 
   const columns = [
     { accessorKey: "twr_Ean", header: "EAN" },
@@ -33,7 +36,21 @@ function ProductsTable() {
   ];
 
   return (
-    <Table data={productsData || []} columnsSchema={columns} noWrap={true} />
+    <div>
+      {isLoading ? (
+        <div className="flex justify-center">
+          <Spinner />
+        </div>
+      ) : (
+        <Table
+          data={productsData || []}
+          columnsSchema={columns}
+          noWrap={true}
+          page={page}
+          setPage={setPage}
+        />
+      )}
+    </div>
   );
 }
 
