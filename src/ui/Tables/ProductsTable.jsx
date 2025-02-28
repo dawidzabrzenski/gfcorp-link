@@ -1,57 +1,40 @@
-import { useProductQuantity } from "../../features/products/useProductQuantity";
-import { useProducts } from "../../features/products/useProducts";
-import { getQuantity } from "../../services/apiProducts";
-import PriceCell from "./PriceCell";
-import QuantityCell from "./QuantityCell";
+import { useProductsData } from "../../features/products/useProductsData";
 import Table from "./Table";
 
-function UserTable() {
-  const { productsData } = useProducts();
+function ProductsTable() {
+  const { productsData } = useProductsData();
 
   const columns = [
     { accessorKey: "twr_Ean", header: "EAN" },
     { accessorKey: "twr_Katalog", header: "Symbol IAI" },
     { accessorKey: "twr_Kod", header: "Kod" },
     { accessorKey: "twr_Nazwa", header: "Nazwa" },
-    // {
-    //   accessorKey: "twr_GIDNumer",
-    //   header: "Cena",
-    //   cell: ({ row }) => <PriceCell id={row.original.twr_GIDNumer} />,
-    // },
     {
-      accessorKey: "twr_GIDNumer",
+      accessorKey: "price",
+      header: "Cena",
+      cell: ({ getValue }) => <div>{getValue()}</div>,
+    },
+    {
+      accessorKey: "quantity.twr_IloscSell",
       header: "Ilość do sprzedaży",
-      cell: ({ row }) => (
-        <QuantityCell
-          id={row.original.twr_GIDNumer}
-          quantityType="twr_IloscSell"
-        />
-      ),
+      cell: ({ getValue }) => <div>{getValue()}</div>,
     },
     {
-      accessorKey: "twr_GIDNumer",
+      accessorKey: "quantity.twr_IloscMag",
       header: "Ilość magazynowa",
-      cell: ({ row }) => (
-        <QuantityCell
-          id={row.original.twr_GIDNumer}
-          quantityType="twr_IloscMag"
-        />
-      ),
+      cell: ({ getValue }) => <div>{getValue()}</div>,
     },
     {
-      accessorKey: "twr_GIDNumer",
+      accessorKey: "quantity.twr_IloscRez",
       header: "Ilość rezerwacji",
-      cell: ({ row }) => (
-        <QuantityCell
-          id={row.original.twr_GIDNumer}
-          quantityType="twr_IloscRez"
-        />
-      ),
+      cell: ({ getValue }) => <div>{getValue()}</div>,
     },
     { accessorKey: "twr_kraj", header: "Kraj Pochodzenia" },
   ];
 
-  return <Table data={productsData} columnsSchema={columns} noWrap={true} />;
+  return (
+    <Table data={productsData || []} columnsSchema={columns} noWrap={true} />
+  );
 }
 
-export default UserTable;
+export default ProductsTable;

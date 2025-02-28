@@ -72,18 +72,26 @@ export default function Table({ data, columnsSchema, noWrap }) {
           <tbody>
             {table.getRowModel().rows.map((row) => (
               <tr key={row.id}>
-                {row.getVisibleCells().map((cell) => (
-                  <td
-                    key={cell.id}
-                    className={`${noWrap ? "whitespace-nowrap" : ""} border border-dark-mainborder p-2 transition-all duration-200 hover:bg-dark-lightbg`}
-                  >
-                    {!cell.getValue() ? (
-                      <p className="text-dark-notactive">brak</p>
-                    ) : (
-                      flexRender(cell.column.columnDef.cell, cell.getContext())
-                    )}
-                  </td>
-                ))}
+                {row.getVisibleCells().map((cell) => {
+                  const cellValue = cell.getValue();
+                  return (
+                    <td
+                      key={cell.id}
+                      className={`${noWrap ? "whitespace-nowrap" : ""} border border-dark-mainborder p-2 transition-all duration-200 hover:bg-dark-lightbg`}
+                    >
+                      {cellValue === null ||
+                      cellValue === undefined ||
+                      cellValue === "" ? (
+                        <p className="text-dark-notactive">brak</p>
+                      ) : (
+                        flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )
+                      )}
+                    </td>
+                  );
+                })}
               </tr>
             ))}
           </tbody>
