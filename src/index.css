@@ -51,12 +51,12 @@ input[type="checkbox"]:checked {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #212732;
+  background: #3c455a;
   border-radius: 10px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #1a212c;
+  background: #566481;
 }
 
 .loader {

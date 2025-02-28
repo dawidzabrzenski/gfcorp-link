@@ -76,7 +76,7 @@ export async function getProductsQuantities(productIds) {
 
   try {
     const quantityMap = {};
-    const chunkSize = 10;
+    const chunkSize = 25;
     const chunks = [];
     for (let i = 0; i < productIds.length; i += chunkSize) {
       chunks.push(productIds.slice(i, i + chunkSize));
