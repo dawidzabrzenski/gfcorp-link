@@ -70,14 +70,20 @@ export default function Table({ data, columnsSchema, noWrap, page, setPage }) {
                   const cellValue = cell.getValue();
                   return (
                     <td
+                      onClick={() =>
+                        console.log(
+                          flexRender(
+                            cell.column.columnDef.cell,
+                            cell.getContext(),
+                          ),
+                        )
+                      }
                       key={cell.id}
                       className={`${noWrap ? "whitespace-nowrap" : ""} border border-dark-mainborder p-2 transition-all duration-200 hover:bg-dark-lightbg`}
                     >
                       {cellValue === "loading" ? (
                         <Skeleton count={1} width="80%" height={17} />
-                      ) : cellValue === null ||
-                        cellValue === undefined ||
-                        cellValue === "" ? (
+                      ) : cellValue === null || cellValue === "" ? (
                         <p className="text-dark-notactive">brak</p>
                       ) : (
                         flexRender(
