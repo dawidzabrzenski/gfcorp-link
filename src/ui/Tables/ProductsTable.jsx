@@ -11,6 +11,18 @@ function ProductsTable() {
   const [debouncedProdName, setDebouncedProdName] = useState(prodName);
   const [debouncedProdCode, setDebouncedProdCode] = useState(prodCode);
 
+  const [columnVisibility, setColumnVisibility] = useState(() => ({
+    twr_Ean: true,
+    twr_Katalog: true,
+    twr_Kod: true,
+    twr_Nazwa: true,
+    price: true,
+    twr_IloscSell: true,
+    twr_IloscMag: true,
+    twr_IloscRez: true,
+    twr_kraj: true,
+  }));
+
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedProdName(prodName);
@@ -34,6 +46,7 @@ function ProductsTable() {
     debouncedProdName,
     debouncedProdCode,
     dataPerPage,
+    columnVisibility,
   );
 
   const columns = [
@@ -44,26 +57,28 @@ function ProductsTable() {
     {
       accessorKey: "price",
       header: "Cena",
-      cell: ({ getValue }) => <div>{getValue()}</div>,
+      cell: ({ getValue }) => <div>{getValue() || "brak"}</div>,
     },
     {
-      accessorKey: "quantity.twr_IloscSell",
+      accessorKey: "twr_IloscSell",
       header: "Ilość do sprzedaży",
+      accessorFn: (row) => row?.quantity?.twr_IloscSell ?? 0,
       cell: ({ getValue }) => <div>{getValue()}</div>,
     },
     {
-      accessorKey: "quantity.twr_IloscMag",
+      accessorKey: "twr_IloscMag",
       header: "Ilość magazynowa",
+      accessorFn: (row) => row?.quantity?.twr_IloscMag ?? 0,
       cell: ({ getValue }) => <div>{getValue()}</div>,
     },
     {
-      accessorKey: "quantity.twr_IloscRez",
+      accessorKey: "twr_IloscRez",
       header: "Ilość rezerwacji",
+      accessorFn: (row) => row?.quantity?.twr_IloscRez ?? 0,
       cell: ({ getValue }) => <div>{getValue()}</div>,
     },
     { accessorKey: "twr_kraj", header: "Kraj Pochodzenia" },
   ];
-
   return (
     <div>
       {isLoading ? (
@@ -83,6 +98,8 @@ function ProductsTable() {
           prodName={prodName}
           handleProdCode={setProdCode}
           handleProdName={setProdName}
+          columnVisibility={columnVisibility}
+          setColumnVisibility={setColumnVisibility}
         />
       )}
     </div>

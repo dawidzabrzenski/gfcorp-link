@@ -23,6 +23,8 @@ export default function Table({
   prodCode = "",
   handleProdName,
   handleProdCode,
+  columnVisibility,
+  setColumnVisibility,
 }) {
   const [filter, setFilter] = useState("");
 
@@ -36,7 +38,9 @@ export default function Table({
     getFilteredRowModel: getFilteredRowModel(),
     state: {
       globalFilter: filter,
+      columnVisibility,
     },
+    onColumnVisibilityChange: setColumnVisibility,
     autoResetPageIndex: true,
     manualPagination: true,
     onGlobalFilterChange: setFilter,
@@ -78,6 +82,29 @@ export default function Table({
             <option value={100}>100</option>
             <option value={200}>200</option>
           </select>
+          <div>
+            {columns.map((col) => (
+              <div key={col.accessorKey} className="flex items-center gap-2">
+                <input
+                  className={`${col.accessorKey === "twr_Ean" ? "hidden" : ""}`}
+                  type="checkbox"
+                  checked={columnVisibility[col.accessorKey] || false}
+                  disabled={col.accessorKey === "twr_Ean"}
+                  onChange={() =>
+                    setColumnVisibility((prev) => ({
+                      ...prev,
+                      [col.accessorKey]: !prev[col.accessorKey],
+                    }))
+                  }
+                />
+                <label
+                  className={`${col.accessorKey === "twr_Ean" ? "hidden" : ""}`}
+                >
+                  {col.header}
+                </label>
+              </div>
+            ))}
+          </div>
         </div>
       </div>
       <div>
@@ -111,14 +138,6 @@ export default function Table({
                   const cellValue = cell.getValue();
                   return (
                     <td
-                      onClick={() =>
-                        console.log(
-                          flexRender(
-                            cell.column.columnDef.cell,
-                            cell.getContext(),
-                          ),
-                        )
-                      }
                       key={cell.id}
                       className={`${noWrap ? "whitespace-nowrap" : ""} border border-dark-mainborder p-2 transition-all duration-200 hover:bg-dark-lightbg`}
                     >

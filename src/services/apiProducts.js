@@ -9,6 +9,7 @@ export async function getProducts(
   prodName,
   prodCode,
   dataPerPage = 50,
+  columnVisibility,
 ) {
   const API_URL =
     !prodName && !prodCode
@@ -26,14 +27,20 @@ export async function getProducts(
       },
     });
 
-    const filteredResults = res.data.map((el) => ({
-      twr_Ean: el.twr_Ean,
-      twr_Katalog: el.twr_Katalog,
-      twr_Kod: el.twr_Kod,
-      twr_Nazwa: el.twr_Nazwa,
-      twr_kraj: el.twr_kraj,
-      twr_GIDNumer: el.twr_GIDNumer,
-    }));
+    const filteredResults = res.data
+      .filter((el) => el && typeof el === "object")
+      .map((el) => {
+        const filteredItem = Object.keys(el)
+          .filter((key) => columnVisibility?.[key])
+          .reduce((acc, key) => {
+            acc[key] = el[key];
+            return acc;
+          }, {});
+
+        filteredItem.twr_GIDNumer = el?.twr_GIDNumer ?? "N/A";
+
+        return filteredItem;
+      });
 
     return filteredResults;
   } catch (err) {
@@ -42,7 +49,7 @@ export async function getProducts(
   }
 }
 
-export async function getProductsPrices(productIds) {
+export async function getProductsPrices(productIds, columnVisibility) {
   if (!productIds || productIds.length === 0) return {};
 
   try {
