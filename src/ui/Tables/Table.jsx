@@ -24,6 +24,7 @@ export default function Table({ data, columnsSchema, noWrap, page, setPage }) {
     state: {
       globalFilter: filter,
     },
+    autoResetPageIndex: true,
     manualPagination: true,
     onGlobalFilterChange: setFilter,
   });
@@ -99,20 +100,29 @@ export default function Table({ data, columnsSchema, noWrap, page, setPage }) {
           </tbody>
         </table>
       </div>
-      <div className="mt-2">
-        <TablePaginationButton
-          handleClick={() => setPage((prev) => Math.max(prev - 1, 1))}
-          handleDisabled={page === 1}
-        >
-          ←
-        </TablePaginationButton>
-        <span className="px-2">Strona {page}</span>
-        <TablePaginationButton
-          handleClick={() => setPage((prev) => prev + 1)}
-          handleDisabled={data.length < 50}
-        >
-          →
-        </TablePaginationButton>
+      <div className="flex gap-6">
+        <div className="mt-2">
+          <TablePaginationButton
+            handleClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            handleDisabled={page === 1}
+          >
+            ←
+          </TablePaginationButton>
+          <span className="px-2">Strona {page}</span>
+          <TablePaginationButton
+            handleClick={() => setPage((prev) => prev + 1)}
+            handleDisabled={data.length < 50}
+          >
+            →
+          </TablePaginationButton>
+          {page > 1 && (
+            <span className="px-2">
+              <TablePaginationButton handleClick={() => setPage(1)}>
+                Powrót do pierwszej strony
+              </TablePaginationButton>
+            </span>
+          )}
+        </div>
       </div>
     </div>
   );
