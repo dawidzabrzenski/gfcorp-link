@@ -10,6 +10,7 @@ import Skeleton from "react-loading-skeleton";
 
 import SearchInput from "./SearchInput";
 import TablePaginationButton from "./TablePaginationButton";
+import Button from "../Button";
 
 export default function Table({
   data,
@@ -82,30 +83,33 @@ export default function Table({
             <option value={100}>100</option>
             <option value={200}>200</option>
           </select>
-          <div>
-            {columns.map((col) => (
-              <div key={col.accessorKey} className="flex items-center gap-2">
-                <input
-                  className={`${col.accessorKey === "twr_Ean" ? "hidden" : ""}`}
-                  type="checkbox"
-                  checked={columnVisibility[col.accessorKey] || false}
-                  disabled={col.accessorKey === "twr_Ean"}
-                  onChange={() =>
-                    setColumnVisibility((prev) => ({
-                      ...prev,
-                      [col.accessorKey]: !prev[col.accessorKey],
-                    }))
-                  }
-                />
-                <label
-                  className={`${col.accessorKey === "twr_Ean" ? "hidden" : ""}`}
-                >
-                  {col.header}
-                </label>
-              </div>
-            ))}
-          </div>
         </div>
+        <button className="outline-blue h-fit cursor-pointer rounded border border-dark-mainborder bg-dark-darkbg p-2 transition-all duration-300 hover:border-dark-mainborderhover">
+          Filtr
+        </button>
+        {/* <div>
+          {columns.map((col) => (
+            <div key={col.accessorKey} className="flex items-center gap-2">
+              <input
+                className={`${col.accessorKey === "twr_Ean" ? "hidden" : ""}`}
+                type="checkbox"
+                checked={columnVisibility[col.accessorKey] || false}
+                disabled={col.accessorKey === "twr_Ean"}
+                onChange={() =>
+                  setColumnVisibility((prev) => ({
+                    ...prev,
+                    [col.accessorKey]: !prev[col.accessorKey],
+                  }))
+                }
+              />
+              <label
+                className={`${col.accessorKey === "twr_Ean" ? "hidden" : ""}`}
+              >
+                {col.header}
+              </label>
+            </div>
+          ))}
+        </div> */}
       </div>
       <div>
         <table className="border-collapse">
