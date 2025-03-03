@@ -4,16 +4,22 @@ import { calculateNetPrice } from "../utils/helpers";
 const ERP_API_TOKEN = import.meta.env.VITE_ERP_API_TOKEN;
 const ERP_API_URL = import.meta.env.VITE_ERP_API_URL;
 
-export async function getProducts(page = 1) {
+export async function getProducts(page = 1, prodName, prodCode) {
+  const API_URL =
+    !prodName && !prodCode
+      ? `${ERP_API_URL}/Product/GetAll?page=${page}&limit=100&typy=1`
+      : `${ERP_API_URL}/Product/GetAll?page=${page}&limit=100` +
+        (prodCode ? `&kodLike=${prodCode}` : "") +
+        (prodName ? `&nazwaLike=${prodName}` : "");
+
+  console.log(API_URL);
+
   try {
-    const res = await axios.get(
-      `http://${ERP_API_URL}/Product/GetAll?page=${page}&limit=50&typy=1`,
-      {
-        headers: {
-          Authorization: `Bearer ${ERP_API_TOKEN}`,
-        },
+    const res = await axios.get(`http://${API_URL}`, {
+      headers: {
+        Authorization: `Bearer ${ERP_API_TOKEN}`,
       },
-    );
+    });
 
     const filteredResults = res.data.map((el) => ({
       twr_Ean: el.twr_Ean,

@@ -1,11 +1,40 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useProductsData } from "../../features/products/useProductsData";
 import Table from "./Table";
 import Spinner from "../Loaders/Spinner";
 
 function ProductsTable() {
   const [page, setPage] = useState(1);
-  const { productsData, isLoading } = useProductsData(page);
+  const [prodName, setProdName] = useState(""); // Immediate input value
+  const [prodCode, setProdCode] = useState(""); // Immediate input value
+  const [debouncedProdName, setDebouncedProdName] = useState(prodName); // Delayed value
+  const [debouncedProdCode, setDebouncedProdCode] = useState(prodCode); // Delayed value
+
+  // Debounce prodName
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedProdName(prodName);
+    }, 700);
+    return () => clearTimeout(timer);
+  }, [prodName]);
+
+  // Debounce prodCode
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedProdCode(prodCode);
+    }, 700);
+    return () => clearTimeout(timer);
+  }, [prodCode]);
+
+  useEffect(() => {
+    setPage(1);
+  }, [debouncedProdName, debouncedProdCode]);
+
+  const { productsData, isLoading } = useProductsData(
+    page,
+    debouncedProdName,
+    debouncedProdCode,
+  );
 
   const columns = [
     { accessorKey: "twr_Ean", header: "EAN" },
@@ -48,6 +77,10 @@ function ProductsTable() {
           noWrap={true}
           page={page}
           setPage={setPage}
+          prodCode={prodCode}
+          prodName={prodName}
+          handleProdCode={setProdCode}
+          handleProdName={setProdName}
         />
       )}
     </div>

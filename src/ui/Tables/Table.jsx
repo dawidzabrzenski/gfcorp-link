@@ -7,10 +7,21 @@ import {
   flexRender,
 } from "@tanstack/react-table";
 import Skeleton from "react-loading-skeleton";
+import { CloseRounded } from "@mui/icons-material";
 
 import TablePaginationButton from "./TablePaginationButton";
 
-export default function Table({ data, columnsSchema, noWrap, page, setPage }) {
+export default function Table({
+  data,
+  columnsSchema,
+  noWrap,
+  page,
+  setPage,
+  prodName = "",
+  prodCode = "",
+  handleProdName,
+  handleProdCode,
+}) {
   const [filter, setFilter] = useState("");
 
   const columns = useMemo(() => columnsSchema, [columnsSchema]);
@@ -31,14 +42,67 @@ export default function Table({ data, columnsSchema, noWrap, page, setPage }) {
 
   return (
     <div>
-      <div className="flex flex-col gap-4">
-        <input
-          type="text"
-          placeholder="Wyszukaj"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-          className="mb-2 w-fit cursor-pointer rounded border border-dark-mainborder bg-dark-mainbg p-2 transition-all duration-300 hover:border-dark-mainborderhover focus:outline-none"
-        />
+      <div className="mb-2 flex gap-2 rounded-lg border border-dark-mainborder bg-dark-mainbg p-4">
+        <div className="flex flex-col gap-2">
+          <p className="text-xl font-semibold">Szukaj po nazwie</p>
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              placeholder="Część nazwy np. AK74..."
+              className="mb-2 w-fit cursor-pointer rounded border border-dark-mainborder bg-dark-darkbg p-2 transition-all duration-300 hover:border-dark-mainborderhover focus:outline-none"
+              value={prodName}
+              onChange={(e) => handleProdName(e.target.value)}
+            />
+            {prodName && (
+              <button
+                onClick={() => handleProdName("")}
+                className="h-fit cursor-pointer rounded-lg border border-dark-mainborder px-2 py-1 text-red-600 transition-all duration-300 hover:border-dark-mainborderhover hover:text-red-500"
+              >
+                &#10005;
+              </button>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <p className="text-xl font-semibold">Szukaj po kodzie</p>
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              placeholder="Część kodu np. JGW-03..."
+              className="mb-2 w-fit cursor-pointer rounded border border-dark-mainborder bg-dark-darkbg p-2 transition-all duration-300 hover:border-dark-mainborderhover focus:outline-none"
+              value={prodCode}
+              onChange={(e) => handleProdCode(e.target.value)}
+            />
+            {prodCode && (
+              <button
+                onClick={() => handleProdCode("")}
+                className="h-fit cursor-pointer rounded-lg border border-dark-mainborder px-2 py-1 text-red-600 transition-all duration-300 hover:border-dark-mainborderhover hover:text-red-500"
+              >
+                &#10005;
+              </button>
+            )}
+          </div>
+        </div>
+        <div className="flex flex-col gap-2">
+          <p className="text-xl font-semibold">Filtruj wyniki poniżej</p>
+          <div className="flex items-center gap-2">
+            <input
+              type="text"
+              placeholder="Filtr (EAN, cena, kod)"
+              value={filter}
+              onChange={(e) => setFilter(e.target.value)}
+              className="mb-2 w-fit cursor-pointer rounded border border-dark-mainborder bg-dark-darkbg p-2 transition-all duration-300 hover:border-dark-mainborderhover focus:outline-none"
+            />
+            {filter && (
+              <button
+                onClick={() => setFilter("")}
+                className="h-fit cursor-pointer rounded-lg border border-dark-mainborder px-2 py-1 text-red-600 transition-all duration-300 hover:border-dark-mainborderhover hover:text-red-500"
+              >
+                &#10005;
+              </button>
+            )}
+          </div>
+        </div>
       </div>
       <div>
         <table className="border-collapse">
