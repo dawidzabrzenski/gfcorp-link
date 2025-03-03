@@ -4,11 +4,16 @@ import { calculateNetPrice } from "../utils/helpers";
 const ERP_API_TOKEN = import.meta.env.VITE_ERP_API_TOKEN;
 const ERP_API_URL = import.meta.env.VITE_ERP_API_URL;
 
-export async function getProducts(page = 1, prodName, prodCode) {
+export async function getProducts(
+  page = 1,
+  prodName,
+  prodCode,
+  dataPerPage = 50,
+) {
   const API_URL =
     !prodName && !prodCode
-      ? `${ERP_API_URL}/Product/GetAll?page=${page}&limit=100&typy=1`
-      : `${ERP_API_URL}/Product/GetAll?page=${page}&limit=100` +
+      ? `${ERP_API_URL}/Product/GetAll?page=${page}&limit=${dataPerPage}&typy=1`
+      : `${ERP_API_URL}/Product/GetAll?page=${page}&limit=${dataPerPage}&typy=1` +
         (prodCode ? `&kodLike=${prodCode}` : "") +
         (prodName ? `&nazwaLike=${prodName}` : "");
 

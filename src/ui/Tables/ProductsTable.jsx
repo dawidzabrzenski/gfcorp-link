@@ -5,12 +5,12 @@ import Spinner from "../Loaders/Spinner";
 
 function ProductsTable() {
   const [page, setPage] = useState(1);
-  const [prodName, setProdName] = useState(""); // Immediate input value
-  const [prodCode, setProdCode] = useState(""); // Immediate input value
-  const [debouncedProdName, setDebouncedProdName] = useState(prodName); // Delayed value
-  const [debouncedProdCode, setDebouncedProdCode] = useState(prodCode); // Delayed value
+  const [dataPerPage, setDataPerPage] = useState(50);
+  const [prodName, setProdName] = useState("");
+  const [prodCode, setProdCode] = useState("");
+  const [debouncedProdName, setDebouncedProdName] = useState(prodName);
+  const [debouncedProdCode, setDebouncedProdCode] = useState(prodCode);
 
-  // Debounce prodName
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedProdName(prodName);
@@ -18,7 +18,6 @@ function ProductsTable() {
     return () => clearTimeout(timer);
   }, [prodName]);
 
-  // Debounce prodCode
   useEffect(() => {
     const timer = setTimeout(() => {
       setDebouncedProdCode(prodCode);
@@ -34,6 +33,7 @@ function ProductsTable() {
     page,
     debouncedProdName,
     debouncedProdCode,
+    dataPerPage,
   );
 
   const columns = [
@@ -73,6 +73,8 @@ function ProductsTable() {
       ) : (
         <Table
           data={productsData || []}
+          dataPerPage={dataPerPage}
+          handleDataPerPage={setDataPerPage}
           columnsSchema={columns}
           noWrap={true}
           page={page}

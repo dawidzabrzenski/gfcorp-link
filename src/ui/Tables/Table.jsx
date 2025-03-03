@@ -13,6 +13,8 @@ import TablePaginationButton from "./TablePaginationButton";
 
 export default function Table({
   data,
+  dataPerPage,
+  handleDataPerPage,
   columnsSchema,
   noWrap,
   page,
@@ -64,6 +66,19 @@ export default function Table({
           onChange={setFilter}
           onClear={() => setFilter("")}
         />
+        <div className="flex flex-col gap-2">
+          <p className="text-xl font-semibold">Ilość wyników na stronę</p>
+          <select
+            value={dataPerPage}
+            onChange={(e) => handleDataPerPage(e.target.value)}
+            className="outline-blue mb-2 cursor-pointer rounded border border-dark-mainborder bg-dark-darkbg p-2 transition-all duration-300 hover:border-dark-mainborderhover"
+          >
+            <option value={25}>25</option>
+            <option value={50}>50</option>
+            <option value={100}>100</option>
+            <option value={200}>200</option>
+          </select>
+        </div>
       </div>
       <div>
         <table className="border-collapse">

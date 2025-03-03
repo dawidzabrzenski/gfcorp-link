@@ -10,7 +10,7 @@ const SearchInput = ({ label, placeholder, value, onChange, onClear }) => {
           placeholder={placeholder}
           value={value}
           onChange={(e) => onChange(e.target.value)}
-          className="mb-2 w-fit cursor-pointer rounded border border-dark-mainborder bg-dark-darkbg p-2 transition-all duration-300 hover:border-dark-mainborderhover focus:outline-none"
+          className="outline-blue mb-2 w-fit cursor-pointer rounded border border-dark-mainborder bg-dark-darkbg p-2 transition-all duration-300 hover:border-dark-mainborderhover"
         />
         {value && (
           <button

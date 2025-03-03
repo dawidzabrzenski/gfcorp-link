@@ -6,14 +6,14 @@ import {
   getProductsQuantities,
 } from "../../services/apiProducts";
 
-export function useProductsData(page = 1, prodName, prodCode) {
+export function useProductsData(page = 1, prodName, prodCode, dataPerPage) {
   const {
     data: productsData,
     error: productsError,
     isPending: productsLoading,
   } = useQuery({
-    queryKey: ["productsData", page, prodName, prodCode],
-    queryFn: () => getProducts(page, prodName, prodCode),
+    queryKey: ["productsData", page, prodName, prodCode, dataPerPage],
+    queryFn: () => getProducts(page, prodName, prodCode, dataPerPage),
   });
 
   const productIds = useMemo(() => {
