@@ -12,7 +12,6 @@ const Login = lazy(() => import("./pages/Login"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Clients = lazy(() => import("./pages/Clients"));
 const Users = lazy(() => import("./pages/Users"));
-const NoAccess = lazy(() => import("./pages/NoAccess"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Products = lazy(() => import("./pages/Products"));
 

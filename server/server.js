@@ -16,7 +16,11 @@ app.use(express.json());
 // middleware cors - które domeny mają mieć dostep do API
 app.use(
   cors({
-    origin: "http://localhost:5173", // front url
+    origin: [
+      "http://localhost:5173",
+      "http://localhost:80",
+      "http://localhost",
+    ], // front url
     // origin: "*",
     credentials: true, // pozwól na przesyłanie danych headerami
   }),
@@ -200,6 +204,16 @@ app.post("/api/login", async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.post("/api/add-sample-data", async (req, res) => {
+  try {
+    await addSampleData();
+    res.status(200).json({ message: "Sample data added successfully!" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error adding sample data" });
   }
 });
 

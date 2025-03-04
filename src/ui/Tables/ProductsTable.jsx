@@ -1,15 +1,22 @@
 import { useState, useEffect } from "react";
+
 import { useProductsData } from "../../features/products/useProductsData";
+
 import Table from "./Table";
 import Spinner from "../Loaders/Spinner";
+import SearchInput from "./SearchInput";
+import DataPerPage from "./DataPerPage";
+import ColumnsFilter from "./ColumnsFilter";
 
 function ProductsTable() {
   const [page, setPage] = useState(1);
   const [dataPerPage, setDataPerPage] = useState(50);
+  const [filter, setFilter] = useState("");
   const [prodName, setProdName] = useState("");
   const [prodCode, setProdCode] = useState("");
   const [debouncedProdName, setDebouncedProdName] = useState(prodName);
   const [debouncedProdCode, setDebouncedProdCode] = useState(prodCode);
+  const [columnsFilter, setColumnsFilter] = useState(false);
 
   const [columnVisibility, setColumnVisibility] = useState(() => ({
     twr_Ean: true,
@@ -86,21 +93,54 @@ function ProductsTable() {
           <Spinner />
         </div>
       ) : (
-        <Table
-          data={productsData || []}
-          dataPerPage={dataPerPage}
-          handleDataPerPage={setDataPerPage}
-          columnsSchema={columns}
-          noWrap={true}
-          page={page}
-          setPage={setPage}
-          prodCode={prodCode}
-          prodName={prodName}
-          handleProdCode={setProdCode}
-          handleProdName={setProdName}
-          columnVisibility={columnVisibility}
-          setColumnVisibility={setColumnVisibility}
-        />
+        <>
+          <div className="mb-2 flex items-end gap-2 rounded-lg border border-dark-mainborder bg-dark-mainbg p-4">
+            <SearchInput
+              label="Szukaj po nazwie"
+              placeholder="Część nazwy np. AK74..."
+              value={prodName}
+              onChange={setProdName}
+              onClear={() => setProdName("")}
+            />
+            <SearchInput
+              label="Szukaj po kodzie"
+              placeholder="Część kodu np. JGW-03..."
+              value={prodCode}
+              onChange={setProdCode}
+              onClear={() => setProdCode("")}
+            />
+            <SearchInput
+              label="Filtruj wyniki poniżej"
+              placeholder="Filtr (EAN, cena, kod)"
+              value={filter}
+              onChange={setFilter}
+              onClear={() => setFilter("")}
+            />
+            <DataPerPage
+              dataPerPage={dataPerPage}
+              setDataPerPage={setDataPerPage}
+            />
+            <ColumnsFilter
+              columns={columns}
+              columnsFilter={columnsFilter}
+              setColumnsFilter={setColumnsFilter}
+              columnVisibility={columnVisibility}
+              setColumnVisibility={setColumnVisibility}
+            />
+          </div>
+          <Table
+            data={productsData || []}
+            dataPerPage={dataPerPage}
+            columnsSchema={columns}
+            filter={filter}
+            setFilter={setFilter}
+            noWrap={true}
+            page={page}
+            setPage={setPage}
+            columnVisibility={columnVisibility}
+            setColumnVisibility={setColumnVisibility}
+          />
+        </>
       )}
     </div>
   );
