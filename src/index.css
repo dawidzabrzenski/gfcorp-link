@@ -23,6 +23,10 @@ input:-webkit-autofill:active {
   font-family: "Inter", sans-serif !important;
 }
 
+.border-rounded {
+  @apply rounded-lg border border-dark-mainborder transition-all duration-300;
+}
+
 .outline-blue {
   @apply outline-none outline-4 outline-offset-2 focus:border-dark-focusbord focus:outline focus:outline-dark-focus;
 }

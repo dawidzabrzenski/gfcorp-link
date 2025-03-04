@@ -6,7 +6,7 @@ function FormRow({ children, error }) {
           {error}
         </div>
       )}
-      <div className="text-dark-main relative flex flex-col gap-1">
+      <div className="relative flex flex-col gap-1 text-dark-main">
         {children}
       </div>
     </div>

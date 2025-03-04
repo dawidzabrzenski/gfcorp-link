@@ -10,7 +10,6 @@ import Skeleton from "react-loading-skeleton";
 
 import SearchInput from "./SearchInput";
 import TablePaginationButton from "./TablePaginationButton";
-import Button from "../Button";
 
 export default function Table({
   data,
@@ -28,6 +27,7 @@ export default function Table({
   setColumnVisibility,
 }) {
   const [filter, setFilter] = useState("");
+  const [columnsFilter, setColumnsFilter] = useState(false);
 
   const columns = useMemo(() => columnsSchema, [columnsSchema]);
 
@@ -49,7 +49,7 @@ export default function Table({
 
   return (
     <div>
-      <div className="mb-2 flex gap-2 rounded-lg border border-dark-mainborder bg-dark-mainbg p-4">
+      <div className="border-rounded mb-2 flex items-end gap-2 bg-dark-mainbg p-4">
         <SearchInput
           label="Szukaj po nazwie"
           placeholder="Część nazwy np. AK74..."
@@ -76,7 +76,7 @@ export default function Table({
           <select
             value={dataPerPage}
             onChange={(e) => handleDataPerPage(e.target.value)}
-            className="outline-blue mb-2 cursor-pointer rounded border border-dark-mainborder bg-dark-darkbg p-2 transition-all duration-300 hover:border-dark-mainborderhover"
+            className="outline-blue border-rounded cursor-pointer bg-dark-darkbg p-2 hover:border-dark-mainborderhover"
           >
             <option value={25}>25</option>
             <option value={50}>50</option>
@@ -84,32 +84,55 @@ export default function Table({
             <option value={200}>200</option>
           </select>
         </div>
-        <button className="outline-blue h-fit cursor-pointer rounded border border-dark-mainborder bg-dark-darkbg p-2 transition-all duration-300 hover:border-dark-mainborderhover">
-          Filtr
-        </button>
-        {/* <div>
-          {columns.map((col) => (
-            <div key={col.accessorKey} className="flex items-center gap-2">
-              <input
-                className={`${col.accessorKey === "twr_Ean" ? "hidden" : ""}`}
-                type="checkbox"
-                checked={columnVisibility[col.accessorKey] || false}
-                disabled={col.accessorKey === "twr_Ean"}
-                onChange={() =>
-                  setColumnVisibility((prev) => ({
-                    ...prev,
-                    [col.accessorKey]: !prev[col.accessorKey],
-                  }))
+        <button
+          onClick={() => setColumnsFilter((prev) => !prev)}
+          className="outline-blue border-rounded relative h-fit cursor-pointer bg-dark-darkbg p-2 hover:border-dark-mainborderhover"
+        >
+          Filtry
+          {columnsFilter && (
+            <div className="border-rounded absolute left-0 top-0 translate-x-1/3 whitespace-nowrap bg-dark-lightbg p-4">
+              {columns.map((col) => (
+                <div key={col.accessorKey} className="flex items-center gap-2">
+                  <input
+                    className={`${col.accessorKey === "twr_Ean" ? "hidden" : ""}`}
+                    type="checkbox"
+                    checked={columnVisibility[col.accessorKey] || false}
+                    disabled={col.accessorKey === "twr_Ean"}
+                    onChange={() =>
+                      setColumnVisibility((prev) => ({
+                        ...prev,
+                        [col.accessorKey]: !prev[col.accessorKey],
+                      }))
+                    }
+                  />
+                  <label
+                    className={`${col.accessorKey === "twr_Ean" ? "hidden" : ""}`}
+                  >
+                    {col.header}
+                  </label>
+                </div>
+              ))}
+              <button
+                onClick={() =>
+                  setColumnVisibility({
+                    twr_Ean: true,
+                    twr_Katalog: true,
+                    twr_Kod: true,
+                    twr_Nazwa: true,
+                    price: true,
+                    twr_IloscSell: true,
+                    twr_IloscMag: true,
+                    twr_IloscRez: true,
+                    twr_kraj: true,
+                  })
                 }
-              />
-              <label
-                className={`${col.accessorKey === "twr_Ean" ? "hidden" : ""}`}
+                className="border-rounded mt-2 bg-dark-mainbg px-4 py-2"
               >
-                {col.header}
-              </label>
+                Zresetuj
+              </button>
             </div>
-          ))}
-        </div> */}
+          )}
+        </button>
       </div>
       <div>
         <table className="border-collapse">
@@ -174,7 +197,7 @@ export default function Table({
           <span className="px-2">Strona {page}</span>
           <TablePaginationButton
             handleClick={() => setPage((prev) => prev + 1)}
-            handleDisabled={data.length < 50}
+            handleDisabled={data.length < dataPerPage}
           >
             →
           </TablePaginationButton>

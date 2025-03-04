@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import DashboardCard from "../ui/DashboardCard";
 import useUser from "../features/authentication/useUser";
 import Skeleton from "react-loading-skeleton";
@@ -22,9 +21,6 @@ function Dashboard() {
         )}
         👋
       </h1>
-      <div>
-        <DashboardCard />
-      </div>
     </div>
   );
 }
