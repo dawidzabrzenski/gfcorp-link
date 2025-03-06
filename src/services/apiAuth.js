@@ -1,5 +1,6 @@
 import axios from "axios";
 import toast from "react-hot-toast";
+import { queryClient } from "../App";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -15,6 +16,8 @@ export async function login(email, password) {
     if (res.data.token) {
       await localStorage.setItem("token", res.data.token);
     }
+
+    queryClient.refetchQueries(["userData", "permissions"]);
 
     return res.data;
   } catch (error) {
@@ -47,6 +50,7 @@ export async function getAuthStatus() {
 export async function logout() {
   try {
     await localStorage.removeItem("token");
+
     toast.success("Wylogowano Cię");
   } catch (error) {
     console.error("Error logging out", error);

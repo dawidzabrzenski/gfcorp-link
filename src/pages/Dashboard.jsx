@@ -1,5 +1,6 @@
 import useUser from "../features/authentication/useUser";
 import Skeleton from "react-loading-skeleton";
+import { getProductsLocal } from "../services/apiProducts";
 
 function Dashboard() {
   const { userData, isPending } = useUser();
@@ -19,6 +20,7 @@ function Dashboard() {
           </span>
         )}
         👋
+        <button onClick={() => getProductsLocal()}>test</button>
       </h1>
     </div>
   );

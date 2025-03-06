@@ -12,7 +12,7 @@ function ColumnsFilter({
     >
       Filtry
       {columnsFilter && (
-        <div className="border-rounded absolute left-0 top-0 flex translate-x-1/3 flex-col gap-[0.7rem] whitespace-nowrap bg-dark-lightbg p-4">
+        <div className="border-rounded absolute left-0 top-0 z-50 flex translate-x-1/3 flex-col gap-[0.7rem] whitespace-nowrap bg-dark-lightbg p-4">
           {columns.map((col) => (
             <div key={col.accessorKey} className="flex items-center gap-2">
               <input

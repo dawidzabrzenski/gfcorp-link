@@ -10,19 +10,22 @@ dotenv.config();
 const app = express();
 // brane z .env lub przydzielane 5000 jesli w env nie ma
 const port = process.env.PORT || 5000;
+const client = process.env.CLIENT_URL;
 
 app.use(express.json());
 
-// middleware cors - które domeny mają mieć dostep do API
 app.use(
   cors({
     origin: [
       "http://localhost:5173",
+      "http://localhost:8044",
       "http://localhost:80",
       "http://localhost",
+      "http://10.42.50.41:",
+      client,
     ], // front url
     // origin: "*",
-    credentials: true, // pozwól na przesyłanie danych headerami
+    credentials: true,
   }),
 );
 

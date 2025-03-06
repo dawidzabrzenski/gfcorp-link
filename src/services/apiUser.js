@@ -1,10 +1,12 @@
 import axios from "axios";
 
+const API_URL = import.meta.env.VITE_API_URL;
+
 export async function getUser() {
   try {
     const token = await localStorage.getItem("token");
 
-    const res = await axios.get("http://localhost:5000/api/user", {
+    const res = await axios.get(`${API_URL}/api/user`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
@@ -18,7 +20,7 @@ export async function getUser() {
 
 export async function getUsers() {
   try {
-    const res = await axios.get("http://localhost:5000/api/users");
+    const res = await axios.get(`${API_URL}/api/users`);
 
     return res.data;
   } catch (err) {

@@ -50,7 +50,7 @@ function MainNav() {
       icon: <Home fontSize="small" />,
     },
     {
-      name: "Czas pracy",
+      name: "Czas pracy B2B",
       path: "/work-track",
       icon: <Calendar fontSize="small" />,
     },
