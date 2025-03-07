@@ -1,5 +1,5 @@
 import Spinner from "../ui/Loaders/Spinner";
-import UserTable from "../ui/Tables/UserTable";
+import UsersComponent from "../ui/UsersComponent";
 
 import { useUsers } from "../features/authentication/useUsers";
 
@@ -14,7 +14,7 @@ function Users() {
           <Spinner />
         </div>
       ) : (
-        <UserTable />
+        <UsersComponent />
       )}
     </div>
   );

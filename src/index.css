@@ -31,6 +31,10 @@ input:-webkit-autofill:active {
   @apply outline-none outline-4 outline-offset-2 focus:border-dark-focusbord focus:outline focus:outline-dark-focus;
 }
 
+.outline-red {
+  @apply focus:border-dark-focusbordred focus:outline-dark-focusred outline-none outline-4 outline-offset-2 focus:outline;
+}
+
 .menu-el {
   @apply mx-4 flex items-center gap-2 rounded-lg px-4 py-2 transition-all duration-300 hover:bg-dark-menuhover [&.active]:bg-dark-menuactive [&.active]:text-dark-main [&.active]:hover:bg-dark-menuactivehover;
 }

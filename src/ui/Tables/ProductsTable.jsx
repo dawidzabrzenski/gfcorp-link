@@ -1,149 +1,123 @@
-import { useState, useEffect } from "react";
+import React, { useMemo } from "react";
+import {
+  useReactTable,
+  getCoreRowModel,
+  getSortedRowModel,
+  getFilteredRowModel,
+  flexRender,
+} from "@tanstack/react-table";
+import Skeleton from "react-loading-skeleton";
 
-import { useProductsData } from "../../features/products/useProductsData";
+import TablePaginationButton from "./TablePaginationButton";
 
-import Table from "./Table";
-import Spinner from "../Loaders/Spinner";
-import SearchInput from "./SearchInput";
-import DataPerPage from "./DataPerPage";
-import ColumnsFilter from "./ColumnsFilter";
+export default function Table({
+  data,
+  dataPerPage,
+  filter,
+  setFilter,
+  columnsSchema,
+  noWrap,
+  page,
+  setPage,
+  columnVisibility,
+  setColumnVisibility,
+}) {
+  const columns = useMemo(() => columnsSchema, [columnsSchema]);
 
-function ProductsTable() {
-  const [page, setPage] = useState(1);
-  const [dataPerPage, setDataPerPage] = useState(50);
-  const [filter, setFilter] = useState("");
-  const [prodName, setProdName] = useState("");
-  const [prodCode, setProdCode] = useState("");
-  const [debouncedProdName, setDebouncedProdName] = useState(prodName);
-  const [debouncedProdCode, setDebouncedProdCode] = useState(prodCode);
-  const [columnsFilter, setColumnsFilter] = useState(false);
-
-  const [columnVisibility, setColumnVisibility] = useState(() => ({
-    twr_Ean: true,
-    twr_Katalog: true,
-    twr_Kod: true,
-    twr_Nazwa: true,
-    price: true,
-    twr_IloscSell: true,
-    twr_IloscMag: true,
-    twr_IloscRez: true,
-    twr_kraj: true,
-  }));
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedProdName(prodName);
-    }, 700);
-    return () => clearTimeout(timer);
-  }, [prodName]);
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedProdCode(prodCode);
-    }, 700);
-    return () => clearTimeout(timer);
-  }, [prodCode]);
-
-  useEffect(() => {
-    setPage(1);
-  }, [debouncedProdName, debouncedProdCode]);
-
-  const { productsData, isLoading } = useProductsData(
-    page,
-    debouncedProdName,
-    debouncedProdCode,
-    dataPerPage,
-    columnVisibility,
-  );
-
-  const columns = [
-    { accessorKey: "twr_Ean", header: "EAN" },
-    { accessorKey: "twr_Katalog", header: "Symbol IAI" },
-    { accessorKey: "twr_Kod", header: "Kod" },
-    { accessorKey: "twr_Nazwa", header: "Nazwa" },
-    {
-      accessorKey: "price",
-      header: "Cena",
-      cell: ({ getValue }) => <div>{getValue() || "brak"}</div>,
+  const table = useReactTable({
+    data,
+    columns,
+    getCoreRowModel: getCoreRowModel(),
+    getSortedRowModel: getSortedRowModel(),
+    getFilteredRowModel: getFilteredRowModel(),
+    state: {
+      globalFilter: filter,
+      columnVisibility,
     },
-    {
-      accessorKey: "twr_IloscSell",
-      header: "Ilość do sprzedaży",
-      accessorFn: (row) => row?.quantity?.twr_IloscSell ?? 0,
-      cell: ({ getValue }) => <div>{getValue()}</div>,
-    },
-    {
-      accessorKey: "twr_IloscMag",
-      header: "Ilość magazynowa",
-      accessorFn: (row) => row?.quantity?.twr_IloscMag ?? 0,
-      cell: ({ getValue }) => <div>{getValue()}</div>,
-    },
-    {
-      accessorKey: "twr_IloscRez",
-      header: "Ilość rezerwacji",
-      accessorFn: (row) => row?.quantity?.twr_IloscRez ?? 0,
-      cell: ({ getValue }) => <div>{getValue()}</div>,
-    },
-    { accessorKey: "twr_kraj", header: "Kraj Pochodzenia" },
-  ];
+    onColumnVisibilityChange: setColumnVisibility,
+    autoResetPageIndex: true,
+    manualPagination: true,
+    onGlobalFilterChange: setFilter,
+  });
+
   return (
     <div>
-      {isLoading ? (
-        <div className="flex justify-center">
-          <Spinner />
+      <div>
+        <table className="border-collapse">
+          <thead>
+            {table.getHeaderGroups().map((headerGroup) => (
+              <tr key={headerGroup.id}>
+                {headerGroup.headers.map((header) => (
+                  <th
+                    key={header.id}
+                    className={`${noWrap ? "whitespace-nowrap" : ""} cursor-pointer border border-dark-mainborder bg-dark-mainbg p-2 font-bold transition-all duration-200 hover:bg-dark-lightbg`}
+                    onClick={header.column.getToggleSortingHandler()}
+                  >
+                    {flexRender(
+                      header.column.columnDef.header,
+                      header.getContext(),
+                    )}
+                    {header.column.getCanSort() &&
+                      (header.column.getIsSorted() === "asc"
+                        ? " ↑"
+                        : " ↓")}{" "}
+                  </th>
+                ))}
+              </tr>
+            ))}
+          </thead>
+          <tbody>
+            {table.getRowModel().rows.map((row) => (
+              <tr key={row.id}>
+                {row.getVisibleCells().map((cell) => {
+                  const cellValue = cell.getValue();
+                  return (
+                    <td
+                      key={cell.id}
+                      className={`${noWrap ? "whitespace-nowrap" : ""} border border-dark-mainborder p-2 transition-all duration-200 hover:bg-dark-lightbg`}
+                    >
+                      {cellValue === "loading" ? (
+                        <Skeleton count={1} width="80%" height={17} />
+                      ) : cellValue === null || cellValue === "" ? (
+                        <p className="text-dark-notactive">brak</p>
+                      ) : (
+                        flexRender(
+                          cell.column.columnDef.cell,
+                          cell.getContext(),
+                        )
+                      )}
+                    </td>
+                  );
+                })}
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <div className="flex gap-6">
+        <div className="mt-2">
+          <TablePaginationButton
+            handleClick={() => setPage((prev) => Math.max(prev - 1, 1))}
+            handleDisabled={page === 1}
+          >
+            ←
+          </TablePaginationButton>
+          <span className="px-2">Strona {page}</span>
+          <TablePaginationButton
+            handleClick={() => setPage((prev) => prev + 1)}
+            handleDisabled={data.length < dataPerPage}
+          >
+            →
+          </TablePaginationButton>
+          {page > 1 && (
+            <span className="px-2">
+              <TablePaginationButton handleClick={() => setPage(1)}>
+                Powrót do pierwszej strony
+              </TablePaginationButton>
+            </span>
+          )}
         </div>
-      ) : (
-        <>
-          <div className="mb-2 flex items-end gap-2 rounded-lg border border-dark-mainborder bg-dark-mainbg p-4">
-            <SearchInput
-              label="Szukaj po nazwie"
-              placeholder="Część nazwy np. AK74..."
-              value={prodName}
-              onChange={setProdName}
-              onClear={() => setProdName("")}
-            />
-            <SearchInput
-              label="Szukaj po kodzie"
-              placeholder="Część kodu np. JGW-03..."
-              value={prodCode}
-              onChange={setProdCode}
-              onClear={() => setProdCode("")}
-            />
-            <SearchInput
-              label="Filtruj wyniki poniżej"
-              placeholder="Filtr (EAN, cena, kod)"
-              value={filter}
-              onChange={setFilter}
-              onClear={() => setFilter("")}
-            />
-            <DataPerPage
-              dataPerPage={dataPerPage}
-              setDataPerPage={setDataPerPage}
-            />
-            <ColumnsFilter
-              columns={columns}
-              columnsFilter={columnsFilter}
-              setColumnsFilter={setColumnsFilter}
-              columnVisibility={columnVisibility}
-              setColumnVisibility={setColumnVisibility}
-            />
-          </div>
-          <Table
-            data={productsData || []}
-            dataPerPage={dataPerPage}
-            columnsSchema={columns}
-            filter={filter}
-            setFilter={setFilter}
-            noWrap={true}
-            page={page}
-            setPage={setPage}
-            columnVisibility={columnVisibility}
-            setColumnVisibility={setColumnVisibility}
-          />
-        </>
-      )}
+      </div>
     </div>
   );
 }
-
-export default ProductsTable;

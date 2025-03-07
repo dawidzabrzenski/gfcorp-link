@@ -1,14 +1,20 @@
+import { useState } from "react";
 import {
   DeleteRounded as TrashBin,
   CreateRounded as Edit,
 } from "@mui/icons-material";
 
-import { useUsers } from "../../features/authentication/useUsers";
+import { useUsers } from "../features/authentication/useUsers";
 
-import Table from "./Table";
+import Table from "./Tables/Table";
+import SearchInput from "./Tables/SearchInput";
+import SearchOptionsWrapper from "./Tables/SearchOptionsWrapper";
+import AddUserTrigger from "./Users/AddUserTrigger";
 
-function UserTable() {
+function UsersComponent() {
   const { usersData } = useUsers();
+
+  const [filter, setFilter] = useState("");
 
   const columns = [
     { accessorKey: "email", header: "E-mail" },
@@ -38,7 +44,26 @@ function UserTable() {
     },
   ];
 
-  return <Table data={usersData} columnsSchema={columns} />;
+  return (
+    <>
+      <SearchOptionsWrapper>
+        <SearchInput
+          label="Wyszukaj użytkownika"
+          placeholder="Filtr (e-mail, imię, nazwisko)"
+          value={filter}
+          onChange={setFilter}
+          onClear={() => setFilter("")}
+        />
+        <AddUserTrigger />
+      </SearchOptionsWrapper>
+      <Table
+        data={usersData}
+        columnsSchema={columns}
+        filter={filter}
+        setFilter={setFilter}
+      />
+    </>
+  );
 }
 
-export default UserTable;
+export default UsersComponent;

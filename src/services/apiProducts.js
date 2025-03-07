@@ -4,19 +4,6 @@ import { calculateNetPrice } from "../utils/helpers";
 const ERP_API_TOKEN = import.meta.env.VITE_ERP_API_TOKEN;
 const ERP_API_URL = import.meta.env.VITE_ERP_API_URL;
 
-export async function getProductsLocal() {
-  try {
-    const res = await axios.get(`http://localhost:5002/products`);
-
-    console.log(res.data);
-
-    return res.data;
-  } catch (err) {
-    console.error(err);
-    throw err;
-  }
-}
-
 export async function getProducts(
   page = 1,
   prodName,
