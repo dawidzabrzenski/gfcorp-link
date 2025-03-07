@@ -27,9 +27,29 @@ function AddUserForm({ onCloseModal }) {
             />
           </div>
         </div>
+        <div className="flex w-full gap-12">
+          <div className="w-1/2 space-y-2">
+            <label className="text-dark-sec">Imię</label>
+            <input
+              type="text"
+              id="name"
+              placeholder="Imię użytkownika"
+              className={`outline-blue border-rounded w-full bg-dark-darkbg px-3 py-2 placeholder:text-dark-placeholder hover:border-dark-mainborderhover`}
+            />
+          </div>
+          <div className="w-1/2 space-y-2">
+            <label className="text-dark-sec">Nazwisko</label>
+            <input
+              type="text"
+              id="surname"
+              placeholder="Nazwisko użytkownika"
+              className={`outline-blue border-rounded w-full bg-dark-darkbg px-3 py-2 placeholder:text-dark-placeholder hover:border-dark-mainborderhover`}
+            />
+          </div>
+        </div>
         <div className="flex flex-col space-y-2">
           <label className="text-dark-sec">Rola</label>
-          <select className="border-rounded w-1/3 bg-dark-darkbg px-3 py-3">
+          <select className="outline-blue border-rounded w-1/3 cursor-pointer bg-dark-darkbg p-2 hover:border-dark-mainborderhover">
             <option value="admin">Admin</option>
             <option value="user">Użytkownik</option>
           </select>

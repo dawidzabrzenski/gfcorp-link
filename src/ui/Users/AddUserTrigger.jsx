@@ -6,7 +6,7 @@ function AddUserTrigger() {
     <Modal>
       <Modal.Open opens="addUserForm">
         <button className="outline-blue border-rounded cursor-pointer px-4 py-2 hover:border-dark-mainborderhover">
-          Otwórz modal
+          Dodaj nowego użytkownika
         </button>
       </Modal.Open>
 

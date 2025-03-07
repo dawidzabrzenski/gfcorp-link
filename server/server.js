@@ -42,6 +42,7 @@ const PermissionSchema = new mongoose.Schema({
 
 const GroupSchema = new mongoose.Schema({
   name: { type: String, required: true, unique: true },
+  visibleName: { type: String, required: true, unique: true },
   permissions: [{ type: mongoose.Schema.Types.ObjectId, ref: "Permission" }],
 });
 
@@ -91,6 +92,19 @@ app.get("/api/permissions", authMiddleware, async (req, res) => {
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.get("/api/groups", authMiddleware, async (req, res) => {
+  try {
+    const groups = await Group.find();
+
+    res.json(groups);
+  } catch (err) {
+    console.error(err);
+    return res
+      .status(500)
+      .json({ message: "Something went wrong while fetching groups" });
   }
 });
 
