@@ -1,11 +1,11 @@
-import FormRow from "../FormRow";
+import { getGroups } from "../../services/apiPermissions";
 
 function AddUserForm({ onCloseModal }) {
   return (
     <div className="flex w-[55vw] flex-col gap-4">
-      <h2 className="text-xl font-bold">Dodaj nowego użytkownika</h2>
+      <h2 className="text-2xl font-bold">Dodaj nowego użytkownika</h2>
 
-      <form className="flex flex-col gap-4">
+      <form className="flex flex-col gap-4 rounded-lg bg-dark-lighterbg px-4 py-6">
         <div className="flex w-full gap-12">
           <div className="w-1/2 space-y-2">
             <label className="text-dark-sec">Email</label>
@@ -56,8 +56,11 @@ function AddUserForm({ onCloseModal }) {
         </div>
       </form>
 
-      <div className="flex gap-2">
-        <button className="outline-red border-rounded w-fit px-4 py-2 text-white hover:border-dark-mainborderhover">
+      <div className="flex gap-3">
+        <button
+          onClick={() => console.log(getGroups())}
+          className="outline-blue border-rounded w-fit px-4 py-2 text-white hover:border-dark-mainborderhover"
+        >
           Dodaj użytkownika
         </button>
         <button
