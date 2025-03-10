@@ -7,7 +7,7 @@ import SelectInput from "../Forms/SelectInput";
 import Button from "../Button";
 
 function AddUserForm({ onCloseModal }) {
-  const { groups, pendingGroups } = useGroups();
+  const { groupsData, pendingGroups } = useGroups();
   const {
     register,
     handleSubmit,
@@ -100,7 +100,7 @@ function AddUserForm({ onCloseModal }) {
                 validation={{ required: "Rola jest wymagana" }}
                 options={[
                   { value: "", label: "Wybierz rolę" },
-                  ...groups.map((group) => ({
+                  ...groupsData.map((group) => ({
                     value: group.name,
                     label: group.visibleName,
                   })),

@@ -35,6 +35,7 @@ export default {
           focusbordred: "#f20202",
           placeholder: "#3c455a",
           mainborder: "#212732",
+          mainborderlighter: "#383e49",
           mainborderhover: "#566481",
           menuactive: "#1d2430",
           menuhover: "#141a23",

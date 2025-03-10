@@ -6,6 +6,7 @@ import {
   AccountBoxRounded as Client,
   PeopleAltRounded as Users,
   CategoryRounded as Products,
+  BadgeRounded as Permissions,
 } from "@mui/icons-material";
 import NavItem from "./NavItem";
 import Spinner from "./Loaders/Spinner";
@@ -70,6 +71,12 @@ function MainNav() {
       path: "users",
       icon: <Users fontSize="small" />,
       requiredPermission: "users",
+    },
+    {
+      name: "Uprawnienia",
+      path: "permissions",
+      icon: <Permissions fontSize="small" />,
+      requiredPermission: "permissions",
     },
   ];
 

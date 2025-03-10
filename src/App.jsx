@@ -12,6 +12,7 @@ const Login = lazy(() => import("./pages/Login"));
 const Dashboard = lazy(() => import("./pages/Dashboard"));
 const Clients = lazy(() => import("./pages/Clients"));
 const Users = lazy(() => import("./pages/Users"));
+const Permissions = lazy(() => import("./pages/Permissions"));
 const NotFound = lazy(() => import("./pages/NotFound"));
 const Products = lazy(() => import("./pages/Products"));
 
@@ -51,6 +52,7 @@ function App() {
                 <Route path="erp/clients" element={<Clients />} />
                 <Route path="erp/products" element={<Products />} />
                 <Route path="users" element={<Users />} />
+                <Route path="permissions" element={<Permissions />} />
               </Route>
               <Route path="login" element={<Login />} />
               <Route path="*" element={<NotFound />} />

@@ -187,7 +187,7 @@ async function addUser(email, firstName, lastName, password, groupId) {
 //   "Testowy",
 //   "User",
 //   "test123",
-//   "67bc2e85846aed71848dda51",
+//   "67caf1df4f5b7a7d0732f95f",
 // );
 
 // addUser(
@@ -202,6 +202,7 @@ async function addUser(email, firstName, lastName, password, groupId) {
 // addSampleData().catch((err) => console.log(err));
 
 // endpoint do logowania
+
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
   try {

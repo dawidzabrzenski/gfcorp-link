@@ -5,7 +5,7 @@ export function useGroups() {
   const token = localStorage.getItem("token");
 
   const {
-    data: groups,
+    data: groupsData,
     isPending: pendingGroups,
     error: errorGroups,
   } = useQuery({
@@ -14,5 +14,5 @@ export function useGroups() {
     enabled: !!token,
   });
 
-  return { groups, pendingGroups, errorGroups };
+  return { groupsData, pendingGroups, errorGroups };
 }

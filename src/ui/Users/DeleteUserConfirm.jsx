@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { ErrorOutlineRounded as Error } from "@mui/icons-material";
 import Button from "../Button";
 
 function DeleteUserConfirm({ onCloseModal, userData }) {
@@ -21,13 +22,19 @@ function DeleteUserConfirm({ onCloseModal, userData }) {
   }, []);
 
   return (
-    <div className="flex w-[65vw] flex-col">
-      <h2 className="text-2xl font-bold">
-        Jesteś pewien, że chcesz usunąć użytkownika{" "}
-        {userData.firstName + " " + userData.lastName}?
-      </h2>
-      <p className="font-light">Usunięcie może być nieodwracalne</p>
-      <div className="mt-4 flex justify-center gap-2">
+    <div className="flex flex-col px-4">
+      <div className="flex flex-col items-center rounded-lg bg-dark-lighterbg px-12 pb-8 pt-6">
+        <div className="mb-6 text-red-700">
+          <Error sx={{ fontSize: "14rem" }} />
+        </div>
+        <h2 className="mb-2 text-2xl font-bold">Jesteś pewien?</h2>
+        <p className="font-light">
+          Jesteś pewien że chcesz usunąć użytkownika{" "}
+          {userData.firstName + " " + userData.lastName}?
+        </p>
+        <p>Usunięcie może być nieodwracalne.</p>
+      </div>
+      <div className="mt-6 flex justify-center gap-2">
         <Button type="button" buttonStyle="border-light" onClick={onCloseModal}>
           Anuluj operację
         </Button>
