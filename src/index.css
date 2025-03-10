@@ -21,6 +21,7 @@ input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px #05070a inset !important;
   -webkit-text-fill-color: #fff !important;
   font-family: "Inter", sans-serif !important;
+  border: 1px solid #212732;
 }
 
 .border-rounded {
@@ -32,7 +33,7 @@ input:-webkit-autofill:active {
 }
 
 .outline-red {
-  @apply focus:border-dark-focusbordred focus:outline-dark-focusred outline-none outline-4 outline-offset-2 focus:outline;
+  @apply outline-none outline-4 outline-offset-2 focus:border-dark-focusbordred focus:outline focus:outline-dark-focusred;
 }
 
 .menu-el {
