@@ -10,6 +10,7 @@ import Table from "./Tables/Table";
 import SearchInput from "./Tables/SearchInput";
 import SearchOptionsWrapper from "./Tables/SearchOptionsWrapper";
 import AddUserTrigger from "./Users/AddUserTrigger";
+import EditUserTrigger from "./Users/EditUserTrigger";
 
 function UsersComponent() {
   const { usersData } = useUsers();
@@ -33,12 +34,7 @@ function UsersComponent() {
           >
             <TrashBin fontSize="very-small" />
           </button>
-          <button
-            onClick={() => console.log(row.original)}
-            className="rounded bg-dark-lighterbg px-2 py-1 text-white transition-all"
-          >
-            <Edit fontSize="very-small" />
-          </button>
+          <EditUserTrigger data={row.original} />
         </div>
       ),
     },
