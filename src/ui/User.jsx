@@ -31,7 +31,7 @@ function User() {
       </div>
       <div
         onClick={() => setMenuOpen((menuOpen) => !menuOpen)}
-        className="relative cursor-pointer rounded-xl border border-dark-mainborder p-2 transition-all duration-300 hover:border-dark-mainborderhover"
+        className="border-rounded relative cursor-pointer p-2 hover:border-dark-mainborderhover"
       >
         <MenuPopup closeMenu={closeMenu} menuStatus={menuOpen} />
         <ThreeDots fontSize="small" />
