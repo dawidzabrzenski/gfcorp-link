@@ -1,16 +1,13 @@
 import { useState } from "react";
-import {
-  DeleteRounded as TrashBin,
-  CreateRounded as Edit,
-} from "@mui/icons-material";
-
 import { useUsers } from "../features/authentication/useUsers";
 
 import Table from "./Tables/Table";
 import SearchInput from "./Tables/SearchInput";
 import SearchOptionsWrapper from "./Tables/SearchOptionsWrapper";
+
 import AddUserTrigger from "./Users/AddUserTrigger";
 import EditUserTrigger from "./Users/EditUserTrigger";
+import DeleteUserTrigger from "./Users/DeleteUserTrigger";
 
 function UsersComponent() {
   const { usersData } = useUsers();
@@ -28,13 +25,8 @@ function UsersComponent() {
       enableSorting: false,
       cell: ({ row }) => (
         <div className="flex justify-center gap-2">
-          <button
-            onClick={() => console.log(row.original)}
-            className="rounded bg-dark-lighterbg px-2 py-1 text-white transition-all"
-          >
-            <TrashBin fontSize="very-small" />
-          </button>
           <EditUserTrigger data={row.original} />
+          <DeleteUserTrigger data={row.original} />
         </div>
       ),
     },
