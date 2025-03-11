@@ -12,8 +12,10 @@ import NavItem from "./NavItem";
 import Spinner from "./Loaders/Spinner";
 import comarchLogo from "../assets/comarchlogo.webp";
 import { useUserPermissions } from "../features/permissions/useUserPermissions";
+import { useAuth } from "../features/authentication/useAuth";
 
 function MainNav() {
+  const { isAuthenticated } = useAuth();
   const { userPermissions, pendingUserPermissions, errorUserPermissions } =
     useUserPermissions();
 
@@ -81,7 +83,7 @@ function MainNav() {
     },
   ];
 
-  if (pendingUserPermissions) {
+  if (!isAuthenticated || pendingUserPermissions) {
     return (
       <div className="flex h-full items-center justify-center">
         <Spinner />

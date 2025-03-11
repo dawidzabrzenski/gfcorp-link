@@ -12,7 +12,9 @@ export async function login(email, password) {
     });
 
     if (res.data.token) {
-      await localStorage.setItem("token", res.data.token);
+      localStorage.setItem("token", res.data.token);
+      await queryClient.refetchQueries(["authStatus"]);
+      // await new Promise((resolve) => setTimeout(resolve, 100));
     }
 
     queryClient.refetchQueries(["userData", "permissions"]);
@@ -25,6 +27,8 @@ export async function login(email, password) {
 
 export async function getAuthStatus() {
   const token = localStorage.getItem("token");
+
+  console.log(token);
 
   if (!token) return false;
 
