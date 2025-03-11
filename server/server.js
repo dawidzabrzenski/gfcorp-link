@@ -16,15 +16,15 @@ app.use(express.json());
 
 app.use(
   cors({
-    origin: [
-      "http://localhost:5173",
-      "http://localhost:8044",
-      "http://localhost:80",
-      "http://localhost",
-      "http://10.42.50.41:",
-      client,
-    ], // front url
-    // origin: "*",
+    // origin: [
+    //   "http://localhost:5173",
+    //   "http://localhost:8044",
+    //   "http://localhost:80",
+    //   "http://localhost",
+    //   "http://10.42.50.41:",
+    //   client,
+    // ], // front url
+    origin: "*",
     credentials: true,
   }),
 );
