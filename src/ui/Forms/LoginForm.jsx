@@ -8,7 +8,7 @@ import TextInput from "./TextInput";
 import Button from "../Button";
 
 function LoginForm() {
-  const { login } = useLogin();
+  const { login, error, isPending } = useLogin();
   const { isAuthenticated } = useAuth();
   const navigate = useNavigate();
   const {
@@ -30,6 +30,11 @@ function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6">
+      {error && (
+        <div className="rounded-lg border border-red-700 bg-red-300 p-2 text-red-700">
+          {error}
+        </div>
+      )}
       <FormField label="Email" id="email" error={errors.email}>
         <TextInput
           type="email"

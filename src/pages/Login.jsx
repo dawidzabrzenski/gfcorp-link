@@ -3,7 +3,7 @@ import LoadingScreen from "../ui/Loaders/LoadingScreen";
 import { useLogin } from "../features/authentication/useLogin";
 
 function Login() {
-  const { isPending, error } = useLogin();
+  const { login, error, isPending } = useLogin();
 
   return (
     <>
@@ -15,12 +15,6 @@ function Login() {
           >
             Zaloguj się
           </h2>
-
-          {error && (
-            <div className="my-3 rounded-lg border border-red-700 bg-red-300 p-2 text-red-700">
-              {error}
-            </div>
-          )}
 
           <LoginForm />
         </div>

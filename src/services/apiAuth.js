@@ -30,8 +30,6 @@ export async function login(email, password) {
 export async function getAuthStatus() {
   const token = localStorage.getItem("token");
 
-  console.log(token);
-
   if (!token) return false;
 
   try {
