@@ -46,7 +46,6 @@ export function useAuth() {
 
     const intervalId = setInterval(checkToken, 30 * 1000);
 
-    // Cleanup interval on unmount
     return () => clearInterval(intervalId);
   }, [refetch]);
 

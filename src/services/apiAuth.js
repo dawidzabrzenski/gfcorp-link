@@ -13,8 +13,10 @@ export async function login(email, password) {
 
     if (res.data.token) {
       localStorage.setItem("token", res.data.token);
-      await queryClient.refetchQueries(["authStatus"]);
-      // await new Promise((resolve) => setTimeout(resolve, 100));
+      await new Promise((resolve) => setTimeout(resolve, 100)); // Opóźnienie 100ms
+      setTimeout(() => {
+        queryClient.refetchQueries(["userData", "permissions"]);
+      }, 100);
     }
 
     queryClient.refetchQueries(["userData", "permissions"]);

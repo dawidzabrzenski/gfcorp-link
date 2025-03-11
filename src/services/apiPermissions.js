@@ -23,11 +23,13 @@ export const getPermissions = async (token) => {
 };
 
 export const getUserPermissions = async (token) => {
+  if (!token) {
+    throw new Error("Brak tokena autoryzacyjnego");
+  }
   const res = await axios.get(`${API_URL}/api/userPermissions`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
-
   return res.data.userPermissions;
 };
