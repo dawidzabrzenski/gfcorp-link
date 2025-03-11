@@ -15,7 +15,9 @@ function NotFound() {
         </div>
 
         <div onClick={() => navigate("/dashboard", { replace: true })}>
-          <Button>Wróć do Dashboarda</Button>
+          <Button type="button" buttonStyle="light">
+            Wróć do Dashboarda
+          </Button>
         </div>
       </div>
     </div>

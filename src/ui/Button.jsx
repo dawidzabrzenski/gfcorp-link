@@ -37,7 +37,7 @@ function Button({
         onClick={onClick}
         type={type}
         disabled={disabled}
-        className="outline-blue border-dark-mainborderlighter cursor-pointer rounded-lg border p-3 transition-all duration-300 hover:border-dark-mainborderhover"
+        className="outline-blue cursor-pointer rounded-lg border border-dark-mainborderlighter p-3 transition-all duration-300 hover:border-dark-mainborderhover"
       >
         {children}
       </button>
@@ -61,7 +61,7 @@ function Button({
         type={type}
         disabled={btnLocked}
         onClick={onClick}
-        className="bg-dark-mainborderlighter flex w-fit cursor-not-allowed items-center justify-center gap-2 rounded-lg border border-dark-mainborderhover px-4 py-2 text-white transition-all duration-300"
+        className="flex w-fit cursor-not-allowed items-center justify-center gap-2 rounded-lg border border-dark-mainborderhover bg-dark-mainborderlighter px-4 py-2 text-white transition-all duration-300"
       >
         <span>{btnCounter || 1}</span>
         <Lock color="#000" />

@@ -82,13 +82,23 @@ const authMiddleware = (req, res, next) => {
 
 app.get("/api/permissions", authMiddleware, async (req, res) => {
   try {
+    const permissions = await Permission.find();
+    res.json(permissions);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+
+app.get("/api/userPermissions", authMiddleware, async (req, res) => {
+  try {
     const groupId = req.user.role;
     const group = await Group.findById(groupId).populate("permissions");
     if (!group) {
       return res.status(404).json({ message: "Group not found" });
     }
-    const permissions = group.permissions.map((perm) => perm.name);
-    res.json({ permissions });
+    const userPermissions = group.permissions.map((perm) => perm.name);
+    res.json({ userPermissions });
   } catch (err) {
     console.error(err);
     res.status(500).json({ message: "Server error" });

@@ -20,5 +20,15 @@ export const getPermissions = async (token) => {
     },
   });
 
-  return res.data.permissions;
+  return res.data;
+};
+
+export const getUserPermissions = async (token) => {
+  const res = await axios.get(`${API_URL}/api/userPermissions`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  return res.data.userPermissions;
 };

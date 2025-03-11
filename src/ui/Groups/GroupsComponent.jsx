@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { useGroups } from "../../features/permissions/useGroups";
 
+import AddGroupTrigger from "./AddGroupTrigger";
 import Table from "../Tables/Table";
 import SearchInput from "../Tables/SearchInput";
 import SearchOptionsWrapper from "../Tables/SearchOptionsWrapper";
@@ -41,7 +42,7 @@ function GroupsComponent() {
           onChange={setFilter}
           onClear={() => setFilter("")}
         />
-        {/* <AddUserTrigger /> */}
+        <AddGroupTrigger />
       </SearchOptionsWrapper>
       {!pendingGroups && (
         <Table

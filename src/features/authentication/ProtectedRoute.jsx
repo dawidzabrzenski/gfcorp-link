@@ -2,8 +2,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import { useEffect } from "react";
 import { useAuth } from "./useAuth";
 import FullscreenLoading from "../../ui/Loaders/FullscreenLoading";
-import { getPermissions } from "../../services/apiPermissions";
-import { useQuery } from "@tanstack/react-query";
+import { useUserPermissions } from "../permissions/useUserPermissions";
 
 function ProtectedRoute({ children }) {
   const token = localStorage.getItem("token");
@@ -12,11 +11,14 @@ function ProtectedRoute({ children }) {
   const { isAuthenticated, isPending, refetch } = useAuth();
   const excludedPaths = ["/dashboard", "/login", "/", "/no-access"];
 
-  const { data: permissions } = useQuery({
-    queryKey: ["permissions"],
-    queryFn: () => getPermissions(token),
-    enabled: !!token,
-  });
+  // const { data: permissions } = useQuery({
+  //   queryKey: ["permissions"],
+  //   queryFn: () => getPermissions(token),
+  //   enabled: !!token,
+  // });
+
+  const { userPermissions, pendingUserPermissions, errorUserPermissions } =
+    useUserPermissions();
 
   useEffect(() => {
     if (isPending) return;
@@ -26,7 +28,7 @@ function ProtectedRoute({ children }) {
     } else if (!isAuthenticated) {
       navigate("/login", { replace: true });
     } else if (
-      !permissions?.includes(location.pathname.slice(1)) &&
+      !userPermissions?.includes(location.pathname.slice(1)) &&
       !excludedPaths.includes(location.pathname)
     ) {
       navigate("/dashboard", { replace: true });
@@ -37,7 +39,7 @@ function ProtectedRoute({ children }) {
     navigate,
     refetch,
     location.pathname,
-    permissions,
+    userPermissions,
     excludedPaths,
   ]);
 

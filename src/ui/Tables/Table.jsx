@@ -27,7 +27,7 @@ export default function Table({ data, columnsSchema, filter, setFilter }) {
 
   return (
     <div>
-      <div className="overflow-x-scroll">
+      <div>
         <table className="w-full border-collapse">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (

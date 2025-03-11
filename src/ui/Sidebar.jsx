@@ -4,7 +4,7 @@ import MainNav from "./MainNav";
 
 function Sidebar() {
   return (
-    <aside className="row-span-full flex flex-col gap-4 border border-dark-mainborder bg-dark-mainbg">
+    <aside className="row-span-full flex max-h-full flex-col gap-4 border border-dark-mainborder bg-dark-mainbg">
       <Logo />
       <MainNav />
       <User />

@@ -11,11 +11,11 @@ import {
 import NavItem from "./NavItem";
 import Spinner from "./Loaders/Spinner";
 import comarchLogo from "../assets/comarchlogo.webp";
-import { usePermissions } from "../features/permissions/usePermissions";
+import { useUserPermissions } from "../features/permissions/useUserPermissions";
 
 function MainNav() {
-  const { permissions, pendingPermissions, errorPermissions } =
-    usePermissions();
+  const { userPermissions, pendingUserPermissions, errorUserPermissions } =
+    useUserPermissions();
 
   const comarchSubmenu = [
     {
@@ -41,7 +41,7 @@ function MainNav() {
   const filteredComarchSubmenu = comarchSubmenu.filter(
     (item) =>
       !item.requiredPermission ||
-      permissions?.includes(item.requiredPermission),
+      userPermissions?.includes(item.requiredPermission),
   );
 
   const sideMenu = [
@@ -54,6 +54,7 @@ function MainNav() {
       name: "Czas pracy B2B",
       path: "/work-track",
       icon: <Calendar fontSize="small" />,
+      requiredPermission: "worktime",
     },
     {
       name: "Comarch XL ERP",
@@ -80,7 +81,7 @@ function MainNav() {
     },
   ];
 
-  if (pendingPermissions) {
+  if (pendingUserPermissions) {
     return (
       <div className="flex h-full items-center justify-center">
         <Spinner />
@@ -88,8 +89,8 @@ function MainNav() {
     );
   }
 
-  if (errorPermissions) {
-    return <div>Błąd pobierania uprawnień: {errorPermissions.message}</div>;
+  if (errorUserPermissions) {
+    return <div>Błąd pobierania uprawnień: {errorUserPermissions.message}</div>;
   }
 
   return (
@@ -98,7 +99,7 @@ function MainNav() {
         {sideMenu.map((el) => (
           <li key={el.name}>
             {!el.requiredPermission ||
-            permissions?.includes(el.requiredPermission) ? (
+            userPermissions?.includes(el.requiredPermission) ? (
               <NavItem to={el.path} submenu={el.submenu}>
                 {el.icon}
                 <p>{el.name}</p>
