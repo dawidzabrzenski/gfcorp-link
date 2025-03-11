@@ -132,7 +132,7 @@ function AddGroupForm({ onCloseModal }) {
 
         <div className="flex w-fit gap-3">
           <Button type="submit" buttonStyle="border-light">
-            Dodaj użytkownika
+            Utwórz grupę
           </Button>
           <Button type="button" buttonStyle="warning" onClick={onCloseModal}>
             Zamknij
