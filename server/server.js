@@ -406,7 +406,7 @@ app.post("/api/user/add", authMiddleware, async (req, res) => {
 
 app.put("/api/user/edit", authMiddleware, async (req, res) => {
   try {
-    const { id, email, firstName, lastName, group, password } = req.body;
+    const { id, email, firstName, lastName, password, group } = req.body;
 
     const user = await User.findById(id);
     if (!user) {

@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 import { useForm } from "react-hook-form";
 import Skeleton from "react-loading-skeleton";
 
@@ -111,7 +112,7 @@ function AddUserForm({ onCloseModal }) {
           </div>
         </div>
         <div className="flex w-1/3 flex-col">
-          <FormField label="Rola *" id="role" error={errors.group}>
+          <FormField label="Rola *" id="group" error={errors.group}>
             {pendingGroups ? (
               <Skeleton count={1} width="17.5%" height={35} />
             ) : (

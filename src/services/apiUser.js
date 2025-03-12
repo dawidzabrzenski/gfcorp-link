@@ -67,7 +67,7 @@ export async function editUser({
   group,
 }) {
   try {
-    const res = await axios.post(
+    const res = await axios.put(
       `${API_URL}/api/user/edit`,
       {
         id,
@@ -87,3 +87,16 @@ export async function editUser({
     throw error;
   }
 }
+
+export const deleteUser = async ({ token, id }) => {
+  try {
+    const res = await axios.delete(`${API_URL}/api/user/delete/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};

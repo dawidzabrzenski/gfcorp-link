@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { addUser as addUserAPI } from "../../services/apiUser";
+import { editUser as editUserAPI } from "../../services/apiUser";
 
-export function useAddUser() {
+export function useEditUser() {
   const token = localStorage.getItem("token");
   const queryClient = useQueryClient();
 
   const {
-    mutate: addUser,
+    mutate: editUser,
     data,
-    error: errorAddingUser,
-    isPending: pendingAddUser,
-    isSuccess: isSuccessAddingUser,
+    error: errorEditingUser,
+    isPending: pendingEditUser,
+    isSuccess: isSuccessEditingUser,
   } = useMutation({
-    mutationFn: (userData) => addUserAPI({ ...userData, token }),
+    mutationFn: (userData) => editUserAPI({ ...userData, token }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["usersData"] });
       queryClient.invalidateQueries({ queryKey: ["userData"] });
@@ -20,10 +20,10 @@ export function useAddUser() {
   });
 
   return {
-    addUser,
+    editUser,
     data,
-    errorAddingUser,
-    pendingAddUser,
-    isSuccessAddingUser,
+    errorEditingUser,
+    pendingEditUser,
+    isSuccessEditingUser,
   };
 }
