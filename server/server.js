@@ -107,7 +107,12 @@ app.get("/api/userPermissions", authMiddleware, async (req, res) => {
 
 app.get("/api/groups", authMiddleware, async (req, res) => {
   try {
-    const groups = await Group.find();
+    const groups = await Group.find()
+      .populate({
+        path: "permissions", // Populate the permissions field with permission documents
+        select: "name", // Only return the name field from the permission documents
+      })
+      .exec();
 
     res.json(groups);
   } catch (err) {
@@ -180,6 +185,25 @@ app.put("/api/groups/edit", authMiddleware, async (req, res) => {
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Błąd serwera", error: error.message });
+  }
+});
+
+app.delete("/api/groups/delete/:id", authMiddleware, async (req, res) => {
+  try {
+    const groupId = req.params.id;
+
+    const deletedGroup = await Group.findByIdAndDelete(groupId);
+
+    if (!deletedGroup) {
+      return res.status(404).json({ message: "Group not found" });
+    }
+
+    res
+      .status(200)
+      .json({ message: "Group deleted successfully", group: deletedGroup });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Internal server error" });
   }
 });
 

@@ -5,6 +5,8 @@ import AddGroupTrigger from "./AddGroupTrigger";
 import Table from "../Tables/Table";
 import SearchInput from "../Tables/SearchInput";
 import SearchOptionsWrapper from "../Tables/SearchOptionsWrapper";
+import EditGroupTrigger from "./EditGroupTrigger";
+import DeleteGroupTrigger from "./DeleteGroupTrigger";
 
 function GroupsComponent() {
   const { groupsData, pendingGroups } = useGroups();
@@ -25,8 +27,8 @@ function GroupsComponent() {
       enableSorting: false,
       cell: ({ row }) => (
         <div className="flex justify-center gap-2">
-          <button>1</button>
-          <button>2</button>
+          <EditGroupTrigger data={row.original} />
+          <DeleteGroupTrigger data={row.original} />
         </div>
       ),
     },

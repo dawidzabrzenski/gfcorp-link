@@ -15,6 +15,7 @@ export function useAddGroup() {
     mutationFn: (groupData) => addGroupAPI({ ...groupData, token }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["groups"] });
+      queryClient.invalidateQueries({ queryKey: ["userPermissions"] });
     },
   });
 

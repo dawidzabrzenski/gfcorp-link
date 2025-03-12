@@ -1,18 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { editGroup as editGroupAPI } from "../../services/apiPermissions";
+import { deleteGroup as deleteGroupAPI } from "../../services/apiPermissions";
 
-export function useEditGroup() {
+export function useDeleteGroup() {
   const token = localStorage.getItem("token");
   const queryClient = useQueryClient();
 
   const {
-    mutate: editGroup,
+    mutate: deleteGroup,
     data,
-    error: errorEditingGroup,
-    isPending: pendingEditGroup,
-    isSuccess: isSuccessEditingGroup,
+    error: errorDeletingGroup,
+    isPending: pendingDeleteGroup,
+    isSuccess: isSuccessDeletingGroup,
   } = useMutation({
-    mutationFn: (groupData) => editGroupAPI({ ...groupData, token }),
+    mutationFn: (id) => deleteGroupAPI({ token, id }),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["groups"] });
       queryClient.invalidateQueries({ queryKey: ["userPermissions"] });
@@ -20,10 +20,10 @@ export function useEditGroup() {
   });
 
   return {
-    editGroup,
+    deleteGroup,
     data,
-    errorEditingGroup,
-    pendingEditGroup,
-    isSuccessEditingGroup,
+    errorDeletingGroup,
+    pendingDeleteGroup,
+    isSuccessDeletingGroup,
   };
 }

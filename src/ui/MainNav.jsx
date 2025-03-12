@@ -68,6 +68,7 @@ function MainNav() {
         />
       ),
       submenu: filteredComarchSubmenu,
+      requiredPermission: "erp",
     },
     {
       name: "Użytkownicy",

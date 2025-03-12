@@ -1,10 +1,12 @@
 import { useState, useEffect } from "react";
 import { ErrorOutlineRounded as Error } from "@mui/icons-material";
 import Button from "../Button";
+import { useDeleteGroup } from "../../features/permissions/useDeleteGroup";
 
-function DeleteUserConfirm({ onCloseModal, userData }) {
+function DeleteUserConfirm({ onCloseModal, groupData }) {
   const [deleteLock, setDeleteLock] = useState(true);
   const [secondsLeft, setSecondsLeft] = useState(3);
+  const { deleteGroup, pendingDeleteGroup } = useDeleteGroup();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -21,6 +23,11 @@ function DeleteUserConfirm({ onCloseModal, userData }) {
     return () => clearInterval(timer);
   }, []);
 
+  const handleDelete = () => {
+    deleteGroup(groupData._id);
+    onCloseModal();
+  };
+
   return (
     <div className="flex flex-col px-4">
       <div className="flex flex-col items-center rounded-lg bg-dark-lighterbg px-12 pb-8 pt-6">
@@ -29,8 +36,7 @@ function DeleteUserConfirm({ onCloseModal, userData }) {
         </div>
         <h2 className="mb-2 text-2xl font-bold">Jesteś pewien?</h2>
         <p className="font-light">
-          Jesteś pewien że chcesz usunąć użytkownika{" "}
-          {userData.firstName + " " + userData.lastName}?
+          Jesteś pewien że chcesz usunąć grupę {groupData.visibleName}?
         </p>
         <p>
           Usunięcie może być <span className="font-bold">nieodwracalne</span>.
@@ -41,11 +47,13 @@ function DeleteUserConfirm({ onCloseModal, userData }) {
           Anuluj operację
         </Button>
         <Button
+          disabled={pendingDeleteGroup}
+          onClick={handleDelete}
           btnCounter={secondsLeft}
           type="button"
           buttonStyle={deleteLock ? "locked" : "warning"}
         >
-          Usuń użytkownika
+          Usuń grupę
         </Button>
       </div>
     </div>

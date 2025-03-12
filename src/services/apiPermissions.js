@@ -61,6 +61,19 @@ export const editGroup = async ({
   }
 };
 
+export const deleteGroup = async ({ token, id }) => {
+  try {
+    const res = await axios.delete(`${API_URL}/api/groups/delete/${id}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getPermissions = async (token) => {
   const res = await axios.get(`${API_URL}/api/permissions`, {
     headers: {

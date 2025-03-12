@@ -1,17 +1,26 @@
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { usePermissions } from "../../features/permissions/usePermissions";
-import { useAddGroup } from "../../features/permissions/useAddGroup";
+import { useEditGroup } from "../../features/permissions/useEditGroup";
 
 import Button from "../Button";
 import FormField from "../Forms/FormField";
 import TextInput from "../Forms/TextInput";
 import Skeleton from "react-loading-skeleton";
 
-function AddGroupForm({ onCloseModal }) {
+function AddGroupForm({ onCloseModal, groupData }) {
   const { permissions, pendingPermissions } = usePermissions();
   const [selectAll, setSelectAll] = useState(false);
-  const { addGroup, error, pendingAddGroup, isSuccess } = useAddGroup();
+  const {
+    editGroup,
+    errorEditingGroup,
+    pendingEditGroup,
+    isSuccessEditingGroup,
+  } = useEditGroup();
+
+  const transformedPermissions = groupData.permissions.map(
+    (permission) => permission.name,
+  );
 
   const {
     register,
@@ -21,18 +30,18 @@ function AddGroupForm({ onCloseModal }) {
     setValue,
   } = useForm({
     defaultValues: {
-      name: "",
-      visibleName: "",
-      permissions: [],
+      name: groupData.name || "",
+      visibleName: groupData.visibleName || "",
+      permissions: transformedPermissions || [],
     },
   });
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccessEditingGroup) {
       reset();
       onCloseModal();
     }
-  }, [isSuccess, reset, onCloseModal]);
+  }, [isSuccessEditingGroup, reset, onCloseModal]);
 
   const groupedPermissions = (permissions ?? []).reduce((acc, permission) => {
     const [mainPath, subPath] = permission.name.split("/");
@@ -60,17 +69,19 @@ function AddGroupForm({ onCloseModal }) {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
-    const { name, visibleName, permissions } = data;
-    addGroup({ name, visibleName, permissions });
+    const id = groupData._id;
+    const { name: unformatedName, visibleName, permissions } = data;
+    const name = unformatedName.toLowerCase();
+
+    editGroup({ id, name, visibleName, permissions });
   };
 
   return (
     <div className="flex w-[65vw] flex-col gap-4">
-      <h2 className="text-2xl font-bold">Dodaj nową grupę uprawnień</h2>
-      {error && (
+      <h2 className="text-2xl font-bold">Edytuj grupę uprawnień</h2>
+      {errorEditingGroup && (
         <div className="inline-block w-fit whitespace-nowrap rounded-lg border border-red-500 bg-red-300 px-6 py-2 text-sm text-red-600">
-          {error.response?.data?.message ||
+          {errorEditingGroup.response?.data?.message ||
             "Wystąpił błąd podczas dodawania grupy"}
         </div>
       )}
@@ -163,7 +174,7 @@ function AddGroupForm({ onCloseModal }) {
           <Button
             type="submit"
             buttonStyle="border-light"
-            disabled={pendingAddGroup}
+            disabled={pendingEditGroup}
           >
             Utwórz grupę
           </Button>
