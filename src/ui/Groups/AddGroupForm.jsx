@@ -60,7 +60,6 @@ function AddGroupForm({ onCloseModal }) {
   };
 
   const onSubmit = (data) => {
-    console.log(data);
     const { name, visibleName, permissions } = data;
     addGroup({ name, visibleName, permissions });
   };

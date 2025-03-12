@@ -27,3 +27,63 @@ export async function getUsers() {
     console.error("Error fetching users data", err);
   }
 }
+
+export async function addUser({
+  token,
+  email,
+  firstName,
+  lastName,
+  password,
+  group,
+}) {
+  try {
+    const res = await axios.post(
+      `${API_URL}/api/user/add`,
+      {
+        email,
+        firstName,
+        lastName,
+        password,
+        group,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+  } catch (error) {
+    throw error;
+  }
+}
+
+export async function editUser({
+  token,
+  id,
+  email,
+  firstName,
+  lastName,
+  password,
+  group,
+}) {
+  try {
+    const res = await axios.post(
+      `${API_URL}/api/user/edit`,
+      {
+        id,
+        email,
+        firstName,
+        lastName,
+        password,
+        group,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+  } catch (error) {
+    throw error;
+  }
+}

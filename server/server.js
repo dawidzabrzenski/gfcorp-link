@@ -254,54 +254,7 @@ const addSampleData = async () => {
   }
 };
 
-async function addUser(email, firstName, lastName, password, groupId) {
-  try {
-    const group = await Group.findById(groupId);
-    if (!group) {
-      console.log("Group not found");
-      return;
-    }
-
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-
-    const user = new User({
-      email,
-      firstName,
-      lastName,
-      password: hashedPassword,
-      group: groupId,
-    });
-
-    await user.save();
-
-    console.log("User added and group assigned");
-  } catch (error) {
-    console.error(error);
-  }
-}
-
-// addUser(
-//   "test@gfcorp.pl",
-//   "Testowy",
-//   "User",
-//   "test123",
-//   "67caf1df4f5b7a7d0732f95f",
-// );
-
-// addUser(
-//   "marek.orlowski@gfcorp.pl",
-//   "Marek",
-//   "Orlowski",
-//   "gfcorp123",
-//   "67bc2e85846aed71848dda51",
-// );
-
-// dodawanie usera
-// addSampleData().catch((err) => console.log(err));
-
 // endpoint do logowania
-
 app.post("/api/login", async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -410,6 +363,116 @@ app.get("/api/users", async (req, res) => {
     return res
       .status(500)
       .json({ message: "Something went wrong while querying users" });
+  }
+});
+
+app.post("/api/user/add", authMiddleware, async (req, res) => {
+  const { email, password, firstName, lastName, group } = req.body;
+
+  try {
+    const groupExist = await Group.findById(group);
+    if (!groupExist) {
+      return res.status(404).json({ message: "Grupa nie została znaleziona" });
+    }
+
+    const emailExist = await User.findOne({ email });
+    if (emailExist) {
+      return res
+        .status(400)
+        .json({ message: "Podany email już istnieje w bazie" });
+    }
+
+    const salt = await bcrypt.genSalt(10);
+    const hashedPassword = await bcrypt.hash(password, salt);
+
+    const user = new User({
+      email,
+      firstName,
+      lastName,
+      password: hashedPassword,
+      group,
+    });
+
+    await user.save();
+
+    return res.status(201).json({ message: "Użytkownik poprawnie dodany" });
+  } catch (error) {
+    console.error(error);
+    return res
+      .status(500)
+      .json({ message: "Server error", error: error.message });
+  }
+});
+
+app.put("/api/user/edit", authMiddleware, async (req, res) => {
+  try {
+    const { id, email, firstName, lastName, group, password } = req.body;
+
+    const user = await User.findById(id);
+    if (!user) {
+      return res
+        .status(404)
+        .json({ message: "Użytkownik nie został znaleziony" });
+    }
+
+    if (email && email !== user.email) {
+      const existingUser = await User.findOne({ email });
+      if (existingUser) {
+        return res
+          .status(400)
+          .json({ message: "Użytkownik z podanym emailem już istnieje" });
+      }
+    }
+
+    if (group) {
+      const groupExist = await Group.findById(group);
+      if (!groupExist) {
+        return res
+          .status(404)
+          .json({ message: "Grupa nie została znaleziona" });
+      }
+    }
+
+    user.email = email || user.email;
+    user.firstName = firstName || user.firstName;
+    user.lastName = lastName || user.lastName;
+    if (group) {
+      user.group = group;
+    }
+
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+    }
+
+    await user.save();
+
+    res.status(200).json({ message: "Użytkownik został zaktualizowany", user });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+});
+
+app.delete("/api/user/delete/:id", authMiddleware, async (req, res) => {
+  try {
+    const userId = req.params.id;
+
+    const deletedUser = await User.findByIdAndDelete(userId);
+
+    if (!deletedUser) {
+      return res
+        .status(404)
+        .json({ message: "Użytkownik nie został znaleziony" });
+    }
+
+    res.status(200).json({
+      message: "Użytkownik został usunięty",
+      user: deletedUser,
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Błąd serwera", error: error.message });
   }
 });
 
