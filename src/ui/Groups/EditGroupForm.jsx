@@ -176,7 +176,7 @@ function AddGroupForm({ onCloseModal, groupData }) {
             buttonStyle="border-light"
             disabled={pendingEditGroup}
           >
-            Utwórz grupę
+            Edytuj grupę
           </Button>
           <Button type="button" buttonStyle="warning" onClick={onCloseModal}>
             Zamknij
