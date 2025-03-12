@@ -65,7 +65,7 @@ function AddGroupForm({ onCloseModal }) {
   };
 
   return (
-    <div className="flex w-[65vw] flex-col gap-4">
+    <div className="flex max-h-[80vh] w-[65vw] flex-col gap-4 overflow-y-auto">
       <h2 className="text-2xl font-bold">Dodaj nową grupę uprawnień</h2>
       {error && (
         <div className="inline-block w-fit whitespace-nowrap rounded-lg border border-red-500 bg-red-300 px-6 py-2 text-sm text-red-600">

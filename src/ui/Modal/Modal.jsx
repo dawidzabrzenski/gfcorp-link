@@ -48,7 +48,7 @@ function Window({ children, name }) {
       >
         <button
           onClick={close}
-          className="absolute right-4 top-3 rounded-md p-1.5 transition hover:text-red-500"
+          className="absolute right-2 top-2 rounded-md p-1.5 transition hover:text-red-500"
         >
           ✕
         </button>
