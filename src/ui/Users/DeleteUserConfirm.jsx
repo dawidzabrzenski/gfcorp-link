@@ -1,10 +1,17 @@
 import { useState, useEffect } from "react";
 import { ErrorOutlineRounded as Error } from "@mui/icons-material";
 import Button from "../Button";
+import { useDeleteUser } from "../../features/users/useDeleteUser";
 
 function DeleteUserConfirm({ onCloseModal, userData }) {
   const [deleteLock, setDeleteLock] = useState(true);
   const [secondsLeft, setSecondsLeft] = useState(3);
+  const {
+    deleteUser,
+    errorDeletingUser,
+    pendingDeleteUser,
+    isSuccessDeletingUser,
+  } = useDeleteUser();
 
   useEffect(() => {
     const timer = setInterval(() => {
@@ -20,6 +27,11 @@ function DeleteUserConfirm({ onCloseModal, userData }) {
 
     return () => clearInterval(timer);
   }, []);
+
+  const handleDelete = () => {
+    deleteUser(userData.id);
+    onCloseModal();
+  };
 
   return (
     <div className="flex flex-col px-4">
@@ -42,6 +54,8 @@ function DeleteUserConfirm({ onCloseModal, userData }) {
         </Button>
         <Button
           btnCounter={secondsLeft}
+          disabled={pendingDeleteUser}
+          onClick={handleDelete}
           type="button"
           buttonStyle={deleteLock ? "locked" : "warning"}
         >
