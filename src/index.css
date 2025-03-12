@@ -40,6 +40,10 @@ input:-webkit-autofill:active {
   @apply mx-4 flex items-center gap-2 rounded-lg px-4 py-2 transition-all duration-300 hover:bg-dark-menuhover [&.active]:bg-dark-menuactive [&.active]:text-dark-main [&.active]:hover:bg-dark-menuactivehover;
 }
 
+.input-form {
+  @apply outline-blue border-rounded w-full bg-dark-darkbg px-3 py-2 text-white placeholder:text-dark-placeholder hover:border-dark-mainborderhover;
+}
+
 input[type="checkbox"] {
   @apply outline-blue h-5 w-5 appearance-none rounded border-2 border-dark-mainborder bg-dark-darkbg transition-all duration-300 checked:border-dark-focusbord checked:bg-dark-focusbord hover:cursor-pointer hover:border-dark-focusbord;
 }

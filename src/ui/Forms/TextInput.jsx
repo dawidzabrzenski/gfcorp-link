@@ -16,7 +16,7 @@ function TextInput({
       placeholder={placeholder}
       autoComplete={autoComplete || "off"}
       className={`outline-blue border-rounded w-full bg-dark-darkbg px-3 py-2 text-white placeholder:text-dark-placeholder hover:border-dark-mainborderhover ${additionalClasses}`}
-      {...register(name, validation)}
+      {...(register ? register(name, validation) : {})}
     />
   );
 }

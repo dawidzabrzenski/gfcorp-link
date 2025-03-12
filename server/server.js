@@ -118,6 +118,71 @@ app.get("/api/groups", authMiddleware, async (req, res) => {
   }
 });
 
+app.post("/api/groups/add", authMiddleware, async (req, res) => {
+  try {
+    const { name, visibleName, permissions } = req.body;
+
+    const existingGroup = await Group.findOne({ name });
+    if (existingGroup) {
+      return res
+        .status(400)
+        .json({ message: "Grupa o podanej nazwie już istnieje" });
+    }
+
+    const permissionDocs = await Permission.find({
+      name: { $in: permissions },
+    });
+    const permissionIds = permissionDocs.map((perm) => perm._id);
+
+    const newGroup = new Group({
+      name,
+      visibleName,
+      permissions: permissionIds,
+    });
+
+    await newGroup.save();
+    res.status(201).json({ message: "Grupa została dodana", group: newGroup });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Błąd serwera", error: error.message });
+  }
+});
+
+app.put("/api/groups/edit", authMiddleware, async (req, res) => {
+  try {
+    const { id, name, visibleName, permissions } = req.body;
+
+    const group = await Group.findById(id);
+    if (!group) {
+      return res.status(404).json({ message: "Grupa nie została znaleziona" });
+    }
+
+    if (name && name !== group.name) {
+      const existingGroup = await Group.findOne({ name });
+      if (existingGroup) {
+        return res
+          .status(400)
+          .json({ message: "Grupa o podanej nazwie już istnieje" });
+      }
+    }
+
+    const permissionDocs = await Permission.find({
+      name: { $in: permissions },
+    });
+    const permissionIds = permissionDocs.map((perm) => perm._id);
+
+    group.name = name || group.name;
+    group.visibleName = visibleName || group.visibleName;
+    group.permissions = permissionIds;
+
+    await group.save();
+    res.status(200).json({ message: "Grupa została zaktualizowana", group });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Błąd serwera", error: error.message });
+  }
+});
+
 // funkcja do dodawania danych do bazy
 const addSampleData = async () => {
   try {
@@ -235,16 +300,6 @@ app.post("/api/login", async (req, res) => {
   }
 });
 
-app.post("/api/add-sample-data", async (req, res) => {
-  try {
-    await addSampleData();
-    res.status(200).json({ message: "Sample data added successfully!" });
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({ message: "Error adding sample data" });
-  }
-});
-
 // endpoint do sprawdzenia wygenerowanego tokenu
 app.get("/api/protected", (req, res) => {
   const authHeader = req.headers.authorization;
@@ -335,7 +390,7 @@ app.get("/api/users", async (req, res) => {
 });
 
 app.get("/", (req, res) => {
-  return res.send("Hello world");
+  return res.send("Hello world from GFCorp App");
 });
 
 // nasłuchiwanie servera

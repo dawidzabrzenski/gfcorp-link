@@ -12,6 +12,55 @@ export const getGroups = async (token) => {
   return res.data;
 };
 
+export const addGroup = async ({ token, name, visibleName, permissions }) => {
+  try {
+    const res = await axios.post(
+      `${API_URL}/api/groups/add`,
+      {
+        name,
+        visibleName,
+        permissions,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const editGroup = async ({
+  token,
+  id,
+  name,
+  visibleName,
+  permissions,
+}) => {
+  try {
+    const res = await axios.put(
+      `${API_URL}/api/groups/edit`,
+      {
+        id,
+        name,
+        visibleName,
+        permissions,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+    return res.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
 export const getPermissions = async (token) => {
   const res = await axios.get(`${API_URL}/api/permissions`, {
     headers: {
