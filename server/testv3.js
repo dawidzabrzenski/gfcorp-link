@@ -16,7 +16,7 @@ app.use(
 
 const BASE_URL = "http://gfcsrvAPP2:5506/Product";
 const BEARER_TOKEN = process.env.BEARER_TOKEN;
-const PAGE_SIZE = 50;
+const PAGE_SIZE = 5000;
 
 let productsCache = [];
 let lastSyncTime = new Date();
@@ -36,7 +36,7 @@ const fetchAllProducts = async () => {
   let fetchMorePages = true;
   let allProducts = [];
 
-  while (fetchMorePages) {
+  while (hasMoreData) {
     try {
       const { data } = await axios.get(`${BASE_URL}/GetAll`, {
         params: { page, limit: PAGE_SIZE, typ: 1, aktywny: 1 },
@@ -76,7 +76,7 @@ const syncProducts = async () => {
   let fetchMorePages = true;
   let newProducts = [];
 
-  while (fetchMorePages) {
+  while (hasMoreData) {
     try {
       const { data } = await axios.get(`${BASE_URL}/GetFiltered`, {
         params: {
@@ -165,5 +165,4 @@ fetchAllProducts().then(() => {
   });
 });
 
-// (0.5 minuty = 0.5 * 60 * 1000 ms)
-setInterval(syncProducts, 0.5 * 60 * 1000);
+setInterval(syncProducts, 2 * 60 * 1000);
