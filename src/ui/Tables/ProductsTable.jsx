@@ -43,7 +43,7 @@ export default function Table({
   return (
     <div>
       <div>
-        <table className="border-collapse">
+        <table className="border-collapse text-sm">
           <thead>
             {table.getHeaderGroups().map((headerGroup) => (
               <tr key={headerGroup.id}>

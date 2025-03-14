@@ -138,12 +138,72 @@ const syncProducts = async () => {
   );
 };
 
+// app.get("/products", (req, res) => {
+//   if (productsCache.length > 0) {
+//     res.json(productsCache);
+//   } else {
+//     res.status(404).json({ message: "Brak produktów w cache" });
+//   }
+// });
+
 app.get("/products", (req, res) => {
-  if (productsCache.length > 0) {
-    res.json(productsCache);
-  } else {
-    res.status(404).json({ message: "Brak produktów w cache" });
+  const page = parseInt(req.query.page) || 1;
+  const limit = parseInt(req.query.limit) || 10;
+  const sortBy = req.query.sortBy || "twr_GIDNumer";
+  const order = req.query.order || "asc";
+
+  const filterLikeBy = req.query.filterLikeBy;
+  const filterLike = req.query.filterLike;
+
+  const filterBy = req.query.filterBy;
+  const filter = req.query.filter;
+
+  if (productsCache.length === 0) {
+    return res.status(404).json({ message: "Brak produktów w cache" });
   }
+
+  let filteredProducts = [...productsCache];
+
+  if (filterLikeBy && filterLike) {
+    filteredProducts = filteredProducts.filter((product) => {
+      const value = String(product[filterLikeBy] || "");
+      return value.toLowerCase().includes(filterLike.toLowerCase());
+    });
+  }
+
+  if (filterBy && filter) {
+    filteredProducts = filteredProducts.filter((product) => {
+      const value = String(product[filterBy] || "");
+      return value === filter;
+    });
+  }
+
+  const sortedProducts = filteredProducts.sort((a, b) => {
+    const aValue = a[sortBy];
+    const bValue = b[sortBy];
+
+    if (typeof aValue === "number" && typeof bValue === "number") {
+      return order === "asc" ? aValue - bValue : bValue - aValue;
+    } else {
+      if (aValue < bValue) return order === "asc" ? -1 : 1;
+      if (aValue > bValue) return order === "asc" ? 1 : -1;
+      return 0;
+    }
+  });
+
+  const startIndex = (page - 1) * limit;
+  const endIndex = page * limit;
+  const paginatedProducts = sortedProducts.slice(startIndex, endIndex);
+
+  const response = {
+    page,
+    limit,
+    total: filteredProducts.length,
+    totalPages: Math.ceil(filteredProducts.length / limit),
+    data: paginatedProducts,
+  };
+
+  res.json(response);
 });
 
 app.get("/products/:twr_Katalog", (req, res) => {
