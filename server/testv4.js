@@ -38,7 +38,6 @@ const fetchAllProducts = async () => {
   let hasMoreData = true;
   let allProducts = [];
 
-  // Fetch all product pages
   while (hasMoreData) {
     try {
       const { data } = await axios.get(`${BASE_URL}/Product/GetAll`, {

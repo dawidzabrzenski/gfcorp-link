@@ -7,6 +7,7 @@ import {
   PeopleAltRounded as Users,
   CategoryRounded as Products,
   BadgeRounded as Permissions,
+  DomainRounded as Domain,
 } from "@mui/icons-material";
 import NavItem from "./NavItem";
 import Spinner from "./Loaders/Spinner";
@@ -69,6 +70,11 @@ function MainNav() {
       ),
       submenu: filteredComarchSubmenu,
       requiredPermission: "erp",
+    },
+    {
+      name: "Domeny",
+      path: "http://gfcsrvdr2:8045/",
+      icon: <Domain fontSize="small" />,
     },
     {
       name: "Użytkownicy",
